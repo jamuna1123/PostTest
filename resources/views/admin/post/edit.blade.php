@@ -1,47 +1,69 @@
-@extends('admin.layouts.app')
+@extends('layouts.app')
 
 @section('content')
-    <div class="card mt-5">
-        <h2 class="card-header">Edit Post</h2>
-        <div class="card-body">
+    <div class="app-content-header"> <!--begin::Container-->
+        <div class="container-fluid"> <!--begin::Row-->
+            <div class="row">
+                <div class="col-sm-6">
+                    <h3 class="mb-0">Post</h3>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-end">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">
+                            Post
+                        </li>
+                    </ol>
+                </div>
+            </div> <!--end::Row-->
+        </div> <!--end::Container-->
+    </div> <!--end::App Content Header--> <!--begin::App Content-->
+    <div class="app-content"> <!--begin::Container-->
+        <div class="container-fluid">
+            <!--begin::Row-->
+            <div class="row g-4">
+                <!--begin::Col-->
+                <div class="col-12"></div>
+                <!--end::Col-->
+                <!--begin::Col-->
+                <div class="col-md-8">
+                    <!--begin::Quick Example-->
+                    <div class="card card-primary card-outline mb-4">
+                        <!--begin::Header-->
+                        <div class="card-header">
+                            <div class="card-title">Edit Post</div>
+                        </div>
+                        <!--end::Header-->
+                        <!--begin::Form-->
+                        <form action="{{ route('post.update', $post->id) }}" method="POST"
+                            enctype="multipart/form-data">
+                            @csrf
+                            @method('PUT')
+                            <!--begin::Body-->
+                            @include('admin.post.field')
 
-            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                <a class="btn btn-primary btn-sm" href="{{ route('post.index') }}"><i class="fa fa-arrow-left"></i> Back</a>
+                            <!--end::Body-->
+                            <!--begin::Footer-->
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-success"><i class="fa-solid fa-floppy-disk"></i>
+                                    Submit</button>
+                                <a href="{{ route('post.index') }}" class="btn btn-primary"><i
+                                        class="fa-solid fa-arrow-left"></i> Back</a>
+                            </div>
+                            <!--end::Footer-->
+                        </form>
+                        <!--end::Form-->
+                    </div>
+                    <!--end::Quick Example-->
+                </div>
+                <!--end::Col-->
             </div>
-
-            <form action="{{ route('post.update', $post->id) }}" method="POST" enctype="multipart/form-data">
-                @csrf
-                @method('PUT')
-                <div class="mb-3">
-                    <label for="image" class="form-label"><strong>Image:</strong></label>
-                    <input type="file" name="image" class="form-control @error('image') is-invalid @enderror"
-                        id="image" placeholder="image"><img src="{{ asset($post->image) }}"
-                        style="width:100px; height:100px">
-                    @error('image')
-                        <div class="form-text text-danger">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="mb-3">
-                    <label for="title" class="form-label"><strong>Title:</strong></label>
-                    <input type="text" name="title" class="form-control @error('title') is-invalid @enderror"
-                        id="title" placeholder="Title" value="{{ $post->title }}">
-                    @error('name')
-                        <div class="form-text text-danger">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="mb-3">
-                    <label for="inputdesc" class="form-label"><strong>Description:</strong></label>
-                    <textarea class="form-control @error('desc') is-invalid @enderror" style="height:150px" name="desc" id="desc"
-                        placeholder="Description">{{ $post->desc }}</textarea>
-                    @error('desc')
-                        <div class="form-text text-danger">{{ $message }}</div>
-                    @enderror
-                </div>
-                <button type="submit" class="btn btn-success"><i class="fa-solid fa-floppy-disk"></i> Submit</button>
-            </form>
-
+            <!--end::Row-->
         </div>
+        <!--end::Container-->
     </div>
+    <!--end::App Content-->
+
+
+
 @endsection

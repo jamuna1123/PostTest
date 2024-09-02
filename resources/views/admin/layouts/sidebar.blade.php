@@ -44,7 +44,7 @@
                             </a>
                         </li>
                          <li class="nav-item">
-                            <a href="./tables/simple.html" class="nav-link">
+                            <a href="{{route('post.index')}}"  class="nav-link">
                                 <i class="nav-icon bi bi-circle"></i>
                                 <p>Post</p>
                             </a>

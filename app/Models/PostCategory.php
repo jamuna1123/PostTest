@@ -27,24 +27,25 @@ class PostCategory extends Model
         return $this->belongsTo(PostCategory::class, 'parent_id');
     }
 
-//  public static function getNewsCategoryLists($parentCategoriesList= null)
-//     {
-//         $query = self::where('status', '=', '1')
-//             ->orderBy('title');
-
-//         $returnArray = $query->get()
-//             ->pluck('title', 'parent_id')
-//             ->toArray();
-
-//         return $returnArray;
-//     }
-
-    public static function getNewsCategoryLists()
+public static function getNewsCategoryLists($parentCategoriesList = null)
 {
-    return self::where('status', '1')
-        ->orderBy('title')
-        ->get(); // Return the collection of categories
+    $query = self::where('status', '=', '1')
+        ->orderBy('title');
+
+    $returnArray = $query->get()
+        ->pluck('title', 'id')
+        ->toArray();
+
+    return $returnArray;
 }
+
+
+//     public static function getNewsCategoryLists()
+// {
+//     return self::where('status', '1')
+//         ->orderBy('title')
+//         ->get(); // Return the collection of categories
+// }
 
 
 }

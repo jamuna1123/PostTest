@@ -8,24 +8,23 @@
                @enderror
            </div>
 
-           <div class="mb-3">
-               <label for="parent_id" class="form-label"><strong>Parent Category:</strong></label>
-               <select class="form-select @error('parent_id') is-invalid @enderror" name="parent_id" id="parent_id">
-                     <option value="">Select Parent Category</option>
-        @foreach($parentCategoriesList as $parentCategory)
-            <option value="{{ $parentCategory->id }}" 
-                {{ (isset($postcategory) && $postcategory->parent_id == $parentCategory->id) ? 'selected' : '' }}>
-                {{ $parentCategory->title }}
+         <div class="mb-3">
+    <label for="parent_id" class="form-label"><strong>Parent Category:</strong></label>
+    <select class="form-select @error('parent_id') is-invalid @enderror" name="parent_id" id="parent_id">
+        <option value="">Select Parent Category</option>
+        @foreach($parentCategoriesList as $id => $title)
+            <option value="{{ $id }}" 
+                {{ (isset($postcategory) && $postcategory->parent_id == $id) ? 'selected' : '' }}>
+                {{ $title }}
             </option>
         @endforeach
-               </select>
+    </select>
 
+    @error('parent_id')
+        <div class="form-text text-danger">{{ $message }}</div>
+    @enderror
+</div>
 
-
-               @error('parent_id')
-                   <div class="form-text text-danger">{{ $message }}</div>
-               @enderror
-           </div>
 
            <div class="mb-3">
                <label for="description" class="form-label"><strong>Description:</strong></label>

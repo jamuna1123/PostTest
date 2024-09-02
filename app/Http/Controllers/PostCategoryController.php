@@ -25,13 +25,16 @@ class PostCategoryController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        // Fetch all categories for the parent category select dropdown
-        $categories = PostCategory::all();
-       $parentCategoriesList= PostCategory::getNewsCategoryLists(null);
-        return view('admin.post-category.create', compact('categories','parentCategoriesList'));
-    }
+  public function create()
+{
+    // Fetch all categories for the parent category select dropdown
+    $categories = PostCategory::all();
+    
+    // Get the list of parent categories
+    $parentCategoriesList = PostCategory::getNewsCategoryLists();
+
+    return view('admin.post-category.create', compact('categories', 'parentCategoriesList'));
+}
 
     /**
      * Store a newly created resource in storage.

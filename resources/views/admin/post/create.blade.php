@@ -1,49 +1,69 @@
-@extends('admin.layouts.app')
+@extends('layouts.app')
 
 @section('content')
-    <div class="card mt-5">
-        <h2 class="card-header">Add New Post</h2>
-    
-        <div class="card-body">
-      
-
-
-            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                <a class="btn btn-primary btn-sm" href="{{ route('post.index') }}"><i class="fa fa-arrow-left"></i> Back</a>
+    <div class="app-content-header">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-6">
+                    <h3 class="mb-0">Post</h3>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-end">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">
+                            Post
+                        </li>
+                    </ol>
+                </div>
             </div>
-
-            <form action="{{ route('post.store') }}" method="POST" enctype="multipart/form-data">
-                @csrf
-
-                    <div class="mb-3">
-                    <label for="image" class="form-label"><strong>Image:</strong></label>
-                    <input type="file" name="image" class="form-control @error('image') is-invalid @enderror"
-                        id="image" placeholder="image">
-                    @error('image')
-                        <div class="form-text text-danger">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="mb-3">
-                    <label for="title" class="form-label"><strong>Title:</strong></label>
-                    <input type="text" name="title" class="form-control @error('title') is-invalid @enderror"
-                        id="title" placeholder="Title">
-                    @error('name')
-                        <div class="form-text text-danger">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="mb-3">
-                    <label for="inputdesc" class="form-label"><strong>Description:</strong></label>
-                    <textarea class="form-control @error('desc') is-invalid @enderror" style="height:150px" name="desc" id="desc"
-                        placeholder="Description"></textarea>
-                    @error('desc')
-                        <div class="form-text text-danger">{{ $message }}</div>
-                    @enderror
-                </div>
-                <button type="submit" class="btn btn-success"><i class="fa-solid fa-floppy-disk"></i> Submit</button>
-            </form>
-
         </div>
     </div>
+    <div class="app-content">
+        <div class="container-fluid">
+            <div class="row g-4">
+                <div class="col-md-8">
+                    <div class="card card-primary card-outline mb-4">
+                        <div class="card-header">
+                            <div class="card-title">Create Post</div>
+                        </div>
+                        <form action="{{ route('post.store') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            @include('admin.post.field')
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-success"><i class="fa-solid fa-floppy-disk"></i>
+                                    Submit</button>
+                                <a href="{{ route('post.index') }}" class="btn btn-primary"><i
+                                        class="fa-solid fa-arrow-left"></i> Back</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
+
+@section('scripts')
+    <!-- Initialize FilePond -->
+    <script>
+        // Register FilePond plugins if necessary
+        // FilePond.registerPlugin(FilePondPluginImagePreview, FilePondPluginImageExifOrientation, FilePondPluginFileValidateSize);
+
+        // Select the file input element
+        const inputElement = document.querySelector('input[name="image"]');
+
+        // Create a FilePond instance
+        const pond = FilePond.create(inputElement);
+
+        // Configure FilePond (optional)
+        // pond.setOptions({
+        //     server: {
+        //         process: '/upload',
+        //         revert: '/revert',
+        //         restore: '/restore',
+        //         load: '/load',
+        //         fetch: '/fetch'
+        //     }
+        // });
+    </script>
 @endsection
