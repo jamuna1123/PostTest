@@ -78,7 +78,7 @@
 
                 </form>
 
-                <div class="social-auth-links text-center mb-3 d-grid gap-2">
+                {{-- <div class="social-auth-links text-center mb-3 d-grid gap-2">
                     <p>- OR -</p>
                     <a href="#" class="btn btn-primary">
                         <i class="bi bi-facebook me-2"></i> Sign up using Facebook
@@ -86,7 +86,7 @@
                     <a href="#" class="btn btn-danger">
                         <i class="bi bi-google me-2"></i> Sign up using Google+
                     </a>
-                </div> <!-- /.social-auth-links -->
+                </div> <!-- /.social-auth-links --> --}}
 
                 <p class="mb-0">
                     <a href="{{ route('login') }}" class="text-center">I already have a membership</a>

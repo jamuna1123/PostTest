@@ -21,7 +21,7 @@
             <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu" data-accordion="false">
                 <!-- Dashboard Module -->
                 <li class="nav-item menu-open">
-                    <a href="./index.html" class="nav-link active">
+                    <a href="{{route('dashboard')}}" class="nav-link active">
                         <i class="nav-icon bi bi-speedometer"></i>
                         <p>Dashboard</p>
                     </a>
@@ -32,15 +32,21 @@
                     <a href="#" class="nav-link">
                         <i class="nav-icon bi bi-table"></i>
                         <p>
-                            Tables
+                            Post
                             <i class="nav-arrow bi bi-chevron-right"></i>
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
+                            <a href="{{route('post-category.index')}}" class="nav-link">
+                                <i class="nav-icon bi bi-circle"></i>
+                                <p>Post Category</p>
+                            </a>
+                        </li>
+                         <li class="nav-item">
                             <a href="./tables/simple.html" class="nav-link">
                                 <i class="nav-icon bi bi-circle"></i>
-                                <p>Simple Tables</p>
+                                <p>Post</p>
                             </a>
                         </li>
                     </ul>
