@@ -25,7 +25,7 @@
             <div class="row">
                 <div class="col-md-12">
 
-                      @if(session('success'))
+                    @if (session('success'))
                         <div class="alert alert-success alert-dismissible fade show" role="alert">
                             {{ session('success') }}
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -35,9 +35,8 @@
                         <div class="card-header">
                             <h3 class="card-title">Post Category List</h3>
                             <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-3">
-                                <a class="btn btn-primary" href="{{ route('post-category.create') }}"
-                                    id="createNewProduct">
-                                    <i class="fa fa-plus"></i>Add
+                                <a class="btn btn-primary" href="{{ route('post-category.create') }}" id="createNewProduct">
+                                    <i class="fa fa-plus"></i>Add Post Category
                                 </a>
                             </div>
                         </div>
@@ -47,13 +46,14 @@
                                 <thead>
                                     <tr>
                                         <th style="width: 60px">No</th>
-                                        <th>Image</th>
                                         <th>Title</th>
                                         <th>Slug</th>
+                                        <th>Image</th>
+
+
                                         <th>Parent Category</th>
 
                                         <th>Status</th>
-                                        <th>Description</th>
 
                                         <th style="width: 280px">Action</th>
                                     </tr>
@@ -62,7 +62,8 @@
                                     @foreach ($postCategories as $postCategory)
                                         <tr class="align-middle">
                                             <td>{{ $loop->iteration }}</td>
-
+                                            <td>{{ $postCategory->title }}</td>
+                                            <td>{{ $postCategory->slug }}</td>
                                             <td>
                                                 @if ($postCategory->image)
                                                     <img src="{{ asset('storage/' . $postCategory->image) }}"
@@ -74,8 +75,8 @@
 
 
 
-                                            <td>{{ $postCategory->title }}</td>
-                                            <td>{{ $postCategory->slug }}</td>
+
+
                                             <td>
                                                 @if ($postCategory->parentCategory)
                                                     {{ $postCategory->parentCategory->title }}
@@ -85,7 +86,6 @@
                                             </td>
 
                                             <td>{{ $postCategory->status ? 'Active' : 'Inactive' }}</td>
-                                            <td>{{ $postCategory->description }}</td>
 
                                             <td>
                                                 <a href="{{ route('post-category.show', $postCategory->id) }}"

@@ -29,7 +29,8 @@ class PostCategoryController extends Controller
     {
         // Fetch all categories for the parent category select dropdown
         $categories = PostCategory::all();
-        return view('admin.post-category.create', compact('categories'));
+       $parentCategoriesList= PostCategory::getNewsCategoryLists(null);
+        return view('admin.post-category.create', compact('categories','parentCategoriesList'));
     }
 
     /**
@@ -70,8 +71,10 @@ class PostCategoryController extends Controller
         $postcategory = PostCategory::findOrFail($id);
         // Fetch all categories for the parent category select dropdown
         $categories = PostCategory::all();
+        $parentCategoriesList= PostCategory::getNewsCategoryLists(null);
 
-        return view('admin.post-category.edit', compact('postcategory', 'categories'));
+
+        return view('admin.post-category.edit', compact('postcategory', 'categories','parentCategoriesList'));
     }
 
     /**

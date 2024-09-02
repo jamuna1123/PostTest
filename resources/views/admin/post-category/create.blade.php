@@ -28,70 +28,7 @@
                         </div>
                         <form action="{{ route('post-category.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
-                            <div class="card-body">
-                                <!-- Image Input -->
-                                <div class="mb-3">
-                                    <label for="image" class="form-label"><strong>Image:</strong></label>
-                                    <input type="file" name="image" id="image"
-                                        class="form-control @error('image') is-invalid @enderror" placeholder="image">
-                                    @error('image')
-                                        <div class="form-text text-danger">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                                <!-- Title Input -->
-                                <div class="mb-3">
-                                    <label for="title" class="form-label"><strong>Title:</strong></label>
-                                    <input type="text" name="title"
-                                        class="form-control @error('title') is-invalid @enderror" id="title"
-                                        placeholder="Title">
-                                    @error('title')
-                                        <div class="form-text text-danger">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                                <!-- Parent Category Select -->
-                                <div class="mb-3">
-                                    <label for="parent_id" class="form-label"><strong>Parent Category:</strong></label>
-                                    <select class="form-select @error('parent_id') is-invalid @enderror" name="parent_id"
-                                        id="parent_id">
-                                        <option selected disabled value="">Select Parent Category...</option>
-
-                                        @foreach ($categories as $category)
-                                            <option value="{{ $category->id }}">{{ $category->title }}</option>
-                                        @endforeach
-                                    </select>
-
-
-
-                                    @error('parent_id')
-                                        <div class="form-text text-danger">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                                <!-- Status Toggle -->
-                                <div class="mb-3">
-                                    <label for="status" class="form-label"><strong>Status:</strong></label>
-                                    <div class="form-check form-switch">
-                                        <input class="form-check-input @error('status') is-invalid @enderror"
-                                            type="checkbox" role="switch" id="status" name="status" value="1"
-                                            {{ old('status') ? 'checked' : '' }}>
-                                        <label class="form-check-label" for="status">Active</label>
-                                    </div>
-                                    @error('status')
-                                        <div class="form-text text-danger">{{ $message }}</div>
-                                    @enderror
-                                </div>
-
-                                  <div class="mb-3">
-                                    <label for="description" class="form-label"><strong>Description:</strong></label>
-                                    <textarea name="description" id="description"
-                                        class="form-control @error('description') is-invalid @enderror"
-                                        rows="4" placeholder="Enter a description..."></textarea>
-                                    @error('description')
-                                        <div class="form-text text-danger">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                            </div>
-
-
+                            @include('admin.post-category.field')
                             <div class="card-footer">
                                 <button type="submit" class="btn btn-success"><i class="fa-solid fa-floppy-disk"></i>
                                     Submit</button>
