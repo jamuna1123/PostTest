@@ -79,7 +79,19 @@
                                         <div class="form-text text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
+
+                                  <div class="mb-3">
+                                    <label for="description" class="form-label"><strong>Description:</strong></label>
+                                    <textarea name="description" id="description"
+                                        class="form-control @error('description') is-invalid @enderror"
+                                        rows="4" placeholder="Enter a description..."></textarea>
+                                    @error('description')
+                                        <div class="form-text text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
                             </div>
+
+
                             <div class="card-footer">
                                 <button type="submit" class="btn btn-success"><i class="fa-solid fa-floppy-disk"></i>
                                     Submit</button>

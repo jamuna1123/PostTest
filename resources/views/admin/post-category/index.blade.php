@@ -53,6 +53,8 @@
                                         <th>Parent Category</th>
 
                                         <th>Status</th>
+                                        <th>Description</th>
+
                                         <th style="width: 280px">Action</th>
                                     </tr>
                                 </thead>
@@ -81,7 +83,10 @@
                                                     None
                                                 @endif
                                             </td>
+
                                             <td>{{ $postCategory->status ? 'Active' : 'Inactive' }}</td>
+                                            <td>{{ $postCategory->description }}</td>
+
                                             <td>
                                                 <a href="{{ route('post-category.show', $postCategory->id) }}"
                                                     class="btn btn-info btn-sm">View</a>

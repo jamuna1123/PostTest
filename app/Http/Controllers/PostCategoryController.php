@@ -37,9 +37,12 @@ class PostCategoryController extends Controller
      */
     public function store(StorePostCategory $request)
     {
+        
         // Create a new post category
         $postcategory = new PostCategory();
         $postcategory->title = $request->title;
+        $postcategory->description = $request->description;
+
         $postcategory->slug = $request->slug;
         $postcategory->parent_id = $request->parent_id; // Add parent_id
 
@@ -80,6 +83,8 @@ class PostCategoryController extends Controller
         $postcategory = PostCategory::findOrFail($id);
 
         $postcategory->title = $request->title;
+        $postcategory->description = $request->description;
+
         $postcategory->slug = $request->slug;
         $postcategory->parent_id = $request->parent_id; // Update parent_id
 

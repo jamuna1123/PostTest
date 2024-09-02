@@ -10,7 +10,7 @@ class PostCategory extends Model
 {
     use HasSlug;
 
-    protected $fillable = ['title', 'slug', 'image', 'parent_id', 'status'];
+    protected $fillable = ['title', 'slug', 'image','description','parent_id', 'status'];
 
     /**
      * Get the options for generating the slug.
