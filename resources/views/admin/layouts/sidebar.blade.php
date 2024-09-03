@@ -20,15 +20,15 @@
             <!--begin::Sidebar Menu-->
             <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu" data-accordion="false">
                 <!-- Dashboard Module -->
-                <li class="nav-item menu-open">
-                    <a href="{{route('dashboard')}}" class="nav-link active">
+                <li class="nav-item {{ request()->routeIs('dashboard') ? 'menu-open' : '' }}">
+                    <a href="{{ route('dashboard') }}" class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
                         <i class="nav-icon bi bi-speedometer"></i>
                         <p>Dashboard</p>
                     </a>
                 </li>
 
                 <!-- Tables Module -->
-                <li class="nav-item">
+                <li class="nav-item {{ request()->routeIs('post-category.index') || request()->routeIs('post.index') ? 'menu-open' : '' }}">
                     <a href="#" class="nav-link">
                         <i class="nav-icon bi bi-table"></i>
                         <p>
@@ -38,13 +38,13 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{route('post-category.index')}}" class="nav-link">
+                            <a href="{{ route('post-category.index') }}" class="nav-link {{ request()->routeIs('post-category.index') ? 'active' : '' }}">
                                 <i class="nav-icon bi bi-circle"></i>
                                 <p>Post Category</p>
                             </a>
                         </li>
                          <li class="nav-item">
-                            <a href="{{route('post.index')}}"  class="nav-link">
+                            <a href="{{ route('post.index') }}" class="nav-link {{ request()->routeIs('post.index') ? 'active' : '' }}">
                                 <i class="nav-icon bi bi-circle"></i>
                                 <p>Post</p>
                             </a>

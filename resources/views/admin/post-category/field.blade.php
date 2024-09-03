@@ -1,6 +1,6 @@
        <div class="card-body">
            <div class="mb-3">
-               <label for="title" class="form-label"><strong>Title:</strong></label>
+               <label for="title" class="form-label"><strong>Title:<span class="text-danger">*</span></strong></label>
                <input type="text" name="title" class="form-control @error('title') is-invalid @enderror" id="title"
                    placeholder="Title" value="{{ old('title', $postcategory->title ?? '') }}">
                @error('title')
@@ -9,7 +9,7 @@
            </div>
 
          <div class="mb-3">
-    <label for="parent_id" class="form-label"><strong>Parent Category:</strong></label>
+    <label for="parent_id" class="form-label"><strong>Parent Category:<span class="text-danger">*</span></strong></label>
     <select class="form-select @error('parent_id') is-invalid @enderror" name="parent_id" id="parent_id">
         <option value="">Select Parent Category</option>
         @foreach($parentCategoriesList as $id => $title)
@@ -27,7 +27,7 @@
 
 
            <div class="mb-3">
-               <label for="description" class="form-label"><strong>Description:</strong></label>
+               <label for="description" class="form-label"><strong>Description:<span class="text-danger">*</span></strong></label>
                <textarea name="description" id="description" class="form-control @error('description') is-invalid @enderror"
                    rows="4" placeholder="Enter a description...">{{ old('description', $postcategory->description ?? '') }}</textarea>
                @error('description')
@@ -36,7 +36,7 @@
            </div>
            <!-- Image Input -->
         <div class="mb-3">
-    <label for="image" class="form-label"><strong>Image:</strong></label>
+    <label for="image" class="form-label"><strong>Image:<span class="text-danger">*</span></strong></label>
     <input type="file" name="image" id="image" class="form-control @error('image') is-invalid @enderror">
     @error('image')
         <div class="form-text text-danger">{{ $message }}</div>
@@ -51,7 +51,7 @@
 </div>
 
 <div class="mb-3">
-    <label for="status" class="form-label"><strong>Status:</strong></label>
+    <label for="status" class="form-label"><strong>Status:<span class="text-danger">*</span></strong></label>
     <div class="form-check form-switch">
         <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" role="switch"
                id="status" name="status" value="1" 

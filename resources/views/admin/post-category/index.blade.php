@@ -34,18 +34,18 @@
                     <div class="card mb-4">
                         <div class="card-header">
                             <h3 class="card-title">Post Category List</h3>
-                            <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-3">
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-1">
                                 <a class="btn btn-primary" href="{{ route('post-category.create') }}" id="createNewProduct">
                                     <i class="fa fa-plus"></i>Add Post Category
                                 </a>
                             </div>
                         </div>
                         <!-- /.card-header -->
-                        <div class="card-body">
+                        <div class="card-body p-0">
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
-                                        <th style="width: 60px">No</th>
+                                        {{-- <th style="width: 60px">No</th> --}}
                                         <th>Title</th>
                                         <th>Slug</th>
                                         <th>Image</th>
@@ -61,7 +61,7 @@
                                 <tbody>
                                     @foreach ($postCategories as $postCategory)
                                         <tr class="align-middle">
-                                            <td>{{ $loop->iteration }}</td>
+                                            {{-- <td>{{ $loop->iteration }}</td> --}}
                                             <td>{{ $postCategory->title }}</td>
                                             <td>{{ $postCategory->slug }}</td>
                                             <td>
@@ -85,7 +85,14 @@
                                                 @endif
                                             </td>
 
-                                            <td>{{ $postCategory->status ? 'Active' : 'Inactive' }}</td>
+                                            <td>@if ($postCategory->status)
+                                                    <span class="text-success"><i class="fa fa-check-circle"></i> Active</span>
+                                                @else
+                                               
+                                                <span class="text-danger"><i class="fa fa-times-circle"></i> Inactive</span>
+                                                @endif</td>
+
+                                           
 
                                             <td>
                                                 <a href="{{ route('post-category.show', $postCategory->id) }}"

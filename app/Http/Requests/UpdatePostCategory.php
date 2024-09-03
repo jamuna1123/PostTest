@@ -23,8 +23,9 @@ class UpdatePostCategory extends FormRequest
     {
 
         return [
-           'title' => 'required|string|max:255',
-        'image' => 'required|image',
+        'title' => 'required|string|max:255',
+        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+
         'parent_id' => 'nullable|exists:post_categories,id',
         'status' => 'boolean',
 

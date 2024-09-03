@@ -15,10 +15,10 @@ class PostCategoryController extends Controller
      */
     public function index(Request $request)
     {
-        // Fetch post categories with pagination
+      
         $postCategories = PostCategory::paginate(5); // Adjust the number per page as needed
         
-        // Return the view with the paginated data
+        
         return view('admin.post-category.index', compact('postCategories'));
     }
 
@@ -27,10 +27,10 @@ class PostCategoryController extends Controller
      */
   public function create()
 {
-    // Fetch all categories for the parent category select dropdown
+    
     $categories = PostCategory::all();
     
-    // Get the list of parent categories
+ 
     $parentCategoriesList = PostCategory::getNewsCategoryLists();
 
     return view('admin.post-category.create', compact('categories', 'parentCategoriesList'));
@@ -42,7 +42,7 @@ class PostCategoryController extends Controller
     public function store(StorePostCategory $request)
     {
         
-        // Create a new post category
+        
         $postcategory = new PostCategory();
         $postcategory->title = $request->title;
         $postcategory->description = $request->description;
@@ -50,9 +50,9 @@ class PostCategoryController extends Controller
         $postcategory->slug = $request->slug;
         $postcategory->parent_id = $request->parent_id; // Add parent_id
 
-        // Handle image upload
+      
         if ($request->hasFile('image')) {
-            // Store image in the 'public/images' directory
+           
             $imagePath = $request->file('image')->store('images', 'public');
             $postcategory->image = $imagePath;
         }
@@ -70,9 +70,9 @@ class PostCategoryController extends Controller
      */
     public function edit($id)
     {
-        // Find the post category by ID
+      
         $postcategory = PostCategory::findOrFail($id);
-        // Fetch all categories for the parent category select dropdown
+        
         $categories = PostCategory::all();
         $parentCategoriesList= PostCategory::getNewsCategoryLists(null);
 
@@ -85,7 +85,7 @@ class PostCategoryController extends Controller
      */
     public function update(UpdatePostCategory $request, $id)
     {
-        // Find the post category by ID
+       
         $postcategory = PostCategory::findOrFail($id);
 
         $postcategory->title = $request->title;
@@ -94,13 +94,13 @@ class PostCategoryController extends Controller
         $postcategory->slug = $request->slug;
         $postcategory->parent_id = $request->parent_id; // Update parent_id
 
-        // Handle image upload if a new image is provided
+      
         if ($request->hasFile('image')) {
-            // Delete the old image if it exists
+           
             if ($postcategory->image && Storage::exists('public/' . $postcategory->image)) {
                 Storage::delete('public/' . $postcategory->image);
             }
-            // Store new image
+           
             $imagePath = $request->file('image')->store('images', 'public');
             $postcategory->image = $imagePath;
         }
@@ -117,10 +117,10 @@ class PostCategoryController extends Controller
      */
     public function destroy($id)
     {
-        // Find the post category by ID
+       
         $postcategory = PostCategory::findOrFail($id);
 
-        // Delete the image file if it exists
+       
         if ($postcategory->image && Storage::exists('public/' . $postcategory->image)) {
             Storage::delete('public/' . $postcategory->image);
         }
@@ -136,10 +136,10 @@ class PostCategoryController extends Controller
      */
     public function show($id)
     {
-        // Find the post category by ID
+       
         $postcategory = PostCategory::findOrFail($id);
 
-        // Return the view with the post category data
+       
         return view('admin.post-category.show', compact('postcategory'));
     }
 }

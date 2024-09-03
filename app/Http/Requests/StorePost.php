@@ -23,7 +23,7 @@ class StorePost extends FormRequest
     {
         return [
         'title' => 'required|string|max:255',
-        'image' => 'required|image',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         'post_category_id' => 'nullable|exists:post_categories,id',
         'user_id' => 'nullable|exists:users,id',
         'status' => 'boolean',

@@ -44,6 +44,12 @@
                 <a href="{{ route('post-category.index') }}" class="btn btn-primary mt-3">
                     <i class="fa-solid fa-arrow-left"></i> Back
                 </a>
+                  <a href="{{ route('post-category.create') }}" class="btn btn-success mt-3">
+                            <i class="fa-solid fa-arrow-left"></i>Create
+                        </a>
+                         <a href="{{ route('post-category.edit', $postcategory->id) }}" class="btn btn-success mt-3">
+                            <i class="fa-solid fa-arrow-left"></i>Edit
+                        </a>
             </div>
         </div>
     </div>

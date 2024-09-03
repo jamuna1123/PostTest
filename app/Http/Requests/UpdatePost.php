@@ -22,8 +22,9 @@ class UpdatePost extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string|max:255',
-        'image' => 'required|image',
+        'title' => 'required|string|max:255',
+        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+
         'post_category_id' => 'nullable|exists:post_categories,id',
         'user_id' => 'nullable|exists:users,id',
         'status' => 'boolean',
