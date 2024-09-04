@@ -35,7 +35,7 @@
                @enderror
            </div>
            <!-- Image Input -->
-        <div class="mb-3">
+     <div class="mb-3">
     <label for="image" class="form-label"><strong>Image:<span class="text-danger">*</span></strong></label>
     <input type="file" name="image" id="image" class="form-control @error('image') is-invalid @enderror">
     @error('image')

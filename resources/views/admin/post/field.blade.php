@@ -9,7 +9,8 @@
            </div>
 
            <div class="mb-3">
-               <label for="parent_id" class="form-label"><strong>Post Category:<span class="text-danger">*</span></strong></label>
+               <label for="parent_id" class="form-label"><strong>Post Category:<span
+                           class="text-danger">*</span></strong></label>
                <select class="form-select @error('post_category_id') is-invalid @enderror" name="post_category_id"
                    id="post_category_id">
                    <option value="">Select Post Category</option>
@@ -42,7 +43,7 @@
                @enderror
            </div>
            <div class="mb-3">
-               <label for="published_at">Publish Date:<span class="text-danger">*</span></label>
+               <label for="published_at"><strong>Publish Date:<span class="text-danger">*</span></strong></label>
                <input type="datetime-local" name="published_at" id="published_at"
                    class="form-control @error('published_at') is-invalid @enderror"
                    value="{{ old('published_at', isset($post->published_at) ? $post->published_at->format('Y-m-d\TH:i') : '') }}">
@@ -60,7 +61,8 @@
         @enderror
     </div> --}}
            <div class="mb-3">
-               <label for="description" class="form-label"><strong>Description:<span class="text-danger">*</span></strong></label>
+               <label for="description" class="form-label"><strong>Description:<span
+                           class="text-danger">*</span></strong></label>
                <textarea name="description" id="description" class="form-control @error('description') is-invalid @enderror"
                    rows="4" placeholder="Enter a description...">{{ old('description', $post->description ?? '') }}</textarea>
                @error('description')
@@ -69,7 +71,8 @@
            </div>
            <!-- Image Input -->
            <div class="mb-3">
-               <label for="image" class="form-label"><strong>Image:<span class="text-danger">*</span></strong></label>
+               <label for="image" class="form-label"><strong>Image:<span
+                           class="text-danger">*</span></strong></label>
                <input type="file" name="image" id="image"
                    class="form-control @error('image') is-invalid @enderror">
                @error('image')
@@ -86,7 +89,7 @@
            </div>
 
            <div class="mb-3">
-               <label for="status" class="form-label"><strong>Status:<span class="text-danger">*</span></strong></label>
+               <label for="status" class="form-label"><strong>Status:</strong></label>
                <div class="form-check form-switch">
                    <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" role="switch"
                        id="status" name="status" value="1"

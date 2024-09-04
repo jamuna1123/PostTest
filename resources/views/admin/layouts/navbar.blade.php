@@ -93,6 +93,7 @@
                             @csrf
                         </form>
                             </li> <!--end::Menu Footer-->
+                            
                         </ul>
                     </li> <!--end::User Menu Dropdown-->
                 </ul> <!--end::End Navbar Links-->

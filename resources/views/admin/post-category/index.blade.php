@@ -32,6 +32,7 @@
                         </div>
                     @endif
                     <div class="card mb-4">
+                        
                         <div class="card-header">
                             <h3 class="card-title">Post Category List</h3>
                             <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-1">
@@ -59,7 +60,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($postCategories as $postCategory)
+                                    @forelse ($postCategories as $postCategory)
                                         <tr class="align-middle">
                                             {{-- <td>{{ $loop->iteration }}</td> --}}
                                             <td>{{ $postCategory->title }}</td>
@@ -72,10 +73,6 @@
                                                     <p>No image available</p>
                                                 @endif
                                             </td>
-
-
-
-
 
                                             <td>
                                                 @if ($postCategory->parentCategory)
@@ -108,7 +105,11 @@
                                                 </form>
                                             </td>
                                         </tr>
-                                    @endforeach
+                                            @empty
+                            <tr>
+                                <td colspan="7" class="text-center">No data available</td>
+                            </tr>
+                                    @endforelse
                                 </tbody>
                             </table>
                         </div>

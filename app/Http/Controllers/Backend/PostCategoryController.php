@@ -1,19 +1,16 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Backend;
 
-use App\Models\PostCategory;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\PostCategory;
 use App\Http\Requests\StorePostCategory;
 use App\Http\Requests\UpdatePostCategory;
 use Illuminate\Support\Facades\Storage;
-
 class PostCategoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index(Request $request)
+     public function index(Request $request)
     {
       
         $postCategories = PostCategory::paginate(5); // Adjust the number per page as needed
@@ -51,11 +48,20 @@ class PostCategoryController extends Controller
         $postcategory->parent_id = $request->parent_id; // Add parent_id
 
       
-        if ($request->hasFile('image')) {
-           
-            $imagePath = $request->file('image')->store('images', 'public');
-            $postcategory->image = $imagePath;
+       if ($request->input('image')) {
+            $imagePath = $request->input('image');
+            $filename = basename($imagePath);
+
+            $newPath = 'images/' . $filename;
+
+
+            // Move the file from 'tmp' to 'images'
+            Storage::disk('public')->move($imagePath, $newPath);
+
+            // Save the new image path in the database
+            $postcategory->image = $newPath;
         }
+
 
         $postcategory->status = $request->has('status') ? 1 : 0;
 
@@ -141,5 +147,24 @@ class PostCategoryController extends Controller
 
        
         return view('admin.post-category.show', compact('postcategory'));
+    }
+
+     public function upload(Request $request)
+    {
+        if ($request->file('image'))
+        {
+            $path = $request->file('image')->store('tmp', 'public');
+            return response()->json(['path' => $path]);
+        }
+        return response()->json(['error' => 'No file uploaded'], 400);
+    }
+
+    public function revert(Request $request)
+    {
+        $path = $request->getContent();
+        if (Storage::disk('public')->exists($path)) {
+            Storage::disk('public')->delete($path);
+        }
+        return response()->json(['success' => true]);
     }
 }

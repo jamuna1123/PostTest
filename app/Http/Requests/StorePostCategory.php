@@ -23,7 +23,7 @@ class StorePostCategory extends FormRequest
     {
         return [
             'title' => 'required|string|max:255',
-        'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        'image' => 'nullable|string',
         'parent_id' => 'nullable|exists:post_categories,id',
         'status' => 'boolean',
         ];

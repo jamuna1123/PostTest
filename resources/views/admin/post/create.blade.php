@@ -1,5 +1,8 @@
 @extends('layouts.app')
-
+@push('styles')
+<link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
+<link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet" />
+@endpush
 @section('content')
     <div class="app-content-header">
         <div class="container-fluid">
@@ -43,27 +46,36 @@
     </div>
 @endsection
 
-@section('scripts')
-    <!-- Initialize FilePond -->
-    <script>
-        // Register FilePond plugins if necessary
-        // FilePond.registerPlugin(FilePondPluginImagePreview, FilePondPluginImageExifOrientation, FilePondPluginFileValidateSize);
+@push('scripts')
+<script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
+<script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
+<script src="https://unpkg.com/filepond@^4/dist/filepond.js"></script>
 
-        // Select the file input element
-        const inputElement = document.querySelector('input[name="image"]');
+<script>
+    FilePond.registerPlugin(FilePondPluginImagePreview);
+    FilePond.registerPlugin(FilePondPluginFileValidateType);
 
-        // Create a FilePond instance
-        const pond = FilePond.create(inputElement);
-
-        // Configure FilePond (optional)
-        // pond.setOptions({
-        //     server: {
-        //         process: '/upload',
-        //         revert: '/revert',
-        //         restore: '/restore',
-        //         load: '/load',
-        //         fetch: '/fetch'
-        //     }
-        // });
+    const pond = FilePond.create(document.querySelector('#image'), {
+        acceptedFileTypes: ['image/*'],
+        server: {
+            process: {
+                url: '{{ route('upload') }}',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                onload: (response) => {
+                    const data = JSON.parse(response);
+                    return data.path;
+                }
+            },
+            revert: {
+                url: '{{ route('revert') }}',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                }
+            }
+        }
+    });
     </script>
-@endsection
+@endpush
+

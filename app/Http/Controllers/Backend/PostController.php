@@ -1,11 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Backend;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
 use App\Models\Post;
 use App\Models\PostCategory;
 use App\Models\User;
-use Illuminate\Http\Request;
+
 use App\Http\Requests\StorePost;
 use App\Http\Requests\UpdatePost;
 use Illuminate\Support\Facades\Storage;
@@ -41,7 +44,7 @@ class PostController extends Controller
      */
     public function store(StorePost $request)
     {
-        
+       
         $post = new Post();
         $post->title = $request->title;
         $post->description = $request->description;
@@ -52,10 +55,19 @@ class PostController extends Controller
         $post->published_at = $request->published_at ? Carbon::parse($request->published_at) : Carbon::now();
 
        
-        if ($request->hasFile('image')) {
-           
-            $imagePath = $request->file('image')->store('images', 'public');
-            $post->image = $imagePath;
+        
+        if ($request->input('image')) {
+            $imagePath = $request->input('image');
+            $filename = basename($imagePath);
+
+            $newPath = 'images/' . $filename;
+
+
+            // Move the file from 'tmp' to 'images'
+            Storage::disk('public')->move($imagePath, $newPath);
+
+            // Save the new image path in the database
+            $post->image = $newPath;
         }
 
         $post->status = $request->has('status') ? 1 : 0;
@@ -100,8 +112,6 @@ class PostController extends Controller
 
         $post->slug = $request->slug;
     
-
-        
         if ($request->hasFile('image')) {
             
             if ($post->image && Storage::exists('public/' . $post->image)) {
@@ -112,7 +122,7 @@ class PostController extends Controller
             $post->image = $imagePath;
         }
 
-            $post->status = $request->has('status') ? 1 : 0;
+        $post->status = $request->has('status') ? 1 : 0;
         $post->save();
 
         return redirect()->route('post.index')
@@ -148,5 +158,26 @@ class PostController extends Controller
 
       
         return view('admin.post.show', compact('post'));
+    }
+
+
+
+    public function upload(Request $request)
+    {
+        if ($request->file('image'))
+        {
+            $path = $request->file('image')->store('tmp', 'public');
+            return response()->json(['path' => $path]);
+        }
+        return response()->json(['error' => 'No file uploaded'], 400);
+    }
+
+    public function revert(Request $request)
+    {
+        $path = $request->getContent();
+        if (Storage::disk('public')->exists($path)) {
+            Storage::disk('public')->delete($path);
+        }
+        return response()->json(['success' => true]);
     }
 }

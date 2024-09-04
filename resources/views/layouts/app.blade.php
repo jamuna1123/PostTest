@@ -45,6 +45,9 @@
     <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
     <script src="https://cdn.tiny.cloud/1/lz3stx6dwxywl56d146m3msq6l66bfvqz2iyl49ikdndki4k/tinymce/6/tinymce.min.js"
         referrerpolicy="origin"></script>
+        <script src="{{asset('Backend/plugins/sweetalert2/sweetalert2.min.js')}}"></script>
+
+@stack('styles')
 
 </head> <!--end::Head--> <!--begin::Body-->
 
@@ -69,7 +72,7 @@
     </div>
 
 
-
+@stack('scripts')
     <script src="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.3.0/browser/overlayscrollbars.browser.es6.min.js"
         integrity="sha256-H2VM7BKda+v2Z4+DRy69uknwxjyDRhszjXFhsL4gD3w=" crossorigin="anonymous"></script>
     <!--end::Third Party Plugin(OverlayScrollbars)--><!--begin::Required Plugin(popperjs for Bootstrap 5)-->
