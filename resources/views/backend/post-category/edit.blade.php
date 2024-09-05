@@ -45,10 +45,11 @@
                             <!--end::Body-->
                             <!--begin::Footer-->
                             <div class="card-footer">
+                                   <a href="{{ route('post-category.index') }}" class="btn btn-primary"><i
+                                        class="fa-solid fa-arrow-left"></i> Back</a>
                                 <button type="submit" class="btn btn-success"><i class="fa-solid fa-floppy-disk"></i>
                                     Submit</button>
-                                <a href="{{ route('post-category.index') }}" class="btn btn-primary"><i
-                                        class="fa-solid fa-arrow-left"></i> Back</a>
+                             
                             </div>
                             <!--end::Footer-->
                         </form>

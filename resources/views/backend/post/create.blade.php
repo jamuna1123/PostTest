@@ -33,10 +33,11 @@
                             @csrf
                             @include('backend.post.field')
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-success"><i class="fa-solid fa-floppy-disk"></i>
-                                    Submit</button>
                                 <a href="{{ route('post.index') }}" class="btn btn-primary"><i
                                         class="fa-solid fa-arrow-left"></i> Back</a>
+                                <button type="submit" class="btn btn-success"><i class="fa-solid fa-floppy-disk"></i>
+                                    Submit</button>
+                                
                             </div>
                         </form>
                     </div>
