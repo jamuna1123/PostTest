@@ -7,23 +7,14 @@
                    <div class="form-text text-danger">{{ $message }}</div>
                @enderror
            </div>
-
-         <div class="mb-3">
-    <label for="parent_id" class="form-label"><strong>Parent Category:<span class="text-danger">*</span></strong></label>
-    <select class="form-select @error('parent_id') is-invalid @enderror" name="parent_id" id="parent_id">
-        <option value="">Select Parent Category</option>
-        @foreach($parentCategoriesList as $id => $title)
-            <option value="{{ $id }}" 
-                {{ (isset($postcategory) && $postcategory->parent_id == $id) ? 'selected' : '' }}>
-                {{ $title }}
-            </option>
-        @endforeach
-    </select>
-
-    @error('parent_id')
-        <div class="form-text text-danger">{{ $message }}</div>
-    @enderror
-</div>
+           <div class="mb-3">
+               <label for="slug" class="form-label"><strong>Slug:<span class="text-danger">*</span></strong></label>
+               <input type="text" name="slug" class="form-control @error('slug') is-invalid @enderror" id="title"
+                   placeholder="Slug" value="{{ old('slug', $postcategory->slug ?? '') }}">
+               @error('slug')
+                   <div class="form-text text-danger">{{ $message }}</div>
+               @enderror
+           </div>
 
 
            <div class="mb-3">

@@ -1,12 +1,10 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Backend\PostCategoryController;
 use App\Http\Controllers\Backend\PostController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-
-
 
 // Add additional routes as needed
 
@@ -23,14 +21,14 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-     Route::resource('/post-category', PostCategoryController::class);
-      Route::post('upload', [PostCategoryController::class, 'upload'])->name('upload');
+    Route::resource('/post-category', PostCategoryController::class);
+    Route::post('upload', [PostCategoryController::class, 'upload'])->name('upload');
     Route::delete('revert', [PostCategoryController::class, 'revert'])->name('revert');
-         Route::resource('/post', PostController::class);
-         
+    Route::resource('/post', PostController::class);
+
     Route::post('upload', [PostController::class, 'upload'])->name('upload');
     Route::delete('revert', [PostController::class, 'revert'])->name('revert');
-   
+
 });
 
 require __DIR__.'/auth.php';

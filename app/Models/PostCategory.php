@@ -10,7 +10,7 @@ class PostCategory extends Model
 {
     use HasSlug;
 
-    protected $fillable = ['title', 'slug', 'image','description','parent_id', 'status'];
+    protected $fillable = ['title', 'slug', 'image', 'description', 'parent_id', 'status'];
 
     /**
      * Get the options for generating the slug.
@@ -22,31 +22,28 @@ class PostCategory extends Model
             ->saveSlugsTo('slug');
     }
 
-     public function parentCategory()
+    public function parentCategory()
     {
         return $this->belongsTo(PostCategory::class, 'parent_id');
     }
 
-public static function getNewsCategoryLists($parentCategoriesList = null)
-{
-    $query = self::where('status', '=', '1')
-        ->orderBy('title');
+    public static function getNewsCategoryLists($parentCategoriesList = null)
+    {
+        $query = self::where('status', '=', '1')
+            ->orderBy('title');
 
-    $returnArray = $query->get()
-        ->pluck('title', 'id')
-        ->toArray();
+        $returnArray = $query->get()
+            ->pluck('title', 'id')
+            ->toArray();
 
-    return $returnArray;
-}
+        return $returnArray;
+    }
 
-
-//     public static function getNewsCategoryLists()
-// {
-//     return self::where('status', '1')
-//         ->orderBy('title')
-//         ->get(); // Return the collection of categories
-// }
-
+    //     public static function getNewsCategoryLists()
+    // {
+    //     return self::where('status', '1')
+    //         ->orderBy('title')
+    //         ->get(); // Return the collection of categories
+    // }
 
 }
-

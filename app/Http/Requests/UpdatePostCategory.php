@@ -11,7 +11,7 @@ class UpdatePostCategory extends FormRequest
      */
     public function authorize(): bool
     {
-         return true;
+        return true;
     }
 
     /**
@@ -23,11 +23,11 @@ class UpdatePostCategory extends FormRequest
     {
 
         return [
-        'title' => 'required|string|max:255',
-        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'title' => 'required|string|max:255',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
 
-        'parent_id' => 'nullable|exists:post_categories,id',
-        'status' => 'boolean',
+            'parent_id' => 'nullable|exists:post_categories,id',
+            'status' => 'boolean',
 
         ];
     }

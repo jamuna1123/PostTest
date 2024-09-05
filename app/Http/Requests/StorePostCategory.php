@@ -11,7 +11,7 @@ class StorePostCategory extends FormRequest
      */
     public function authorize(): bool
     {
-      return true;
+        return true;
     }
 
     /**
@@ -23,9 +23,9 @@ class StorePostCategory extends FormRequest
     {
         return [
             'title' => 'required|string|max:255',
-        'image' => 'nullable|string',
-        'parent_id' => 'nullable|exists:post_categories,id',
-        'status' => 'boolean',
+            'image' => 'nullable|string',
+            'parent_id' => 'nullable|exists:post_categories,id',
+            'status' => 'boolean',
         ];
     }
 }

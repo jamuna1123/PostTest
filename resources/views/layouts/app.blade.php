@@ -54,8 +54,8 @@
 <body class="layout-fixed sidebar-expand-lg bg-body-tertiary"> <!--begin::App Wrapper-->
     <div class="app-wrapper"> <!--begin::Header-->
 
-        @include('admin.layouts.navbar')
-        @include('admin.layouts.sidebar')
+        @include('backend.layouts.navbar')
+        @include('backend.layouts.sidebar')
 
 
 
