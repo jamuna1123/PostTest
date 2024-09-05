@@ -23,7 +23,7 @@ class UpdatePost extends FormRequest
     {
         return [
             'title' => 'required|string|max:255',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
 
             'post_category_id' => 'nullable|exists:post_categories,id',
             'user_id' => 'nullable|exists:users,id',

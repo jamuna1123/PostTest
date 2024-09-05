@@ -54,7 +54,7 @@
                <label for="published_at"><strong>Publish Date:<span class="text-danger">*</span></strong></label>
                <input type="datetime-local" name="published_at" id="published_at"
                    class="form-control @error('published_at') is-invalid @enderror"
-                   value="{{ old('published_at', isset($post->published_at) ? $post->published_at->format('Y-m-d\TH:i') : '') }}">
+                   value="{{ old('published_at', isset($post->published_at) ? $post->published_at->format('Y-m-d\TH:i') : now()->format('Y-m-d\TH:i')) }}">
                @error('published_at')
                    <div class="form-text text-danger">{{ $message }}</div>
                @enderror
@@ -81,9 +81,8 @@
 
                @if (isset($post) && $post->image)
                    <div class="mt-2">
-                       <img src="{{ asset('storage/' . $post->image) }}" alt="Current Image" class="img-thumbnail"
+                       <img src="{{ asset('storage/images/original/' . $post->image) }}" alt="Current Image" class="img-thumbnail"
                            width="150">
-                       <p>Current Image</p>
                    </div>
                @endif
            </div>
@@ -103,3 +102,4 @@
                    <div class="form-text text-danger">{{ $message }}</div>
                @enderror
            </div>
+       </div>

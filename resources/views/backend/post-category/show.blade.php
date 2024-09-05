@@ -19,9 +19,9 @@
 <div class="container">
 <div class="row mt-4">
     <div class="col-lg-12">
-        <div class="card">
+        <div class="card card-primary">
             <div class="card-header">
-                <h4>Post Category Details</h4>
+                <div class="card-title">Post Category Details</div>
             </div>
             <div class="card-body mt-3">
                 <div>
@@ -36,18 +36,18 @@
                 <div>
                     <strong>Image:</strong>
                     @if ($postcategory->image)
-                        <img src="{{ asset('storage/' . $postcategory->image) }}" alt="{{ $postcategory->title }}" style="width: 50px; height: auto;">
+                        <img src="{{ asset('storage/images/original' . $postcategory->image) }}" alt="{{ $postcategory->title }}" style="width: 50px; height: auto;">
                     @else
                         <p>No image available</p>
                     @endif
                 </div>
-                <a href="{{ route('post-category.index') }}" class="btn btn-primary mt-3">
+                <a href="{{ route('post-category.index') }}" class="btn btn-secondary mt-3 btn-sm">
                     <i class="fa-solid fa-arrow-left"></i> Back
                 </a>
-                  <a href="{{ route('post-category.create') }}" class="btn btn-success mt-3">
+                  <a href="{{ route('post-category.create') }}" class="btn btn-primary mt-3 btn-sm">
                             <i class="fa-solid fa-arrow-left"></i>Create
                         </a>
-                         <a href="{{ route('post-category.edit', $postcategory->id) }}" class="btn btn-success mt-3">
+                         <a href="{{ route('post-category.edit', $postcategory->id) }}" class="btn btn-success mt-3 btn-sm">
                             <i class="fa-solid fa-arrow-left"></i>Edit
                         </a>
             </div>

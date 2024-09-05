@@ -8,6 +8,7 @@ use App\Http\Requests\UpdatePostCategory;
 use App\Models\PostCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 class PostCategoryController extends Controller
 {
@@ -44,19 +45,23 @@ class PostCategoryController extends Controller
 
         $postcategory->slug = $request->slug;
 
-        if ($request->input('image')) {
-            $imagePath = $request->input('image');
-            $filename = basename($imagePath);
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time().'.'.$image->getClientOriginalExtension();
 
-            $newPath = 'images/'.$filename;
+            // Store original image
+            $originalImagePath = 'images/original/'.$imageName;
+            Storage::disk('public')->put($originalImagePath, file_get_contents($image));
 
-            // Move the file from 'tmp' to 'images'
-            Storage::disk('public')->move($imagePath, $newPath);
+            // Resize image
+            $resizedImage = Image::make($image)->resize(300, 200);
 
-            // Save the new image path in the database
-            $postcategory->image = $newPath;
+            // Store resized image
+            $resizedImagePath = 'images/resized/'.$imageName;
+            Storage::disk('public')->put($resizedImagePath, (string) $resizedImage->encode());
+
+            $postcategory->image = $imageName;
         }
-
         $postcategory->status = $request->has('status') ? 1 : 0;
 
         $postcategory->save();
@@ -93,13 +98,32 @@ class PostCategoryController extends Controller
         $postcategory->slug = $request->slug;
 
         if ($request->hasFile('image')) {
+            // Delete old images
+            if ($postcategory->image) {
+                $oldOriginalImagePath = 'images/original/'.$postcategory->image;
+                $oldResizedImagePath = 'images/resized/'.$postcategory->image;
 
-            if ($postcategory->image && Storage::exists('public/'.$postcategory->image)) {
-                Storage::delete('public/'.$postcategory->image);
+                if (Storage::exists($oldOriginalImagePath)) {
+                    Storage::delete($oldOriginalImagePath);
+                }
+                if (Storage::exists($oldResizedImagePath)) {
+                    Storage::delete($oldResizedImagePath);
+                }
             }
 
-            $imagePath = $request->file('image')->store('images', 'public');
-            $postcategory->image = $imagePath;
+            $image = $request->file('image');
+            $imageName = time().'.'.$image->getClientOriginalExtension();
+
+            // Store new original image
+            $originalImagePath = 'images/original/'.$imageName;
+            Storage::disk('public')->put($originalImagePath, file_get_contents($image));
+
+            // Resize new image
+            $resizedImage = Image::make($image)->resize(300, 200);
+            $resizedImagePath = 'images/resized/'.$imageName;
+            Storage::disk('public')->put($resizedImagePath, (string) $resizedImage->encode());
+
+            $postcategory->image = $imageName;
         }
 
         $postcategory->status = $request->has('status') ? 1 : 0;
@@ -114,13 +138,12 @@ class PostCategoryController extends Controller
      */
     public function destroy($id)
     {
-
         $postcategory = PostCategory::findOrFail($id);
 
-        if ($postcategory->image && Storage::exists('public/'.$postcategory->image)) {
-            Storage::delete('public/'.$postcategory->image);
+        if ($postcategory->image) {
+            Storage::disk('public')->delete('images/original/'.$postcategory->image);
+            Storage::disk('public')->delete('images/resized/'.$postcategory->image);
         }
-
         $postcategory->delete();
 
         return redirect()->route('post-category.index')
@@ -136,26 +159,5 @@ class PostCategoryController extends Controller
         $postcategory = PostCategory::findOrFail($id);
 
         return view('backend.post-category.show', compact('postcategory'));
-    }
-
-    public function upload(Request $request)
-    {
-        if ($request->file('image')) {
-            $path = $request->file('image')->store('tmp', 'public');
-
-            return response()->json(['path' => $path]);
-        }
-
-        return response()->json(['error' => 'No file uploaded'], 400);
-    }
-
-    public function revert(Request $request)
-    {
-        $path = $request->getContent();
-        if (Storage::disk('public')->exists($path)) {
-            Storage::disk('public')->delete($path);
-        }
-
-        return response()->json(['success' => true]);
     }
 }

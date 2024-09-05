@@ -67,7 +67,7 @@
                                             </td>
                                             <td>
                                                 @if ($posts->image)
-                                                    <img src="{{ asset('storage/' . $posts->image) }}"
+                                                    <img src="{{ asset('storage/images/original/' . $posts->image) }}"
                                                         alt="{{ $posts->title }}" style="width: 50px; height: auto;">
                                                 @else
                                                     <p>No image available</p>

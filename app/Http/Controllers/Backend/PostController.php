@@ -11,7 +11,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Intervention\Image\Laravel\Facades\Image;
+use Intervention\Image\Facades\Image;
 
 class PostController extends Controller
 {
@@ -52,16 +52,22 @@ class PostController extends Controller
         $post->user_id = $request->user_id;
         $post->published_at = $request->published_at ? Carbon::parse($request->published_at) : Carbon::now();
 
-        if ($request->input('image')) {
-            $imagePath = $request->input('image');
-            $filename = basename($imagePath);
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time().'.'.$image->getClientOriginalExtension();
 
-            $newPath = 'images/'.$filename;
-            // Move the file from 'tmp' to 'images'
-            Storage::disk('public')->move($imagePath, $newPath);
+            // Store original image
+            $originalImagePath = 'images/original/'.$imageName;
+            Storage::disk('public')->put($originalImagePath, file_get_contents($image));
 
-            // Save the new image path in the database
-            $post->image = $newPath;
+            // Resize image
+            $resizedImage = Image::make($image)->resize(300, 200);
+
+            // Store resized image
+            $resizedImagePath = 'images/resized/'.$imageName;
+            Storage::disk('public')->put($resizedImagePath, (string) $resizedImage->encode());
+
+            $post->image = $imageName;
         }
 
         $post->status = $request->has('status') ? 1 : 0;
@@ -108,15 +114,33 @@ class PostController extends Controller
         $post->slug = $request->slug;
 
         if ($request->hasFile('image')) {
+            // Delete old images
+            if ($post->image) {
+                $oldOriginalImagePath = 'images/original/'.$post->image;
+                $oldResizedImagePath = 'images/resized/'.$post->image;
 
-            if ($post->image && Storage::exists('public/'.$post->image)) {
-                Storage::delete('public/'.$post->image);
+                if (Storage::exists($oldOriginalImagePath)) {
+                    Storage::delete($oldOriginalImagePath);
+                }
+                if (Storage::exists($oldResizedImagePath)) {
+                    Storage::delete($oldResizedImagePath);
+                }
             }
 
-            $imagePath = $request->file('image')->store('images', 'public');
-            $post->image = $imagePath;
-        }
+            $image = $request->file('image');
+            $imageName = time().'.'.$image->getClientOriginalExtension();
 
+            // Store new original image
+            $originalImagePath = 'images/original/'.$imageName;
+            Storage::disk('public')->put($originalImagePath, file_get_contents($image));
+
+            // Resize new image
+            $resizedImage = Image::make($image)->resize(300, 200);
+            $resizedImagePath = 'images/resized/'.$imageName;
+            Storage::disk('public')->put($resizedImagePath, (string) $resizedImage->encode());
+
+            $post->image = $imageName;
+        }
         $post->status = $request->has('status') ? 1 : 0;
         $post->save();
 
@@ -132,8 +156,9 @@ class PostController extends Controller
 
         $post = Post::findOrFail($id);
 
-        if ($post->image && Storage::exists('public/'.$post->image)) {
-            Storage::delete('public/'.$post->image);
+        if ($post->image) {
+            Storage::disk('public')->delete('images/original/'.$post->image);
+            Storage::disk('public')->delete('images/resized/'.$post->image);
         }
 
         $post->delete();
@@ -151,26 +176,5 @@ class PostController extends Controller
         $post = Post::findOrFail($id);
 
         return view('backend.post.show', compact('post'));
-    }
-
-    public function upload(Request $request)
-    {
-        if ($request->file('image')) {
-            $path = $request->file('image')->store('tmp', 'public');
-
-            return response()->json(['path' => $path]);
-        }
-
-        return response()->json(['error' => 'No file uploaded'], 400);
-    }
-
-    public function revert(Request $request)
-    {
-        $path = $request->getContent();
-        if (Storage::disk('public')->exists($path)) {
-            Storage::disk('public')->delete($path);
-        }
-
-        return response()->json(['success' => true]);
     }
 }

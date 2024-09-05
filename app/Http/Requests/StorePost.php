@@ -23,8 +23,8 @@ class StorePost extends FormRequest
     {
         return [
             'title' => 'required|string|max:255',
-            'image' => 'nullable|string',
-            // 'post_category_id' => 'nullable|exists:post_categories,id',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'post_category_id' => 'required|exists:post_categories,id',
             'user_id' => 'nullable|exists:users,id',
             'status' => 'boolean',
         ];

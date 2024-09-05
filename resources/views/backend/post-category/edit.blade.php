@@ -28,7 +28,7 @@
                 <!--begin::Col-->
                 <div class="col-md-8">
                     <!--begin::Quick Example-->
-                    <div class="card card-primary card-outline mb-4">
+                    <div class="card card-primary mb-4">
                         <!--begin::Header-->
                         <div class="card-header">
                             <div class="card-title">Edit Post Category</div>
@@ -45,9 +45,9 @@
                             <!--end::Body-->
                             <!--begin::Footer-->
                             <div class="card-footer">
-                                   <a href="{{ route('post-category.index') }}" class="btn btn-primary"><i
+                                   <a href="{{ route('post-category.index') }}" class="btn float-end"><i
                                         class="fa-solid fa-arrow-left"></i> Back</a>
-                                <button type="submit" class="btn btn-success"><i class="fa-solid fa-floppy-disk"></i>
+                                <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i>
                                     Submit</button>
                              
                             </div>

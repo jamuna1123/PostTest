@@ -25,10 +25,6 @@ Route::middleware('auth')->group(function () {
     Route::post('upload', [PostCategoryController::class, 'upload'])->name('upload');
     Route::delete('revert', [PostCategoryController::class, 'revert'])->name('revert');
     Route::resource('/post', PostController::class);
-
-    Route::post('upload', [PostController::class, 'upload'])->name('upload');
-    Route::delete('revert', [PostController::class, 'revert'])->name('revert');
-
 });
 
 require __DIR__.'/auth.php';

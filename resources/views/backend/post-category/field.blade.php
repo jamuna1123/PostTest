@@ -35,8 +35,7 @@
 
     @if(isset($postcategory) && $postcategory->image)
         <div class="mt-2">
-            <img src="{{ asset('storage/' . $postcategory->image) }}" alt="Current Image" class="img-thumbnail" width="150">
-            <p>Current Image</p>
+            <img src="{{ asset('storage/images/original/' . $postcategory->image) }}" alt="Current Image" class="img-thumbnail" width="150">
         </div>
     @endif
 </div>
@@ -57,3 +56,4 @@
     @enderror
 </div>
 
+       </div>
