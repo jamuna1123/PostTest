@@ -21,9 +21,13 @@ class StorePost extends FormRequest
      */
     public function rules(): array
     {
+
+        $postId = $this->route('post'); // Assuming 'post' is passed as a route parameter
+
         return [
-            'title' => 'required|unique:posts|max:255',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'title' => 'required|max:255|unique:posts,title,'.$postId,
+            'image' => 'sometimes|image|mimes:jpeg,png,jpg,gif',
+            'description' => 'required|string',
             'post_category_id' => 'required|exists:post_categories,id',
             'user_id' => 'required|exists:users,id',
             'status' => 'boolean',

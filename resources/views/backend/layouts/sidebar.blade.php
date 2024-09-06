@@ -30,9 +30,10 @@
                 <!-- Tables Module -->
                 <li class="nav-item {{ request()->routeIs('post-category.index') || request()->routeIs('post.index') ? 'menu-open' : '' }}">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon bi bi-table"></i>
+                     
+                        <i class="nav-icon bi bi-postcard"></i>
                         <p>
-                            Post
+                            Post Management
                             <i class="nav-arrow bi bi-chevron-right"></i>
                         </p>
                     </a>

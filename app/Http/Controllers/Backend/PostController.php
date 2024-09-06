@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePost;
-use App\Http\Requests\UpdatePost;
 use App\Models\Post;
 use App\Models\PostCategory;
 use App\Models\User;
@@ -13,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 use RealRashid\SweetAlert\Facades\Alert;
+
 class PostController extends Controller
 {
     public function index(Request $request)
@@ -98,7 +98,7 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatePost $request, $id)
+    public function update(StorePost $request, $id)
     {
 
         $post = Post::findOrFail($id);

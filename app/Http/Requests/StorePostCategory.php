@@ -21,10 +21,14 @@ class StorePostCategory extends FormRequest
      */
     public function rules(): array
     {
+        $categoryId = $this->route('post_category'); // Assuming 'post_category' is passed as a route parameter
+
         return [
-            'title' => 'required|unique:post_categories|max:255',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'title' => 'required|max:255|unique:post_categories,title,'.$categoryId, // Allowing the current category's title
+            'image' => 'sometimes|image|mimes:jpeg,png,jpg,gif|max:2048', // Image is optional
+            'description' => 'required|string',
             'status' => 'boolean',
         ];
+
     }
 }

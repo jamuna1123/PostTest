@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePostCategory;
-use App\Http\Requests\UpdatePostCategory;
 use App\Models\PostCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -90,7 +89,7 @@ class PostCategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatePostCategory $request, $id)
+    public function update(StorePostCategory $request, $id)
     {
 
         $postcategory = PostCategory::findOrFail($id);
