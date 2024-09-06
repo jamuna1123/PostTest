@@ -8,9 +8,9 @@
                @enderror
            </div>
            <div class="mb-3">
-               <label for="slug" class="form-label"><strong>Slug:<span class="text-danger">*</span></strong></label>
+               <label for="slug" class="form-label"><strong>Slug:</strong></label>
                <input type="text" name="slug" class="form-control @error('slug') is-invalid @enderror"
-                   id="title" placeholder="Slug" value="{{ old('slug', $post->slug ?? '') }}">
+                   id="slug" placeholder="Slug" value="{{ old('slug', $post->slug ?? '') }}">
                @error('slug')
                    <div class="form-text text-danger">{{ $message }}</div>
                @enderror
@@ -54,11 +54,14 @@
                <label for="published_at"><strong>Publish Date:<span class="text-danger">*</span></strong></label>
                <input type="datetime-local" name="published_at" id="published_at"
                    class="form-control @error('published_at') is-invalid @enderror"
-                   value="{{ old('published_at', isset($post->published_at) ? $post->published_at->format('Y-m-d\TH:i') : now()->format('Y-m-d\TH:i')) }}">
+                   value="{{ old('published_at', isset($post->published_at) ? $post->published_at->format('Y-m-d\TH:i') : '') }}">
+
                @error('published_at')
                    <div class="form-text text-danger">{{ $message }}</div>
                @enderror
            </div>
+
+
 
            <div class="mb-3">
                <label for="description" class="form-label"><strong>Description:<span
@@ -81,8 +84,8 @@
 
                @if (isset($post) && $post->image)
                    <div class="mt-2">
-                       <img src="{{ asset('storage/images/original/' . $post->image) }}" alt="Current Image" class="img-thumbnail"
-                           width="150">
+                       <img src="{{ asset('storage/images/original/' . $post->image) }}" alt="Current Image"
+                           class="img-thumbnail" width="150">
                    </div>
                @endif
            </div>

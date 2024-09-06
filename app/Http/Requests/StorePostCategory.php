@@ -22,9 +22,8 @@ class StorePostCategory extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string|max:255',
+            'title' => 'required|unique:post_categories|max:255',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'parent_id' => 'nullable|exists:post_categories,id',
             'status' => 'boolean',
         ];
     }

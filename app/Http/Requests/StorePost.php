@@ -22,10 +22,10 @@ class StorePost extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string|max:255',
+            'title' => 'required|unique:posts|max:255',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'post_category_id' => 'required|exists:post_categories,id',
-            'user_id' => 'nullable|exists:users,id',
+            'user_id' => 'required|exists:users,id',
             'status' => 'boolean',
         ];
     }

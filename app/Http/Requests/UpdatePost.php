@@ -24,9 +24,8 @@ class UpdatePost extends FormRequest
         return [
             'title' => 'required|string|max:255',
             'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
-
-            'post_category_id' => 'nullable|exists:post_categories,id',
-            'user_id' => 'nullable|exists:users,id',
+            'post_category_id' => 'required|exists:post_categories,id',
+            'user_id' => 'required|exists:users,id',
             'status' => 'boolean',
 
         ];

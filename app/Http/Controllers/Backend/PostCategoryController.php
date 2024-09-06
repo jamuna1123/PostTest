@@ -9,6 +9,7 @@ use App\Models\PostCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class PostCategoryController extends Controller
 {
@@ -40,7 +41,7 @@ class PostCategoryController extends Controller
     {
 
         $postcategory = new PostCategory;
-        $postcategory->title = trim($request->title);
+        $postcategory->title = $request->title;
         $postcategory->description = $request->description;
 
         $postcategory->slug = $request->slug;
@@ -66,8 +67,10 @@ class PostCategoryController extends Controller
 
         $postcategory->save();
 
-        return redirect()->route('post-category.index')
-            ->with('success', 'Post Category created successfully.');
+        Alert::success('Success', 'Post Category created successfully.');
+
+        return redirect()->route('post-category.index');
+
     }
 
     /**
@@ -92,7 +95,7 @@ class PostCategoryController extends Controller
 
         $postcategory = PostCategory::findOrFail($id);
 
-        $postcategory->title = trim($request->title);
+        $postcategory->title = $request->title;
         $postcategory->description = $request->description;
 
         $postcategory->slug = $request->slug;
@@ -129,8 +132,9 @@ class PostCategoryController extends Controller
         $postcategory->status = $request->has('status') ? 1 : 0;
         $postcategory->save();
 
-        return redirect()->route('post-category.index')
-            ->with('success', 'Post Category updated successfully.');
+        Alert::success('Success', 'Post Category update successfully.');
+
+        return redirect()->route('post-category.index');
     }
 
     /**
@@ -145,9 +149,10 @@ class PostCategoryController extends Controller
             Storage::disk('public')->delete('images/resized/'.$postcategory->image);
         }
         $postcategory->delete();
+        Alert::success('Success', 'Post Category deleted successfully.');
 
-        return redirect()->route('post-category.index')
-            ->with('success', 'Post Category deleted successfully.');
+        return redirect()->route('post-category.index');
+
     }
 
     /**

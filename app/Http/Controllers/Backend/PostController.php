@@ -12,7 +12,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
-
+use RealRashid\SweetAlert\Facades\Alert;
 class PostController extends Controller
 {
     public function index(Request $request)
@@ -44,7 +44,7 @@ class PostController extends Controller
     {
 
         $post = new Post;
-        $post->title = trim($request->title);
+        $post->title = $request->title;
         $post->description = $request->description;
 
         $post->slug = $request->slug;
@@ -73,9 +73,10 @@ class PostController extends Controller
         $post->status = $request->has('status') ? 1 : 0;
 
         $post->save();
+        Alert::success('Success', 'Post created successfully.');
 
-        return redirect()->route('post.index')
-            ->with('success', 'Post created successfully.');
+        return redirect()->route('post.index');
+
     }
 
     /**
@@ -102,7 +103,7 @@ class PostController extends Controller
 
         $post = Post::findOrFail($id);
 
-        $post->title = trim($request->title);
+        $post->title = $request->title;
         $post->description = $request->description;
         $post->post_category_id = $request->post_category_id; // Add parent_id
         $post->user_id = $request->user_id;
@@ -143,9 +144,9 @@ class PostController extends Controller
         }
         $post->status = $request->has('status') ? 1 : 0;
         $post->save();
+        Alert::success('Success', 'Post updated successfully.');
 
-        return redirect()->route('post.index')
-            ->with('success', 'Post updated successfully.');
+        return redirect()->route('post.index');
     }
 
     /**
@@ -162,9 +163,10 @@ class PostController extends Controller
         }
 
         $post->delete();
+        Alert::success('Success', 'Post deleted successfully.');
 
-        return redirect()->route('post.index')
-            ->with('success', 'Post deleted successfully.');
+        return redirect()->route('post.index');
+
     }
 
     /**

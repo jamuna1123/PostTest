@@ -8,8 +8,8 @@
                @enderror
            </div>
            <div class="mb-3">
-               <label for="slug" class="form-label"><strong>Slug:<span class="text-danger">*</span></strong></label>
-               <input type="text" name="slug" class="form-control @error('slug') is-invalid @enderror" id="title"
+               <label for="slug" class="form-label"><strong>Slug:</strong></label>
+               <input type="text" name="slug" class="form-control @error('slug') is-invalid @enderror" id="slug"
                    placeholder="Slug" value="{{ old('slug', $postcategory->slug ?? '') }}">
                @error('slug')
                    <div class="form-text text-danger">{{ $message }}</div>

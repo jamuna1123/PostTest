@@ -65,7 +65,7 @@
                                             <td>
                                                 @if ($postCategory->image)
                                                     <img src="{{ asset('storage/images/original/' . $postCategory->image) }}"
-                                                        alt="{{ $postCategory->title }}" style="width: 50px; height: auto;">
+                                                        alt="{{ $postCategory->title }}" style="width: 50px; height: 50px;">
                                                 @else
                                                     <p>No image available</p>
                                                 @endif

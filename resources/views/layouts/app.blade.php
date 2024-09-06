@@ -45,6 +45,8 @@
     <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
     <script src="https://cdn.tiny.cloud/1/lz3stx6dwxywl56d146m3msq6l66bfvqz2iyl49ikdndki4k/tinymce/6/tinymce.min.js"
         referrerpolicy="origin"></script>
+        <link rel="stylesheet" href="{{asset('Backend/plugins/sweetalert2/sweetalert2.css')}}">
+          <link rel="stylesheet" href="{{asset('Backend/plugins/sweetalert2/sweetalert2.min.css')}}">
         <script src="{{asset('Backend/plugins/sweetalert2/sweetalert2.min.js')}}"></script>
 
 @stack('styles')
@@ -52,9 +54,11 @@
 </head> <!--end::Head--> <!--begin::Body-->
 
 <body class="layout-fixed sidebar-expand-lg bg-body-tertiary"> <!--begin::App Wrapper-->
+     @include('sweetalert::alert')
     <div class="app-wrapper"> <!--begin::Header-->
-
+ 
         @include('backend.layouts.navbar')
+       
         @include('backend.layouts.sidebar')
 
 
