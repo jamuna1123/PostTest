@@ -10,9 +10,9 @@ class DashboardController extends Controller
     {
         $Post = Post::all();
         $postvalue = count($Post);
-        $postactiveValue = Post::where('status', 1)->count();
-        $postInactiveValue = Post::where('status', 0)->count();
+        $postActiveValue = Post::where('status', 1)->count();
+        $postInActiveValue = Post::where('status', 0)->count();
 
-        return view('backend.layouts.main', compact('postvalue', 'postactiveValue', 'postInactiveValue'));
+        return view('backend.layouts.main', compact('postvalue', 'postActiveValue', 'postInActiveValue'));
     }
 }

@@ -61,8 +61,8 @@
                                             </td>
                                             <td>
                                                 @if ($posts->image)
-                                                    <img src="{{ asset('storage/images/original/' . $posts->image) }}"
-                                                        alt="{{ $posts->title }}" style="width: 50px;">
+                                                    <img src="{{ asset('storage/images/resized/' . $posts->image) }}"
+                                                        alt="{{ $posts->title }}" style="height: 50px;">
                                                 @else
                                                     <p>No image available</p>
                                                 @endif
@@ -94,7 +94,7 @@
                                                 </a>
 
                                             </td>
-                                       
+
 
                                         </tr>
                                     @empty
@@ -111,51 +111,54 @@
                                 {{ $post->links('pagination::bootstrap-5') }}
                             </div>
 
-                            
+
                             <!-- /.card-body -->
                         </div> <!-- /.card -->
                     </div>
                 </div>
             </div> <!-- /.col -->
         </div> <!--end::Row-->
-<div class="modal fade" id="modal-danger" tabindex="-1" aria-labelledby="modal-dangerLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <form action="" id="confirmDeleteButton" method="POST" style="display: inline-block;">
-            @csrf
-            @method('DELETE')
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modal-dangerLabel">Delete Confirmation</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="redirectToPost()"></button>
-                </div>
-                <div class="modal-body">
-                    <p>Are you sure you want to delete this item? This action cannot be undone.</p>
-                </div>
-                <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="redirectToPost()">Close</button>
-                    <button type="submit" class="btn btn-danger">Yes, Delete</button>
-                </div>
+        <div class="modal fade" id="modal-danger" tabindex="-1" aria-labelledby="modal-dangerLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <form action="" id="confirmDeleteButton" method="POST" style="display: inline-block;">
+                    @csrf
+                    @method('DELETE')
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modal-dangerLabel">Delete Confirmation</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                                onclick="redirectToPost()"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Are you sure you want to delete this item? This action cannot be undone.</p>
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="bu
+                            tton" class="btn btn-secondary" data-bs-dismiss="modal"
+                                onclick="redirectToPost()">Close</button>
+                            <button type="submit" class="btn btn-danger">Yes, Delete</button>
+                        </div>
+                    </div>
+                </form>
             </div>
-        </form>
-    </div>
-</div>
+        </div>
     @endsection
-   <!-- for delete conformation  -->
-   <script>
-    function handleDelete(id) {
-        var form = document.getElementById('confirmDeleteButton');
-        form.action = 'post/' + id;
-        var modal = new bootstrap.Modal(document.getElementById('modal-danger'));
-        modal.show();
-    }
+    <!-- for delete conformation  -->
+    <script>
+        function handleDelete(id) {
+            var form = document.getElementById('confirmDeleteButton');
+            form.action = 'post/' + id;
+            var modal = new bootstrap.Modal(document.getElementById('modal-danger'));
+            modal.show();
+        }
 
-    function redirectToPost() {
-        window.location.href = "{{ route('post.index') }}";
-    }
+        function redirectToPost() {
+            window.location.href = "{{ route('post.index') }}";
+        }
 
-    // Optionally handle modal hidden event (if user dismisses using the backdrop or other means)
-    var deleteModal = document.getElementById('modal-danger');
-    deleteModal.addEventListener('hidden.bs.modal', function (event) {
-        redirectToPostCategory();
-    });
-</script>
+        // Optionally handle modal hidden event (if user dismisses using the backdrop or other means)
+        var deleteModal = document.getElementById('modal-danger');
+        deleteModal.addEventListener('hidden.bs.modal', function(event) {
+            redirectToPostCategory();
+        });
+    </script>
