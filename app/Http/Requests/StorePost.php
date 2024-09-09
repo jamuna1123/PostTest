@@ -2,8 +2,9 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
 use Elegant\Sanitizer\Sanitizer;
+use Illuminate\Foundation\Http\FormRequest;
+
 class StorePost extends FormRequest
 {
     /**
@@ -32,14 +33,9 @@ class StorePost extends FormRequest
             'user_id' => 'required|exists:users,id',
             'status' => 'boolean',
         ];
-        
+
     }
 
-     /**
-     * Sanitize input before validation
-     *
-     * @return array
-     */
     protected function prepareForValidation()
     {
         // Define sanitization rules

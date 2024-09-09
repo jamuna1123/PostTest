@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Elegant\Sanitizer\Sanitizer;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StorePostCategory extends FormRequest
@@ -30,5 +31,18 @@ class StorePostCategory extends FormRequest
             'status' => 'boolean',
         ];
 
+    }
+
+    protected function prepareForValidation()
+    {
+        // Define sanitization rules
+        $sanitizer = new Sanitizer($this->all(), [
+            'title' => 'trim|escape',
+            'description' => 'trim|escape',
+            'slug' => 'trim|escape',
+        ]);
+
+        // Replace request data with sanitized data
+        $this->merge($sanitizer->sanitize());
     }
 }
