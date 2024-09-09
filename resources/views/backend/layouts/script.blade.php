@@ -137,7 +137,12 @@
                 }
             });
         </script>
-        
+   
+   
+ 
+
+
+
  <script>
     Fancybox.bind("[data-fancybox]", {
         // Custom options here
