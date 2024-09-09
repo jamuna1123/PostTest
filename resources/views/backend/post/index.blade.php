@@ -61,12 +61,16 @@
                                             </td>
                                             <td>
                                                 @if ($posts->image)
-                                                    <img src="{{ asset('storage/images/resized/' . $posts->image) }}"
-                                                        alt="{{ $posts->title }}" style="height: 50px;">
+                                                    <a href="{{ asset('storage/images/original/' . $posts->image) }}"
+                                                        data-fancybox="gallery" data-caption="{{ $posts->title }}">
+                                                        <img src="{{ asset('storage/images/resized/' . $posts->image) }}"
+                                                            alt="{{ $posts->title }}" style="height: 50px;">
+                                                    </a>
                                                 @else
                                                     <p>No image available</p>
                                                 @endif
                                             </td>
+
                                             <td>
                                                 @if ($posts->username)
                                                     {{ $posts->username->name }}
@@ -88,8 +92,9 @@
                                                     class="btn btn-info btn-sm">View</a>
                                                 <a href="{{ route('post.edit', $posts->id) }}"
                                                     class="btn btn-success btn-sm">Edit</a>
-                                                <a class="btn btn-danger btn-sm" onclick="handleDelete({{ $posts->id }})"
-                                                    data-bs-toggle="modal" data-bs-target="#modal-danger">
+                                                <a class="btn btn-danger btn-sm"
+                                                    onclick="handleDelete({{ $posts->id }})" data-bs-toggle="modal"
+                                                    data-bs-target="#modal-danger">
                                                     Delete
                                                 </a>
 
@@ -134,8 +139,8 @@
                         </div>
                         <div class="modal-footer justify-content-between">
                             <button type="bu
-                            tton" class="btn btn-secondary" data-bs-dismiss="modal"
-                                onclick="redirectToPost()">Close</button>
+                            tton" class="btn btn-secondary"
+                                data-bs-dismiss="modal" onclick="redirectToPost()">Close</button>
                             <button type="submit" class="btn btn-danger">Yes, Delete</button>
                         </div>
                     </div>
@@ -162,3 +167,4 @@
             redirectToPostCategory();
         });
     </script>
+

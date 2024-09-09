@@ -3,7 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-
+use Elegant\Sanitizer\Sanitizer;
 class StorePost extends FormRequest
 {
     /**
@@ -32,5 +32,24 @@ class StorePost extends FormRequest
             'user_id' => 'required|exists:users,id',
             'status' => 'boolean',
         ];
+        
+    }
+
+     /**
+     * Sanitize input before validation
+     *
+     * @return array
+     */
+    protected function prepareForValidation()
+    {
+        // Define sanitization rules
+        $sanitizer = new Sanitizer($this->all(), [
+            'title' => 'trim|escape',
+            'description' => 'trim|escape',
+            'slug' => 'trim|escape',
+        ]);
+
+        // Replace request data with sanitized data
+        $this->merge($sanitizer->sanitize());
     }
 }

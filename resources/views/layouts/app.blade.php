@@ -45,20 +45,27 @@
     <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
     <script src="https://cdn.tiny.cloud/1/lz3stx6dwxywl56d146m3msq6l66bfvqz2iyl49ikdndki4k/tinymce/6/tinymce.min.js"
         referrerpolicy="origin"></script>
-        <link rel="stylesheet" href="{{asset('Backend/plugins/sweetalert2/sweetalert2.css')}}">
-          <link rel="stylesheet" href="{{asset('Backend/plugins/sweetalert2/sweetalert2.min.css')}}">
-        <script src="{{asset('Backend/plugins/sweetalert2/sweetalert2.min.js')}}"></script>
+    <link rel="stylesheet" href="{{ asset('Backend/plugins/sweetalert2/sweetalert2.css') }}">
+    <link rel="stylesheet" href="{{ asset('Backend/plugins/sweetalert2/sweetalert2.min.css') }}">
+    <script src="{{ asset('Backend/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
+    {{-- use fancybox --}}
 
-@stack('styles')
+    <!-- Fancybox CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script>
+
+
+
+    @stack('styles')
 
 </head> <!--end::Head--> <!--begin::Body-->
 
 <body class="layout-fixed sidebar-expand-lg bg-body-tertiary"> <!--begin::App Wrapper-->
-     @include('sweetalert::alert')
+    @include('sweetalert::alert')
     <div class="app-wrapper"> <!--begin::Header-->
- 
+
         @include('backend.layouts.navbar')
-       
+
         @include('backend.layouts.sidebar')
 
 
@@ -76,7 +83,7 @@
     </div>
 
 
-@stack('scripts')
+    @stack('scripts')
     <script src="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.3.0/browser/overlayscrollbars.browser.es6.min.js"
         integrity="sha256-H2VM7BKda+v2Z4+DRy69uknwxjyDRhszjXFhsL4gD3w=" crossorigin="anonymous"></script>
     <!--end::Third Party Plugin(OverlayScrollbars)--><!--begin::Required Plugin(popperjs for Bootstrap 5)-->
@@ -300,23 +307,23 @@
         );
         sparkline3.render();
     </script> <!--end::Script-->
-<script>
-    function toggleStatusLabel() {
-        const statusCheckbox = document.getElementById('status');
-        const statusLabel = document.getElementById('statusLabel');
-        
-        if (statusCheckbox.checked) {
-            statusLabel.textContent = 'Active';
-        } else {
-            statusLabel.textContent = 'Inactive';
-        }
-    }
+    <script>
+        function toggleStatusLabel() {
+            const statusCheckbox = document.getElementById('status');
+            const statusLabel = document.getElementById('statusLabel');
 
-    // Initialize the label text based on the checkbox's initial state
-    document.addEventListener('DOMContentLoaded', (event) => {
-        toggleStatusLabel();
-    });
-</script>
+            if (statusCheckbox.checked) {
+                statusLabel.textContent = 'Active';
+            } else {
+                statusLabel.textContent = 'Inactive';
+            }
+        }
+
+        // Initialize the label text based on the checkbox's initial state
+        document.addEventListener('DOMContentLoaded', (event) => {
+            toggleStatusLabel();
+        });
+    </script>
     <script>
         tinymce.init({
             selector: '#description',
