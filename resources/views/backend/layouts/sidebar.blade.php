@@ -38,16 +38,37 @@
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
-                        <li class="nav-item">
+                        {{-- <li class="nav-item">
                             <a href="{{ route('post-category.index') }}" class="nav-link {{ request()->routeIs('post-category.index') ? 'active' : '' }}">
                                 <i class="nav-icon bi bi-circle"></i>
                                 <p>Post Category</p>
                             </a>
-                        </li>
+                        </li> --}}
                          <li class="nav-item">
                             <a href="{{ route('post.index') }}" class="nav-link {{ request()->routeIs('post.index') ? 'active' : '' }}">
                                 <i class="nav-icon bi bi-circle"></i>
                                 <p>Post</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                  <!-- Tables Module -->
+                <li class="nav-item {{request()->routeIs('users.index') ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link">
+                     
+                        <i class="nav-icon bi bi-person"></i>
+                        <p>
+                            User Management
+                            <i class="nav-arrow bi bi-chevron-right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                       
+                         <li class="nav-item">
+                            <a href="{{ route('users.index') }}" class="nav-link {{ request()->routeIs('users.index') ? 'active' : '' }}">
+                                <i class="nav-icon bi bi-circle"></i>
+                                <p>Users</p>
                             </a>
                         </li>
                     </ul>

@@ -19,14 +19,13 @@
             </div> <!--end::Row-->
         </div> <!--end::Container-->
     </div> <!--end::App Content Header--> <!--begin::App Content-->
+
     <div class="app-content">
         <!--begin::Container-->
         <div class="container-fluid">
             <!--begin::Row-->
             <div class="row">
                 <div class="col-md-12">
-
-                
                     <div class="card mb-4">
 
                         <div class="card-header">
@@ -69,14 +68,16 @@
 
 
                                             <td>
-                                                @if ($postCategory->status)
-                                                    <span class="text-success"><i class="fa fa-check-circle"></i>
-                                                        Active</span>
-                                                @else
-                                                    <span class="text-danger"><i class="fa fa-times-circle"></i>
-                                                        Inactive</span>
-                                                @endif
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input status-toggle" type="checkbox"
+                                                        data-id="{{ $postCategory->id }}"
+                                                        {{ $postCategory->status ? 'checked' : '' }}>
+                                                    <label class="form-check-label" id="statusLabel{{ $postCategory->id }}">
+                                                        {{ $postCategory->status ? 'Active' : 'Inactive' }}
+                                                    </label>
+                                                </div>
                                             </td>
+
 
 
 
@@ -132,6 +133,26 @@
                     </form>
                 </div>
             </div>
+
+            <!-- Toggle Status Modal -->
+            <div class="modal fade" id="modal-status-toggle" tabindex="-1" aria-labelledby="modal-status-toggleLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modal-status-toggleLabel">Confirm Status Update</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Are you sure you want to update the status of this post category?</p>
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-primary" id="confirmStatusUpdate">Update</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         @endsection
         <!-- for delete conformation  -->
         <script>
@@ -150,5 +171,71 @@
             var deleteModal = document.getElementById('modal-danger');
             deleteModal.addEventListener('hidden.bs.modal', function(event) {
                 redirectToPostCategory();
+            });
+        </script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                let selectedCategoryId = null;
+                let selectedStatus = null;
+
+                // Handle status toggle click event
+                document.querySelectorAll('.status-toggle').forEach(toggle => {
+                    toggle.addEventListener('click', function(e) {
+                        e.preventDefault();
+
+                        // Store the category ID and status
+                        selectedCategoryId = this.getAttribute('data-id');
+                        selectedStatus = this.checked;
+
+                        // Show confirmation modal
+                        var modal = new bootstrap.Modal(document.getElementById('modal-status-toggle'));
+                        modal.show();
+                    });
+                });
+
+                // Handle modal confirmation for status update
+                document.getElementById('confirmStatusUpdate').addEventListener('click', function() {
+                    if (selectedCategoryId !== null) {
+                        updateStatus(selectedCategoryId, selectedStatus);
+                    }
+                });
+
+                // Update status using AJAX and show SweetAlert on success
+                function updateStatus(id, status) {
+                    fetch(`/post-category/update-status/${id}`, {
+                            method: 'PATCH',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                            },
+                            body: JSON.stringify({
+                                status: status
+                            })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                document.getElementById(`statusLabel${id}`).textContent = status ? 'Active' :
+                                    'Inactive';
+
+                                // Manually update the toggle status
+                                document.querySelector(`input[data-id="${id}"]`).checked = status;
+                                // Show success alert using SweetAlert
+                                Swal.fire({
+                                    title: 'Success!',
+                                    text: 'Status updated successfully.',
+                                    icon: 'success',
+                                    confirmButtonText: 'OK'
+                                });
+                            }
+
+                            // Hide the modal after update
+                            var modal = bootstrap.Modal.getInstance(document.getElementById('modal-status-toggle'));
+                            modal.hide();
+                        })
+                        .catch(error => {
+                            console.error('Error updating status:', error);
+                        });
+                }
             });
         </script>

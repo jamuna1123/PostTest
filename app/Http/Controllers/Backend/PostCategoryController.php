@@ -164,4 +164,14 @@ class PostCategoryController extends Controller
 
         return view('backend.post-category.show', compact('postcategory'));
     }
+
+    public function updateStatus(Request $request, $id)
+    {
+        $postCategory = PostCategory::findOrFail($id);
+        $postCategory->status = $request->status;
+        $postCategory->save();
+
+        return response()->json(['success' => true]);
+
+    }
 }

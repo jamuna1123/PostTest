@@ -325,6 +325,7 @@
             menubar: false,
         });
     </script>
+    @include('backend.layouts.script')
 
 </body><!--end::Body-->
 
