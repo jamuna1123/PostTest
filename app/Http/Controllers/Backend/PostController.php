@@ -179,4 +179,14 @@ class PostController extends Controller
 
         return view('backend.post.show', compact('post'));
     }
+
+    public function updateStatus(Request $request, $id)
+    {
+        $post = Post::findOrFail($id);
+        $post->status = $request->status;
+        $post->save();
+
+        return response()->json(['success' => true]);
+
+    }
 }

@@ -40,7 +40,7 @@
                                     <tr>
                                         <th>Title</th>
                                         <th>Slug</th>
-                                        <th>Post Category</th>
+                                        <th>Category</th>
                                         <th>Image</th>
                                         <th>User</th>
                                         <th>Status</th>
@@ -78,14 +78,15 @@
                                                     None
                                                 @endif
                                             </td>
-                                            <td>
-                                                @if ($posts->status)
-                                                    <span class="text-success"><i class="fa fa-check-circle"></i>
-                                                        Active</span>
-                                                @else
-                                                    <span class="text-danger"><i class="fa fa-times-circle"></i>
-                                                        Inactive</span>
-                                                @endif
+                                           <td>
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input statuspost-toggle" type="checkbox"
+                                                        data-id="{{ $posts->id }}"
+                                                        {{ $posts->status ? 'checked' : '' }}>
+                                                    <label class="form-check-label" id="statusLabel{{ $posts->id }}">
+                                                        {{ $posts->status ? 'Active' : 'Inactive' }}
+                                                    </label>
+                                                </div>
                                             </td>
                                             <td>
                                                 <a href="{{ route('post.show', $posts->id) }}"
@@ -147,6 +148,27 @@
                 </form>
             </div>
         </div>
+
+<!-- Toggle Status Modal -->
+            <div class="modal fade" id="modal-statuspost-toggle" tabindex="-1" aria-labelledby="modal-statuspost-toggleLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modal-statuspost-toggleLabel">Confirm Status Update</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Are you sure you want to update the status of this post category?</p>
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-primary" id="confirmStatusUpdate">Update</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
     @endsection
     <!-- for delete conformation  -->
     <script>
@@ -167,4 +189,7 @@
             redirectToPostCategory();
         });
     </script>
+
+
+
 
