@@ -7,7 +7,10 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
+use Intervention\Image\Facades\Image;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class ProfileController extends Controller
 {
@@ -28,13 +31,34 @@ class ProfileController extends Controller
     {
         $request->user()->fill($request->validated());
 
+        // Handle the profile image
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time().'.'.$image->getClientOriginalExtension();
+
+            // Store original image
+            $originalImagePath = 'images/original/'.$imageName;
+            Storage::disk('public')->put($originalImagePath, file_get_contents($image));
+
+            // Resize image
+            $resizedImage = Image::make($image)->resize(300, 200);
+
+            // Store resized image
+            $resizedImagePath = 'images/resized/'.$imageName;
+            Storage::disk('public')->put($resizedImagePath, (string) $resizedImage->encode());
+
+            $request->user()->image = $imageName;
+        }
+
         if ($request->user()->isDirty('email')) {
             $request->user()->email_verified_at = null;
         }
 
         $request->user()->save();
+        Alert::success('Success', 'Profile update successfully.');
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        return redirect()->route('profile.edit');
+        // return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
 
     /**

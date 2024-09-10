@@ -30,7 +30,7 @@
                             @csrf
                             @include('backend.post.field')
                             <div class="card-footer">
-                                <a href="{{ route('post.index') }}" class="btn"><i
+                                <a href="{{ route('post.index') }}" class="btn btn-secondary"><i
                                         class="fa-solid fa-arrow-left"></i> Back</a>
                                 <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i>
                                     Submit</button>

@@ -40,7 +40,9 @@
                                     <tr>
                                         <th>Name</th>
                                         <th>Email</th>
-                                        
+                                        <th>Image</th>
+                                        <th>Phone</th>
+                                        <th>Address</th>
                                         <th style="width: 280px">Action</th>
                                     </tr>
                                 </thead>
@@ -49,7 +51,19 @@
                                         <tr class="align-middle">
                                             <td>{{ $user->name }}</td>
                                             <td>{{ $user->email }}</td>
-                                          
+                                              <td>
+                                                @if ($user->image)
+                                                    <a href="{{ asset('storage/images/original/' . $user->image) }}"
+                                                        data-fancybox="gallery" data-caption="{{ $user->name }}">
+                                                        <img src="{{ asset('storage/images/resized/' . $user->image) }}"
+                                                            alt="{{ $user->name }}" style="height: 50px;">
+                                                    </a>
+                                                @else
+                                                    <p>No image available</p>
+                                                @endif
+                                            </td>
+                                             <td>{{ $user->phone }}</td>
+                                                  <td>{{ $user->address }}</td>
                                             <td>
                                                 {{-- <a href="{{ route('users.show', $user->id) }}"
                                                     class="btn btn-info btn-sm">View</a>
@@ -61,7 +75,7 @@
                                                 </a>
 
                                             </td>
-                                       
+
 
                                         </tr>
                                     @empty
@@ -78,51 +92,53 @@
                                 {{ $users->links('pagination::bootstrap-5') }}
                             </div>
 
-                            
+
                             <!-- /.card-body -->
                         </div> <!-- /.card -->
                     </div>
                 </div>
             </div> <!-- /.col -->
         </div> <!--end::Row-->
-<div class="modal fade" id="modal-danger" tabindex="-1" aria-labelledby="modal-dangerLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <form action="" id="confirmDeleteButton" method="Users" style="display: inline-block;">
-            @csrf
-            @method('DELETE')
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modal-dangerLabel">Delete Confirmation</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="redirectToUsers()"></button>
-                </div>
-                <div class="modal-body">
-                    <p>Are you sure you want to delete this item? This action cannot be undone.</p>
-                </div>
-                <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="redirectToUsers()">Close</button>
-                    <button type="submit" class="btn btn-danger">Yes, Delete</button>
-                </div>
+        <div class="modal fade" id="modal-danger" tabindex="-1" aria-labelledby="modal-dangerLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <form action="" id="confirmDeleteButton" method="Post" style="display: inline-block;">
+                    @csrf
+                    @method('DELETE')
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modal-dangerLabel">Delete Confirmation</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                                onclick="redirectToUsers()"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Are you sure you want to delete this item? This action cannot be undone.</p>
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                                onclick="redirectToUsers()">Close</button>
+                            <button type="submit" class="btn btn-danger">Yes, Delete</button>
+                        </div>
+                    </div>
+                </form>
             </div>
-        </form>
-    </div>
-</div>
+        </div>
     @endsection
-   <!-- for delete conformation  -->
-   <script>
-    function handleDelete(id) {
-        var form = document.getElementById('confirmDeleteButton');
-        form.action = 'users/' + id;
-        var modal = new bootstrap.Modal(document.getElementById('modal-danger'));
-        modal.show();
-    }
+    <!-- for delete conformation  -->
+    <script>
+        function handleDelete(id) {
+            var form = document.getElementById('confirmDeleteButton');
+            form.action = 'users/' + id;
+            var modal = new bootstrap.Modal(document.getElementById('modal-danger'));
+            modal.show();
+        }
 
-    function redirectToUsers() {
-        window.location.href = "{{ route('users.index') }}";
-    }
+        function redirectToUsers() {
+            window.location.href = "{{ route('users.index') }}";
+        }
 
-    // Optionally handle modal hidden event (if user dismisses using the backdrop or other means)
-    var deleteModal = document.getElementById('modal-danger');
-    deleteModal.addEventListener('hidden.bs.modal', function (event) {
-        redirectToUsersCategory();
-    });
-</script>
+        // Optionally handle modal hidden event (if user dismisses using the backdrop or other means)
+        var deleteModal = document.getElementById('modal-danger');
+        deleteModal.addEventListener('hidden.bs.modal', function(event) {
+            redirectToUsersCategory();
+        });
+    </script>

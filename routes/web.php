@@ -22,13 +22,15 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::resource('/users', AdminUserController::class);
     Route::resource('/post-category', PostCategoryController::class);
     Route::post('upload', [PostCategoryController::class, 'upload'])->name('upload');
     Route::delete('revert', [PostCategoryController::class, 'revert'])->name('revert');
     Route::patch('/post-category/update-status/{id}', [PostCategoryController::class, 'updateStatus'])->name('post-category.update-status');
     Route::patch('/post/update-status/{id}', [PostController::class, 'updateStatus'])->name('post.update-status');
     Route::resource('/post', PostController::class);
+
+    Route::resource('/users', AdminUserController::class);
+
 });
 
 require __DIR__.'/auth.php';
