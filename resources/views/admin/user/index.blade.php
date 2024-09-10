@@ -49,8 +49,6 @@
                                         <tr class="align-middle">
                                             <td>{{ $user->name }}</td>
                                             <td>{{ $user->email }}</td>
-                                         
-                                           
                                           
                                             <td>
                                                 {{-- <a href="{{ route('users.show', $user->id) }}"

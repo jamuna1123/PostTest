@@ -54,7 +54,12 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" />
     <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script>
 
+    {{-- using dropify for image browse --}}
+    <!-- Dropzone CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/dropzone.min.css">
 
+    <!-- Dropzone JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/dropzone.min.js"></script>
 
     @stack('styles')
 
@@ -324,10 +329,10 @@
             toggleStatusLabel();
         });
     </script>
-    
+
     @include('backend.layouts.script')
- {{-- tinymce image upload --}}
-<script>
+    {{-- tinymce image upload --}}
+    <script>
         tinymce.init({
             selector: '#description',
             plugins: 'lists link image table code',
@@ -344,29 +349,31 @@
                 input.setAttribute('accept', 'image/*');
 
                 input.addEventListener('change', (e) => {
-                const file = e.target.files[0];
+                    const file = e.target.files[0];
 
-                const reader = new FileReader();
-                reader.addEventListener('load', () => {
+                    const reader = new FileReader();
+                    reader.addEventListener('load', () => {
 
-                    const id = 'blobid' + (new Date()).getTime();
-                    const blobCache =  tinymce.activeEditor.editorUpload.blobCache;
-                    const base64 = reader.result.split(',')[1];
-                    const blobInfo = blobCache.create(id, file, base64);
-                    blobCache.add(blobInfo);
+                        const id = 'blobid' + (new Date()).getTime();
+                        const blobCache = tinymce.activeEditor.editorUpload.blobCache;
+                        const base64 = reader.result.split(',')[1];
+                        const blobInfo = blobCache.create(id, file, base64);
+                        blobCache.add(blobInfo);
 
-               
-                    cb(blobInfo.blobUri(), { title: file.name });
-                });
-                reader.readAsDataURL(file);
+
+                        cb(blobInfo.blobUri(), {
+                            title: file.name
+                        });
+                    });
+                    reader.readAsDataURL(file);
                 });
 
                 input.click();
             },
             content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:16px }'
-            });
+        });
     </script>
-   
+
 </body><!--end::Body-->
 
 </html>

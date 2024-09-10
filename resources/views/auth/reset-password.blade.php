@@ -1,5 +1,5 @@
-@extends('admin.layouts.auth')
 
+@extends('admin.layouts.auth')
 @section('content')
 <body class="login-page bg-body-secondary">
     <div class="login-box">

@@ -41,6 +41,7 @@ class StorePost extends FormRequest
         // Define sanitization rules
         $sanitizer = new Sanitizer($this->all(), [
             'title' => 'trim|escape',
+            // 'description' => 'trim|escape',
             'slug' => 'trim|escape',
         ]);
 

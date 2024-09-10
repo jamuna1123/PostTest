@@ -26,13 +26,15 @@
                         <div class="card-header">
                             <div class="card-title">Create Post Category</div>
                         </div>
-                        <form action="{{ route('post-category.store') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('post-category.store') }}" method="POST"  enctype="multipart/form-data">
                             @csrf
                             @include('backend.post-category.field')
+                             
                             <div class="card-footer">
                                  <a href="{{ route('post-category.index') }}" class="btn"><i
                                         class="fa-solid fa-arrow-left"></i> Back</a>
                                 <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i>
+           
                                     Submit</button>
                                
                             </div>
@@ -42,6 +44,7 @@
             </div>
         </div>
     </div>
+
 @endsection
 
-
+ 

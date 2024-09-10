@@ -43,8 +43,8 @@
                         .then(response => response.json())
                         .then(data => {
                             if (data.success) {
-                                document.getElementById(`statusLabel${id}`).textContent = status ? 'Active' :
-                                    'Inactive';
+                                // document.getElementById(`statusLabel${id}`).textContent = status ? 'Active' :
+                                //     'Inactive';
 
                                 // Manually update the toggle status
                                 document.querySelector(`input[data-id="${id}"]`).checked = status;
@@ -113,8 +113,8 @@
                         .then(response => response.json())
                         .then(data => {
                             if (data.success) {
-                                document.getElementById(`statusLabel${id}`).textContent = status ? 'Active' :
-                                    'Inactive';
+                                // document.getElementById(`statusLabel${id}`).textContent = status ? 'Active' :
+                                //     'Inactive';
 
                                 // Manually update the toggle status
                                 document.querySelector(`input[data-id="${id}"]`).checked = status;
