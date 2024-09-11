@@ -74,18 +74,19 @@
                             <div class="mb-3">
                                 <label for="image"
                                     class="form-label"><strong>{{ __('Profile Image') }}:</strong></label>
-                                <input id="image" name="image" type="file"
-                                    class="form-control @error('image') is-invalid @enderror">
+                                <input  name="image" type="file"
+                                    class="dropify @error('image') is-invalid @enderror"     data-default-file="{{ isset($user->image) ? asset('storage/images/original/' . $user->image) : '' }}">
                                 @error('image')
                                     <div class="form-text text-danger">{{ $message }}</div>
                                 @enderror
-                                @if ($user->image)
+                                {{-- @if ($user->image)
                                     <div class="mt-2">
                                         <img src="{{ asset('storage/images/original/' . $user->image) }}"
                                             alt="Current Image" class="img-thumbnail" width="150">
                                     </div>
-                                @endif
+                                @endif --}}
                             </div>
+
 
                             @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && !$user->hasVerifiedEmail())
                                 <div class="mb-3">

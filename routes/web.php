@@ -28,7 +28,6 @@ Route::middleware('auth')->group(function () {
     Route::patch('/post-category/update-status/{id}', [PostCategoryController::class, 'updateStatus'])->name('post-category.update-status');
     Route::patch('/post/update-status/{id}', [PostController::class, 'updateStatus'])->name('post.update-status');
     Route::resource('/post', PostController::class);
-
     Route::resource('/users', AdminUserController::class);
 
 });

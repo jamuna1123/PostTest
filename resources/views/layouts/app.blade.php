@@ -45,15 +45,23 @@
     <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
     <script src="https://cdn.tiny.cloud/1/lz3stx6dwxywl56d146m3msq6l66bfvqz2iyl49ikdndki4k/tinymce/6/tinymce.min.js"
         referrerpolicy="origin"></script>
-        {{-- sweetalert  --}}
+    {{-- sweetalert  --}}
     <link rel="stylesheet" href="{{ asset('Backend/plugins/sweetalert2/sweetalert2.css') }}">
     <link rel="stylesheet" href="{{ asset('Backend/plugins/sweetalert2/sweetalert2.min.css') }}">
     <script src="{{ asset('Backend/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
 
+    <!-- Dropify CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/dropify/dist/css/dropify.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Dropify JS -->
+    <script src="https://cdn.jsdelivr.net/npm/dropify/dist/js/dropify.min.js"></script>
 
     <!-- Fancybox CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" />
     <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script>
+
+
 
     @stack('styles')
 
@@ -319,10 +327,10 @@
             toggleStatusLabel();
         });
     </script>
-    
+
     @include('backend.layouts.script')
- {{-- tinymce image upload --}}
-<script>
+    {{-- tinymce image upload --}}
+    <script>
         tinymce.init({
             selector: '#description',
             plugins: 'lists link image table code',
@@ -339,29 +347,54 @@
                 input.setAttribute('accept', 'image/*');
 
                 input.addEventListener('change', (e) => {
-                const file = e.target.files[0];
+                    const file = e.target.files[0];
 
-                const reader = new FileReader();
-                reader.addEventListener('load', () => {
+                    const reader = new FileReader();
+                    reader.addEventListener('load', () => {
 
-                    const id = 'blobid' + (new Date()).getTime();
-                    const blobCache =  tinymce.activeEditor.editorUpload.blobCache;
-                    const base64 = reader.result.split(',')[1];
-                    const blobInfo = blobCache.create(id, file, base64);
-                    blobCache.add(blobInfo);
+                        const id = 'blobid' + (new Date()).getTime();
+                        const blobCache = tinymce.activeEditor.editorUpload.blobCache;
+                        const base64 = reader.result.split(',')[1];
+                        const blobInfo = blobCache.create(id, file, base64);
+                        blobCache.add(blobInfo);
 
-               
-                    cb(blobInfo.blobUri(), { title: file.name });
-                });
-                reader.readAsDataURL(file);
+
+                        cb(blobInfo.blobUri(), {
+                            title: file.name
+                        });
+                    });
+                    reader.readAsDataURL(file);
                 });
 
                 input.click();
             },
             content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:16px }'
-            });
+        });
     </script>
-   
+    <script>
+        $(document).ready(function() {
+            // Initialize Dropify
+            $('.dropify').dropify({
+                messages: {
+                    'default': 'Drag and drop a file or click',
+                    'replace': 'Drag and drop or click to replace',
+                    'remove': 'Remove',
+                    'error': 'Oops, something went wrong.'
+                }
+            }).on('dropify.afterClear', function(event, element) {
+                // Handle the event after image removal
+                 Swal.fire({
+                                    title: 'Success!',
+                                    text: 'file deleted successfully.',
+                                    icon: 'success',
+                                    confirmButtonText: 'OK'
+                                });
+                // Optionally you can send an AJAX request to remove the image on the server side
+            });
+        });
+    </script>
+
+
 </body><!--end::Body-->
 
 </html>

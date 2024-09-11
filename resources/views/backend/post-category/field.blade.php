@@ -32,23 +32,30 @@
                @enderror
            </div>
            <!-- Image Input -->
-     <div class="mb-3">
-    <label for="image" class="form-label">   <strong>Image:
-                @if (true) 
-                    <span class="text-danger">*</span>
-                @endif
-            </strong></label>
-    <input type="file" name="image" id="image" class="form-control @error('image') is-invalid @enderror">
+           <div class="mb-3">
+    <label for="image" class="form-label">
+        <strong>Image: 
+            @if (true)
+                <span class="text-danger">*</span>
+            @endif
+        </strong>
+    </label>
+    
+    <input type="file" id="input-file-now" name="image" 
+           class="dropify" 
+           data-default-file="{{ isset($postcategory->image) ? asset('storage/images/original/' . $postcategory->image) : '' }}">
+    
     @error('image')
         <div class="form-text text-danger">{{ $message }}</div>
     @enderror
-
-    @if(isset($postcategory) && $postcategory->image)
+    
+    {{-- @if(isset($postcategory) && $postcategory->image)
         <div class="mt-2">
             <img src="{{ asset('storage/images/original/' . $postcategory->image) }}" alt="Current Image" class="img-thumbnail" width="150">
         </div>
-    @endif
+    @endif --}}
 </div>
+
 
 <div class="mb-3">
     <label for="status" class="form-label"><strong>Status: 

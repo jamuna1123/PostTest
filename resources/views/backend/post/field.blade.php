@@ -119,16 +119,16 @@
                 @endif
             </strong>
         </label>
-        <input type="file" name="image" id="image" class="form-control @error('image') is-invalid @enderror">
+        <input type="file" name="image"  class="dropify @error('image') is-invalid @enderror"     data-default-file="{{ isset($post->image) ? asset('storage/images/original/' . $post->image) : '' }}">
         @error('image')
             <div class="form-text text-danger">{{ $message }}</div>
         @enderror
 
-        @if (isset($post) && $post->image)
+        {{-- @if (isset($post) && $post->image)
             <div class="mt-2">
                 <img src="{{ asset('storage/images/original/' . $post->image) }}" alt="Current Image" class="img-thumbnail" width="150">
             </div>
-        @endif
+        @endif --}}
     </div>
 
     <!-- Status Field -->
