@@ -4,14 +4,13 @@
         <label for="title" class="form-label">
             <strong>Title:
                 @if (true)
-                
                     <span class="text-danger">*</span>
                 @endif
             </strong>
         </label>
         <input type="text" name="title" class="form-control @error('title') is-invalid @enderror" id="title"
             placeholder="Title" value="{{ old('title', $post->title ?? '') }}">
-        
+
         @error('title')
             <div class="form-text text-danger">{{ $message }}</div>
         @enderror
@@ -21,7 +20,8 @@
     <div class="mb-3">
         <label for="slug" class="form-label">
             <strong>Slug:
-                @if (true) <!-- Replace 'true' with your condition for the required field -->
+                @if (true)
+                    <!-- Replace 'true' with your condition for the required field -->
                     <span class="text-danger">*</span>
                 @endif
             </strong>
@@ -37,15 +37,17 @@
     <div class="mb-3">
         <label for="post_category_id" class="form-label">
             <strong>Post Category:
-                @if (true) 
+                @if (true)
                     <span class="text-danger">*</span>
                 @endif
             </strong>
         </label>
-        <select class="form-select @error('post_category_id') is-invalid @enderror" name="post_category_id" id="post_category_id">
+        <select class="form-select @error('post_category_id') is-invalid @enderror" name="post_category_id"
+            id="post_category_id">
             <option value="">Select Post Category</option>
             @foreach ($parentCategoriesList as $id => $title)
-                <option value="{{ $id }}" {{ isset($post) && $post->post_category_id == $id ? 'selected' : '' }}>
+                <option value="{{ $id }}"
+                    {{ isset($post) && $post->post_category_id == $id ? 'selected' : '' }}>
                     {{ $title }}
                 </option>
             @endforeach
@@ -59,12 +61,12 @@
     <div class="mb-3">
         <label for="user_id" class="form-label">
             <strong>User:
-                @if (true) 
+                @if (true)
                     <span class="text-danger">*</span>
                 @endif
             </strong>
         </label>
-        <select class="form-select @error('user_id') is-invalid @enderror" name="user_id" id="user_id" >
+        <select class="form-select @error('user_id') is-invalid @enderror" name="user_id" id="user_id">
             <option value="">Select User</option>
             @foreach ($users as $user)
                 <option value="{{ $user->id }}" {{ isset($post) && $post->user_id == $user->id ? 'selected' : '' }}>
@@ -86,7 +88,7 @@
                 @endif
             </strong>
         </label>
-        <input type="datetime-local" name="published_at" id="published_at" 
+        <input type="datetime-local" name="published_at" id="published_at"
             class="form-control @error('published_at') is-invalid @enderror"
             value="{{ old('published_at', isset($post->published_at) ? $post->published_at->format('Y-m-d\TH:i') : '') }}">
         @error('published_at')
@@ -98,7 +100,7 @@
     <div class="mb-3">
         <label for="description" class="form-label">
             <strong>Description:
-                @if (true) 
+                @if (true)
                     <span class="text-danger">*</span>
                 @endif
             </strong>
@@ -114,12 +116,13 @@
     <div class="mb-3">
         <label for="image" class="form-label">
             <strong>Image:
-                @if (true) 
+                @if (true)
                     <span class="text-danger">*</span>
                 @endif
             </strong>
         </label>
-        <input type="file" name="image"  class="dropify @error('image') is-invalid @enderror"     data-default-file="{{ isset($post->image) ? asset('storage/images/original/' . $post->image) : '' }}">
+        <input type="file" name="image" class="dropify @error('image') is-invalid @enderror"
+            data-default-file="{{ isset($post->image) ? asset('storage/images/original/' . $post->image) : asset('storage/images/default-image.png') }}">
         @error('image')
             <div class="form-text text-danger">{{ $message }}</div>
         @enderror
@@ -137,9 +140,9 @@
             <strong>Status:</strong>
         </label>
         <div class="form-check form-switch">
-            <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" role="switch" id="status" name="status" value="1"
-                {{ (isset($post) && $post->status) || old('status') ? 'checked' : '' }}
-                onchange="toggleStatusLabel()">
+            <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" role="switch"
+                id="status" name="status" value="1"
+                {{ (isset($post) && $post->status) || old('status') ? 'checked' : '' }} onchange="toggleStatusLabel()">
             <label class="form-check-label" for="status" id="statusLabel">
                 {{ (isset($post) && $post->status) || old('status') ? 'Active' : 'Inactive' }}
             </label>

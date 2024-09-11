@@ -30,8 +30,11 @@
 
                         <div class="card-body">
                             <div class="mb-3">
-                                <label for="name" class="form-label"><strong>{{ __('Name') }}:<span
-                                            class="text-danger">*</span></strong></label>
+                                <label for="name" class="form-label"><strong>{{ __('Name') }}:
+                                        @if (true)
+                                            <span class="text-danger">*</span>
+                                        @endif
+                                    </strong></label>
                                 <input id="name" name="name" type="text"
                                     class="form-control @error('name') is-invalid @enderror"
                                     value="{{ old('name', $user->name) }}" required autofocus autocomplete="name">
@@ -41,8 +44,11 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="email" class="form-label"><strong>{{ __('Email') }}:<span
-                                            class="text-danger">*</span></strong></label>
+                                <label for="email" class="form-label"><strong>{{ __('Email') }}:
+                                        @if (true)
+                                            <span class="text-danger">*</span>
+                                        @endif
+                                    </strong></label>
                                 <input id="email" name="email" type="email"
                                     class="form-control @error('email') is-invalid @enderror"
                                     value="{{ old('email', $user->email) }}" required autocomplete="username">
@@ -74,8 +80,9 @@
                             <div class="mb-3">
                                 <label for="image"
                                     class="form-label"><strong>{{ __('Profile Image') }}:</strong></label>
-                                <input  name="image" type="file"
-                                    class="dropify @error('image') is-invalid @enderror"     data-default-file="{{ isset($user->image) ? asset('storage/images/original/' . $user->image) : '' }}">
+                                <input name="image" type="file"
+                                    class="dropify @error('image') is-invalid @enderror"
+                                    data-default-file="{{ isset($user->image) ? asset('storage/images/original/' . $user->image) : asset('storage/images/default-image.png') }}">
                                 @error('image')
                                     <div class="form-text text-danger">{{ $message }}</div>
                                 @enderror

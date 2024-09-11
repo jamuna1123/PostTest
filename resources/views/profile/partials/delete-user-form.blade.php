@@ -15,46 +15,43 @@
                 <div class="card card-primary mb-4">
                     <div class="card-header">
                         <div class="card-title">
-                            {{ __('Once your account is deleted, all of its resources and data will be permanently deleted.') }}
+                            {{ __('Are you sure you want to delete your account?') }}
                         </div>
                     </div>
                     <div class="card-body">
-                        <p>{{ __('Before deleting your account, please download any data or information that you wish to retain.') }}</p>
+                        <p>{{ __('Before deleting your account, please download any data or information that you wish to retain.') }}
+                        </p>
 
                         <form method="post" action="{{ route('profile.destroy') }}">
                             @csrf
                             @method('delete')
 
-                            <h2 class="text-lg font-medium text-gray-900">
+                            {{-- <h2 class="text-lg font-medium text-gray-900">
                                 {{ __('Are you sure you want to delete your account?') }}
-                            </h2>
+                            </h2> --}}
 
-                            <p class="mt-1 text-sm text-gray-600">
+                            {{-- <p class="mt-1 text-sm text-gray-600">
                                 {{ __('Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.') }}
-                            </p>
+                            </p> --}}
 
                             <div class="mt-6">
                                 <label for="password" class="form-label">
                                     <strong>
-                                        {{ __('Password') }}:<span class="text-danger">*</span>
+                                        {{ __('Password') }}:@if (true)
+                                            <span class="text-danger">*</span>
+                                        @endif
                                     </strong>
                                 </label>
-                                <input
-                                    id="password"
-                                    name="password"
-                                    type="password"
+                                <input id="password" name="password" type="password"
                                     class="form-control @error('password') is-invalid @enderror"
-                                    placeholder="{{ __('Password') }}"
-                                >
+                                    placeholder="{{ __('Password') }}">
                                 @error('password')
                                     <div class="form-text text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
 
                             <div class="mt-4 flex justify-end">
-                                <button
-                                    type="submit"
-                                    class="btn btn-danger">
+                                <button type="submit" class="btn btn-danger">
                                     {{ __('Delete Account') }}
                                 </button>
                             </div>
