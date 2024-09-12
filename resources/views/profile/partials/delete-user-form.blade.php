@@ -42,12 +42,11 @@
                                         @endif
                                     </strong>
                                 </label>
-                                <input id="password" name="password" type="password"
-                                    class="form-control @error('password') is-invalid @enderror"
-                                    placeholder="{{ __('Password') }}">
-                                @error('password')
-                                    <div class="form-text text-danger">{{ $message }}</div>
-                                @enderror
+
+                                <x-text-input id="password" name="password" type="password" class="form-control mt-1 block w-3/4"
+                                    placeholder="{{ __('Password') }}" />
+
+                                <x-input-error :messages="$errors->userDeletion->get('password')" class="mt-2" />
                             </div>
 
                             <div class="mt-4 flex justify-end">

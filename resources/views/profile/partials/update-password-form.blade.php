@@ -10,7 +10,7 @@
 <div class="app-content">
     <div class="container-fluid">
         <div class="row g-4">
-            <div class="col-md-8">
+            <div class="col-md-6">
                 <div class="card card-primary mb-4">
                     <div class="card-header">
                         <div class="card-title">
@@ -27,12 +27,10 @@
                                             <span class="text-danger">*</span>
                                         @endif
                                     </strong></label>
-                                <input id="update_password_current_password" name="current_password" type="password"
-                                    class="form-control @error('current_password') is-invalid @enderror"
-                                    autocomplete="current-password">
-                                @error('current_password')
-                                    <div class="form-text text-danger">{{ $message }}</div>
-                                @enderror
+
+                                    
+                             <x-text-input id="update_password_current_password" name="current_password" type="password" class="form-control mt-1 block w-full" autocomplete="current-password" />
+                                <x-input-error :messages="$errors->updatePassword->get('current_password')" class="mt-2" />
                             </div>
 
                             <div class="mb-3">
@@ -42,12 +40,8 @@
                                             <span class="text-danger">*</span>
                                         @endif
                                     </strong></label>
-                                <input id="update_password_password" name="password" type="password"
-                                    class="form-control @error('password') is-invalid @enderror"
-                                    autocomplete="new-password">
-                                @error('password')
-                                    <div class="form-text text-danger">{{ $message }}</div>
-                                @enderror
+                                   <x-text-input id="update_password_password" name="password" type="password" class="form-control mt-1 block w-full" autocomplete="new-password" />
+                                <x-input-error :messages="$errors->updatePassword->get('password')" class="mt-2" />
                             </div>
 
                             <div class="mb-3">
@@ -57,13 +51,8 @@
                                             <span class="text-danger">*</span>
                                         @endif
                                     </strong></label>
-                                <input id="update_password_password_confirmation" name="password_confirmation"
-                                    type="password"
-                                    class="form-control @error('password_confirmation') is-invalid @enderror"
-                                    autocomplete="new-password">
-                                @error('password_confirmation')
-                                    <div class="form-text text-danger">{{ $message }}</div>
-                                @enderror
+                                 <x-text-input id="update_password_password_confirmation" name="password_confirmation" type="password" class="form-control mt-1 block w-full" autocomplete="new-password" />
+                                <x-input-error :messages="$errors->updatePassword->get('password_confirmation')" class="mt-2" />
                             </div>
                         </div>
 

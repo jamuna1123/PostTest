@@ -26,7 +26,7 @@ class StorePostCategory extends FormRequest
 
         return [
             'title' => 'required|max:255|unique:post_categories,title,'.$categoryId, // Allowing the current category's title
-            'image' => 'sometimes|image|mimes:jpeg,png,jpg,gif|max:2048', // Image is optional
+            'image' => 'sometimes|image|mimes:jpeg,png,jpg,gif', // Image is optional
             'description' => 'required|string',
             'status' => 'boolean',
         ];
