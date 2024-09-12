@@ -70,7 +70,7 @@
                                                 <a href="{{ route('users.edit', $user->id) }}"
                                                     class="btn btn-success btn-sm">Edit</a> --}}
                                                 <a class="btn btn-danger btn-sm" onclick="handleDelete({{ $user->id }})"
-                                                    data-bs-toggle="modal" data-bs-target="#modal-danger">
+                                                    data-bs-toggle="modal" data-bs-target="#modal-danger"><i class="fas fa-trash"></i>
                                                     Delete
                                                 </a>
 

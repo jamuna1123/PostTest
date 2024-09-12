@@ -32,7 +32,7 @@
                             <h3 class="card-title">Post Category List</h3>
                             <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-1">
                                 <a class="btn btn-primary" href="{{ route('post-category.create') }}" id="createNewProduct">
-                                    <i class="fa fa-plus"></i>Add Post Category
+                                    <i class="fa fa-plus"></i> Add Post Category
                                 </a>
                             </div>
                         </div>
@@ -84,12 +84,12 @@
 
                                             <td>
                                                 <a href="{{ route('post-category.show', $postCategory->id) }}"
-                                                    class="btn btn-info btn-sm">View</a>
+                                                    class="btn btn-info btn-sm text-white"><i class="fas fa-folder"></i> View</a>
                                                 <a href="{{ route('post-category.edit', $postCategory->id) }}"
-                                                    class="btn btn-success btn-sm">Edit</a>
+                                                    class="btn btn-success btn-sm"><i class="fas fa-pencil-alt"></i> Edit</a>
                                                 <a class="btn btn-danger btn-sm"
                                                     onclick="handleDelete({{ $postCategory->id }})" data-bs-toggle="modal"
-                                                    data-bs-target="#modal-danger">
+                                                    data-bs-target="#modal-danger"><i class="fas fa-trash"></i>
                                                     Delete
                                                 </a>
                                             </td>

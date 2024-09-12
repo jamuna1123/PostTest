@@ -78,7 +78,7 @@
                                                     None
                                                 @endif
                                             </td>
-                                           <td>
+                                            <td>
                                                 <div class="form-check form-switch">
                                                     <input class="form-check-input statuspost-toggle" type="checkbox"
                                                         data-id="{{ $posts->id }}"
@@ -90,12 +90,12 @@
                                             </td>
                                             <td>
                                                 <a href="{{ route('post.show', $posts->id) }}"
-                                                    class="btn btn-info btn-sm">View</a>
+                                                    class="btn btn-info btn-sm text-white"><i class="fas fa-folder"></i> View</a>
                                                 <a href="{{ route('post.edit', $posts->id) }}"
-                                                    class="btn btn-success btn-sm">Edit</a>
+                                                    class="btn btn-success btn-sm"><i class="fas fa-pencil-alt"></i> Edit</a>
                                                 <a class="btn btn-danger btn-sm"
                                                     onclick="handleDelete({{ $posts->id }})" data-bs-toggle="modal"
-                                                    data-bs-target="#modal-danger">
+                                                    data-bs-target="#modal-danger"><i class="fas fa-trash"></i>
                                                     Delete
                                                 </a>
 
@@ -149,26 +149,25 @@
             </div>
         </div>
 
-<!-- Toggle Status Modal -->
-            <div class="modal fade" id="modal-statuspost-toggle" tabindex="-1" aria-labelledby="modal-statuspost-toggleLabel"
-                aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="modal-statuspost-toggleLabel">Confirm Status Update</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <p>Are you sure you want to update the status of this post category?</p>
-                        </div>
-                        <div class="modal-footer justify-content-between">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <button type="button" class="btn btn-primary" id="confirmStatusUpdate">Update</button>
-                        </div>
+        <!-- Toggle Status Modal -->
+        <div class="modal fade" id="modal-statuspost-toggle" tabindex="-1" aria-labelledby="modal-statuspost-toggleLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modal-statuspost-toggleLabel">Confirm Status Update</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Are you sure you want to update the status of this post category?</p>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-primary" id="confirmStatusUpdate">Update</button>
                     </div>
                 </div>
             </div>
-        
+        </div>
     @endsection
     <!-- for delete conformation  -->
     <script>
@@ -189,7 +188,3 @@
             redirectToPostCategory();
         });
     </script>
-
-
-
-

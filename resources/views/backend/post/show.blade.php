@@ -53,13 +53,13 @@
                             @endif
                         </div>
                         <a href="{{ route('post.index') }}" class="btn btn-secondary mt-3 btn-sm">
-                            <i class="fa-solid fa-arrow-left"></i> Back
+                        Back
                         </a>
                           <a href="{{ route('post.create') }}" class="btn btn-primary mt-3 btn-sm">
-                            <i class="fa-solid fa-arrow-left"></i>Create
+                      Create
                         </a>
                          <a href="{{ route('post.edit',$post->id) }}" class="btn btn-success mt-3 btn-sm">
-                            <i class="fa-solid fa-arrow-left"></i>Edit
+                         Edit
                         </a>
                     </div>
                 </div>

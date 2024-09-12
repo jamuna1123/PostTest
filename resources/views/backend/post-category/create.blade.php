@@ -31,9 +31,8 @@
                             @include('backend.post-category.field')
                              
                             <div class="card-footer">
-                                 <a href="{{ route('post-category.index') }}" class="btn btn-secondary"><i
-                                        class="fa-solid fa-arrow-left"></i> Back</a>
-                                <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i>
+                                 <a href="{{ route('post-category.index') }}" class="btn btn-secondary">Cancel</a>
+                                <button type="submit" class="btn btn-primary">
            
                                     Submit</button>
                                
