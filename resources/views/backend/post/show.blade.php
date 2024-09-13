@@ -46,7 +46,7 @@
                         <div>
                             <strong>Image:</strong>
                             @if ($post->image)
-                                <img src="{{ asset('storage/images/original/' . $post->image) }}" alt="{{ $post->title }}"
+                                <img src="{{ asset('storage/images/resized/' . $post->image) }}" alt="{{ $post->title }}"
                                     style="width: 50px; height: auto;">
                             @else
                                 <p>No image available</p>

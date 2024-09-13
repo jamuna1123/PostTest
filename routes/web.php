@@ -29,6 +29,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/post/update-status/{id}', [PostController::class, 'updateStatus'])->name('post.update-status');
     Route::resource('/post', PostController::class);
     Route::resource('/users', AdminUserController::class);
+Route::get('/admin/users/export-pdf', [AdminUserController::class, 'exportPDF'])->name('users.export.pdf');
 
 });
 

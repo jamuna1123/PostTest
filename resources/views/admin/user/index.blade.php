@@ -51,7 +51,7 @@
                                         <tr class="align-middle">
                                             <td>{{ $user->name }}</td>
                                             <td>{{ $user->email }}</td>
-                                              <td>
+                                            <td>
                                                 @if ($user->image)
                                                     <a href="{{ asset('storage/images/original/' . $user->image) }}"
                                                         data-fancybox="gallery" data-caption="{{ $user->name }}">
@@ -62,17 +62,24 @@
                                                     <p>No image available</p>
                                                 @endif
                                             </td>
-                                             <td>{{ $user->phone }}</td>
-                                                  <td>{{ $user->address }}</td>
+                                            <td>{{ $user->phone }}</td>
+                                            <td>{{ $user->address }}</td>
                                             <td>
-                                                {{-- <a href="{{ route('users.show', $user->id) }}"
-                                                    class="btn btn-info btn-sm">View</a>
-                                                <a href="{{ route('users.edit', $user->id) }}"
-                                                    class="btn btn-success btn-sm">Edit</a> --}}
+
+                                                <a href="{{ route('users.show', $user->id) }}"
+                                                    class="btn btn-info btn-sm text-white"><i class="fas fa-folder"></i>
+                                                    View</a>
                                                 <a class="btn btn-danger btn-sm" onclick="handleDelete({{ $user->id }})"
-                                                    data-bs-toggle="modal" data-bs-target="#modal-danger"><i class="fas fa-trash"></i>
+                                                    data-bs-toggle="modal" data-bs-target="#modal-danger"><i
+                                                        class="fas fa-trash"></i>
                                                     Delete
                                                 </a>
+
+                                                <a class="btn btn-primary btn-sm" href="{{ route('users.export.pdf') }}">
+                                                    <i class="fa fa-file-pdf"></i> Export PDF
+                                                </a>
+
+
 
                                             </td>
 

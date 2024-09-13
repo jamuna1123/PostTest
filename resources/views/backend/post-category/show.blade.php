@@ -36,7 +36,7 @@
                         <div>
                             <strong>Image:</strong>
                             @if ($postcategory->image)
-                                <img src="{{ asset('storage/images/original/' . $postcategory->image) }}"
+                                <img src="{{ asset('storage/images/resized/' . $postcategory->image) }}"
                                     alt="{{ $postcategory->title }}" style="width: 50px; height: auto;">
                             @else
                                 <p>No image available</p>
