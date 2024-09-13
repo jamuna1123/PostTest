@@ -18,7 +18,7 @@
     </div>
     <div class="container">
         <div class="row mt-4">
-            <div class="col-lg-12">
+            <div class="col-lg-6">
                 <div class="card card-primary">
                     <div class="card-header">
                         <div class="card-title">User Details</div>
@@ -30,17 +30,27 @@
                         <div>
                             <strong>Email:</strong> {{ $user->email }}
                         </div>
+
                         <div>
-                            <strong>Phone:</strong> {{ $user->phone}}
+                            <strong>Phone:</strong> {{ $user->phone }}
                         </div>
-                         <div>
-                            <strong>Address:</strong> {{ $user->address}}
+                        <div>
+                            <strong>Address:</strong> {{ $user->address }}
                         </div>
-                       
+                        <div>
+                            <strong>Image:</strong>
+                            @if ($user->image)
+                                <img src="{{ asset('storage/images/resized/' . $user->image) }}" alt="{{ $user->name }}"
+                                    style="width: 50px; height: auto;">
+                            @else
+                                <p>No image available</p>
+                            @endif
+                        </div>
+
                         <a href="{{ route('users.index') }}" class="btn btn-secondary mt-3 btn-sm">
                             Back
                         </a>
-                       
+
                     </div>
                 </div>
             </div>

@@ -75,9 +75,9 @@
                                                     Delete
                                                 </a>
 
-                                                <a class="btn btn-primary btn-sm" href="{{ route('users.export.pdf') }}">
+                                                {{-- <a class="btn btn-primary btn-sm" href="{{ route('users.export.pdf') }}">
                                                     <i class="fa fa-file-pdf"></i> Export PDF
-                                                </a>
+                                                </a> --}}
 
 
 

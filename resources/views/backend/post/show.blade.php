@@ -18,7 +18,7 @@
     </div>
     <div class="container">
         <div class="row mt-4">
-            <div class="col-lg-12">
+            <div class="col-lg-6">
                 <div class="card card-primary">
                     <div class="card-header">
                     <div class="card-title">Post Details</div>
