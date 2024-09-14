@@ -28,7 +28,7 @@
                 <!--begin::Col-->
                 <div class="col-md-8">
                     <!--begin::Quick Example-->
-                    <div class="card card-primary mb-4">
+                    <div class="card card-primary card-outline mb-4">
                         <!--begin::Header-->
                         <div class="card-header">
                             <div class="card-title">Edit Post Category</div>

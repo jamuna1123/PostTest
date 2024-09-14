@@ -69,11 +69,11 @@
                                                 <a href="{{ route('users.show', $user->id) }}"
                                                     class="btn btn-info btn-sm text-white"><i class="fas fa-folder"></i>
                                                     View</a>
-                                                <a class="btn btn-danger btn-sm" onclick="handleDelete({{ $user->id }})"
+                                                {{-- <a class="btn btn-danger btn-sm" onclick="handleDelete({{ $user->id }})"
                                                     data-bs-toggle="modal" data-bs-target="#modal-danger"><i
                                                         class="fas fa-trash"></i>
                                                     Delete
-                                                </a>
+                                                </a> --}}
 
                                                 {{-- <a class="btn btn-primary btn-sm" href="{{ route('users.export.pdf') }}">
                                                     <i class="fa fa-file-pdf"></i> Export PDF

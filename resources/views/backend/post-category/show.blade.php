@@ -18,39 +18,59 @@
     </div>
     <div class="container">
         <div class="row mt-4">
-            <div class="col-lg-6">
-                <div class="card card-primary">
+            <div class="col-lg-12">
+                <div class="card">
                     <div class="card-header">
                         <div class="card-title">Post Category Details</div>
                     </div>
                     <div class="card-body mt-3">
-                        <div>
-                            <strong>Title:</strong> {{ $postcategory->title }}
+                        <table class="table  table-striped">
+                            <tbody>
+                                <tr>
+                                    <th style="width: 30%">Title:</th>
+                                    <td>{{ $postcategory->title }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Slug:</th>
+                                    <td>{{ $postcategory->slug }}</td>
+                                </tr>
+                                 <tr>
+                                    <th>Description:</th>
+                                    <td>{!! $postcategory->description !!}</td>
+                                </tr>
+                                <tr>
+                                    <th>Status:</th>
+                                    <td>{{ $postcategory->status ? 'Active' : 'Inactive' }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Image:</th>
+                                    <td>
+                                        @if ($postcategory->image)
+                                            <a href="{{ asset('storage/images/original/' . $postcategory->image) }}" 
+                                               data-fancybox="gallery" 
+                                               data-caption="{{ $postcategory->title }}">
+                                                <img src="{{ asset('storage/images/resized/' . $postcategory->image) }}" 
+                                                     alt="{{ $postcategory->title }}" 
+                                                     style="height: 100px;">
+                                            </a>
+                                        @else
+                                            <p>No image available</p>
+                                        @endif
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="d-flex justify-content-start mt-3">
+                            <a href="{{ route('post-category.index') }}" class="btn btn-secondary btn-sm me-2">
+                                Back
+                            </a>
+                            <a href="{{ route('post-category.create') }}" class="btn btn-primary btn-sm me-2">
+                                Create
+                            </a>
+                            <a href="{{ route('post-category.edit', $postcategory->id) }}" class="btn btn-success btn-sm">
+                                Edit
+                            </a>
                         </div>
-                        <div>
-                            <strong>Slug:</strong> {{ $postcategory->slug }}
-                        </div>
-                        <div>
-                            <strong>Status:</strong> {{ $postcategory->status ? 'Active' : 'Inactive' }}
-                        </div>
-                        <div>
-                            <strong>Image:</strong>
-                            @if ($postcategory->image)
-                                <img src="{{ asset('storage/images/resized/' . $postcategory->image) }}"
-                                    alt="{{ $postcategory->title }}" style="width: 50px; height: auto;">
-                            @else
-                                <p>No image available</p>
-                            @endif
-                        </div>
-                        <a href="{{ route('post-category.index') }}" class="btn btn-secondary mt-3 btn-sm">
-                            Back
-                        </a>
-                        <a href="{{ route('post-category.create') }}" class="btn btn-primary mt-3 btn-sm">
-                            Create
-                        </a>
-                        <a href="{{ route('post-category.edit', $postcategory->id) }}" class="btn btn-success mt-3 btn-sm">
-                            Edit
-                        </a>
                     </div>
                 </div>
             </div>

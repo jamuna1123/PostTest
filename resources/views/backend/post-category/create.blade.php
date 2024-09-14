@@ -22,7 +22,7 @@
         <div class="container-fluid">
             <div class="row g-4">
                 <div class="col-md-8">
-                    <div class="card card-primary mb-4">
+                    <div class="card card-primary card-outline mb-4">
                         <div class="card-header">
                             <div class="card-title">Create Post Category</div>
                         </div>

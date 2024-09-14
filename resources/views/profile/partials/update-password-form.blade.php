@@ -11,7 +11,7 @@
     <div class="container-fluid">
         <div class="row g-4">
             <div class="col-md-6">
-                <div class="card card-primary mb-4">
+                <div class="card card-primary card-outline mb-4">
                     <div class="card-header">
                         <div class="card-title">
                             {{ __('Ensure your account is using a long, random password to stay secure.') }}</div>

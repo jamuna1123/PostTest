@@ -18,49 +18,65 @@
     </div>
     <div class="container">
         <div class="row mt-4">
-            <div class="col-lg-6">
-                <div class="card card-primary">
+            <div class="col-lg-12">
+                <div class="card">
                     <div class="card-header">
-                    <div class="card-title">Post Details</div>
-
+                        <div class="card-title">Post Details</div>
                     </div>
                     <div class="card-body mt-3">
-                        <div>
-                            <strong>Title:</strong> {{ $post->title }}
+                        <table class="table  table-striped">
+                            <tbody>
+                                <tr>
+                                    <th style="width: 30%">Title:</th>
+                                    <td>{{ $post->title }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Slug:</th>
+                                    <td>{{ $post->slug }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Status:</th>
+                                    <td>{{ $post->status ? 'Active' : 'Inactive' }}</td>
+                                </tr>
+                                <tr>
+                                    <th>User Name:</th>
+                                    <td>{{ $post->username->name }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Post Category Name:</th>
+                                    <td>{{ $post->postCategory->title }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Description:</th>
+                                    <td>{!! $post->description !!}</td>
+                                </tr>
+                                <tr>
+                                    <th>Image:</th>
+                                    <td>
+                                       @if ($post->image)
+                                                    <a href="{{ asset('storage/images/original/' . $post->image) }}"
+                                                        data-fancybox="gallery" data-caption="{{ $post->title }}">
+                                                        <img src="{{ asset('storage/images/resized/' . $post->image) }}"
+                                                            alt="{{ $post->title }}" style="height: 50px;">
+                                                    </a>
+                                                @else
+                                                    <p>No image available</p>
+                                                @endif
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="d-flex justify-content-start mt-3">
+                            <a href="{{ route('post.index') }}" class="btn btn-secondary btn-sm me-2">
+                                Back
+                            </a>
+                            <a href="{{ route('post.create') }}" class="btn btn-primary btn-sm me-2">
+                                Create
+                            </a>
+                            <a href="{{ route('post.edit', $post->id) }}" class="btn btn-success btn-sm">
+                                Edit
+                            </a>
                         </div>
-                        <div>
-                            <strong>Slug:</strong> {{ $post->slug }}
-                        </div>
-                        <div>
-                            <strong>Status:</strong> {{ $post->status ? 'Active' : 'Inactive' }}
-                        </div>
-                        <div>
-                            <strong>User Name:</strong> {{ $post->username->name }}
-                        </div>
-                        <div>
-                            <strong>Post Category Name:</strong> {{ $post->postCategory->title }}
-                        </div>
-                        <div>
-                            <strong>Description:</strong> {!! $post->description !!}
-                        </div>
-                        <div>
-                            <strong>Image:</strong>
-                            @if ($post->image)
-                                <img src="{{ asset('storage/images/resized/' . $post->image) }}" alt="{{ $post->title }}"
-                                    style="width: 50px; height: auto;">
-                            @else
-                                <p>No image available</p>
-                            @endif
-                        </div>
-                        <a href="{{ route('post.index') }}" class="btn btn-secondary mt-3 btn-sm">
-                        Back
-                        </a>
-                          <a href="{{ route('post.create') }}" class="btn btn-primary mt-3 btn-sm">
-                      Create
-                        </a>
-                         <a href="{{ route('post.edit',$post->id) }}" class="btn btn-success mt-3 btn-sm">
-                         Edit
-                        </a>
                     </div>
                 </div>
             </div>

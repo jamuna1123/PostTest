@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use RealRashid\SweetAlert\Facades\Alert;
 use Barryvdh\DomPDF\Facade\Pdf;
+use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 class AdminUserController extends Controller
 {
     public function index()
@@ -16,7 +18,15 @@ class AdminUserController extends Controller
         return view('admin.user.index', compact('users'));
     }
 
-      public function show($id)
+  
+
+    /**
+     * Store a newly created resource in storage.
+     */
+  
+       
+
+    public function show($id)
     {
 
         $user = User::findOrFail($id);
@@ -29,23 +39,16 @@ class AdminUserController extends Controller
 
         $users = User::findOrFail($id);
 
-        $users->delete();
+        if ($user->image) {
+            Storage::disk('public')->delete('images/original/'.$user->image);
+            Storage::disk('public')->delete('images/resized/'.$user->image);
+        }
+        $user->delete();
         Alert::success('Success', 'User deleted successfully.');
 
         return redirect()->route('users.index');
 
     }
 
-  // Export PDF
-    public function exportPDF()
-    {
-        $users = User::all(); // Get all users
-
-        // Load a view to generate PDF
-        $pdf = PDF::loadView('admin.user.pdf', compact('users'));
-
-        // Download the PDF with a specific filename
-        return $pdf->download('users_list.pdf');
-    }
- 
+   
 }

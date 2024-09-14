@@ -18,39 +18,49 @@
     </div>
     <div class="container">
         <div class="row mt-4">
-            <div class="col-lg-6">
-                <div class="card card-primary">
+            <div class="col-lg-12">
+                <div class="card">
                     <div class="card-header">
                         <div class="card-title">User Details</div>
                     </div>
                     <div class="card-body mt-3">
-                        <div>
-                            <strong>Name:</strong> {{ $user->name }}
+                        <table class="table table-striped">
+                            <tbody>
+                                <tr>
+                                    <th style="width: 30%">Name:</th>
+                                    <td>{{ $user->name }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Email:</th>
+                                    <td>{{ $user->email }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Phone:</th>
+                                    <td>{{ $user->phone }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Address:</th>
+                                    <td>{{ $user->address }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Image:</th>
+                                    <td>
+                                        @if ($user->image)
+                                            <img src="{{ asset('storage/images/resized/' . $user->image) }}" 
+                                                 alt="{{ $user->name }}" 
+                                                 style="width: 100px; height: auto;">
+                                        @else
+                                            <p>No image available</p>
+                                        @endif
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="d-flex justify-content-start mt-3">
+                            <a href="{{ route('users.index') }}" class="btn btn-secondary btn-sm me-2">
+                                Back
+                            </a>
                         </div>
-                        <div>
-                            <strong>Email:</strong> {{ $user->email }}
-                        </div>
-
-                        <div>
-                            <strong>Phone:</strong> {{ $user->phone }}
-                        </div>
-                        <div>
-                            <strong>Address:</strong> {{ $user->address }}
-                        </div>
-                        <div>
-                            <strong>Image:</strong>
-                            @if ($user->image)
-                                <img src="{{ asset('storage/images/resized/' . $user->image) }}" alt="{{ $user->name }}"
-                                    style="width: 50px; height: auto;">
-                            @else
-                                <p>No image available</p>
-                            @endif
-                        </div>
-
-                        <a href="{{ route('users.index') }}" class="btn btn-secondary mt-3 btn-sm">
-                            Back
-                        </a>
-
                     </div>
                 </div>
             </div>
