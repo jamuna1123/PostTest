@@ -39,10 +39,8 @@
     {{-- use toggle --}}
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-    <!-- FilePond CSS -->
-    <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
-    <!-- FilePond JS -->
-    <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
+   
+
     <script src="https://cdn.tiny.cloud/1/lz3stx6dwxywl56d146m3msq6l66bfvqz2iyl49ikdndki4k/tinymce/6/tinymce.min.js"
         referrerpolicy="origin"></script>
     {{-- sweetalert  --}}
@@ -50,12 +48,7 @@
     <link rel="stylesheet" href="{{ asset('Backend/plugins/sweetalert2/sweetalert2.min.css') }}">
     <script src="{{ asset('Backend/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
 
-    <!-- Dropify CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/dropify/dist/css/dropify.min.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-    <!-- Dropify JS -->
-    <script src="https://cdn.jsdelivr.net/npm/dropify/dist/js/dropify.min.js"></script>
+   
 
     <!-- Fancybox CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" />
@@ -208,29 +201,7 @@
             content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:16px }'
         });
     </script>
-    <script>
-        $(document).ready(function() {
-            // Initialize Dropify
-            $('.dropify').dropify({
-                messages: {
-                    'default': 'Drag and drop a file or click',
-                    'replace': 'Drag and drop or click to replace',
-                    'remove': 'Remove',
-                    'error': 'Oops, something went wrong.'
-                }
-            }).on('dropify.afterClear', function(event, element) {
-                // Handle the event after image removal
-                Swal.fire({
-                    title: 'Success!',
-                    text: 'file deleted successfully.',
-                    icon: 'success',
-                    confirmButtonText: 'OK'
-                });
-                // Optionally you can send an AJAX request to remove the image on the server side
-            });
-        });
-    </script>
-
+   
 
 </body><!--end::Body-->
 

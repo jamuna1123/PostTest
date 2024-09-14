@@ -1,5 +1,8 @@
 @extends('layouts.app')
-
+@push('styles')
+<link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
+<link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet" />
+@endpush
 @section('content')
     <div class="app-content-header"> <!--begin::Container-->
         <div class="container-fluid"> <!--begin::Row-->
@@ -68,3 +71,56 @@
 
 
 @endsection
+@push('scripts')
+<script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
+<script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
+<script src="https://unpkg.com/filepond@^4/dist/filepond.js"></script>
+
+  <script>
+        FilePond.registerPlugin(FilePondPluginImagePreview);
+        FilePond.registerPlugin(FilePondPluginFileValidateType);
+
+        const inputElement = document.querySelector('#image');
+
+        const pond = FilePond.create(inputElement, {
+            acceptedFileTypes: ['image/*'],
+            server: {
+                load: (source, load, error, progress, abort, headers) => {
+                    fetch(source, {
+                        mode: 'cors'
+                    }).then((res) => {
+                        return res.blob();
+                    }).then(load).catch(error);
+                },
+                process: {
+                    url: '{{ route('upload') }}',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    onload: (response) => {
+                        const data = JSON.parse(response);
+                        return data.path;
+                    }
+                },
+                revert: {
+                    url: '{{ route('revert') }}',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    }
+                }
+            },
+
+            files: [
+                @if (isset($postcategory) && $postcategory->image)
+                    {
+                        source: '{{ asset('storage/' . $postcategory->image) }}',
+                        options: {
+                            type: 'local',
+                        },
+                    }
+                @endif
+            ],
+        });
+    </script>
+    
+@endpush

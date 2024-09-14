@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 use RealRashid\SweetAlert\Facades\Alert;
-
+use Illuminate\Support\Facades\File;
 class PostCategoryController extends Controller
 {
     public function index(Request $request)
@@ -45,22 +45,25 @@ class PostCategoryController extends Controller
 
         $postcategory->slug = $request->slug;
 
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $imageName = time().'.'.$image->getClientOriginalExtension();
+        if ($request->input('image')) {
+             $imagePath = $request->input('image');
+        $filename = basename($imagePath);
 
-            // Store original image
-            $originalImagePath = 'images/original/'.$imageName;
-            Storage::disk('public')->put($originalImagePath, file_get_contents($image));
+        // Define paths
+        $originalPath = 'images/original/'.$filename;
+        $resizedPath = 'images/resized/'.$filename;
 
-            // Resize image
-            $resizedImage = Image::make($image)->resize(300, 200);
+        // Move the file from 'tmp' to 'images'
+        Storage::disk('public')->move($imagePath, $originalPath);
 
-            // Store resized image
-            $resizedImagePath = 'images/resized/'.$imageName;
-            Storage::disk('public')->put($resizedImagePath, (string) $resizedImage->encode());
+        // Resize the image using Intervention Image
+        $resizedImage = Image::make(storage_path('app/public/'.$originalPath))->resize(300, 200);
 
-            $postcategory->image = $imageName;
+        // Store the resized image
+        Storage::disk('public')->put($resizedPath, (string) $resizedImage->encode());
+
+
+            $postcategory->image =  $originalPath;
         }
         $postcategory->status = $request->has('status') ? 1 : 0;
 
@@ -99,7 +102,7 @@ class PostCategoryController extends Controller
 
         $postcategory->slug = $request->slug;
 
-        if ($request->hasFile('image')) {
+        if ($request->input('image')) {
             // Delete old images
             if ($postcategory->image) {
                 $oldOriginalImagePath = 'images/original/'.$postcategory->image;
@@ -113,19 +116,24 @@ class PostCategoryController extends Controller
                 }
             }
 
-            $image = $request->file('image');
-            $imageName = time().'.'.$image->getClientOriginalExtension();
+             $imagePath = $request->input('image');
+        $filename = basename($imagePath);
 
-            // Store new original image
-            $originalImagePath = 'images/original/'.$imageName;
-            Storage::disk('public')->put($originalImagePath, file_get_contents($image));
+        // Define paths
+        $originalPath = 'images/original/'.$filename;
+        $resizedPath = 'images/resized/'.$filename;
 
-            // Resize new image
-            $resizedImage = Image::make($image)->resize(300, 200);
-            $resizedImagePath = 'images/resized/'.$imageName;
-            Storage::disk('public')->put($resizedImagePath, (string) $resizedImage->encode());
+        // Move the file from 'tmp' to 'images'
+        Storage::disk('public')->move($imagePath, $originalPath);
 
-            $postcategory->image = $imageName;
+        // Resize the image using Intervention Image
+        $resizedImage = Image::make(storage_path('app/public/'.$originalPath))->resize(300, 200);
+
+        // Store the resized image
+        Storage::disk('public')->put($resizedPath, (string) $resizedImage->encode());
+
+
+            $postcategory->image =  $originalPath;
         }
 
         $postcategory->status = $request->has('status') ? 1 : 0;
@@ -173,5 +181,39 @@ class PostCategoryController extends Controller
 
         return response()->json(['success' => true]);
 
+    }
+
+
+     public function upload(Request $request)
+    {
+        if ($request->file('image')) {
+            $path = $request->file('image')->store('tmp', 'public');
+
+            return response()->json(['path' => $path]);
+        }
+
+        return response()->json(['error' => 'No file uploaded'], 400);
+    }
+
+    public function revert(Request $request)
+    {
+        $path = $request->getContent();
+        if (Storage::disk('public')->exists($path)) {
+            Storage::disk('public')->delete($path);
+        }
+
+        return response()->json(['success' => true]);
+    }
+
+     public function load($filename)
+    {
+        return response()->file(storage_path('app/public/images/'.$filename));
+
+    }
+
+    // Handle fetching image (e.g., after upload or on form load)
+    public function fetch($filename)
+    {
+        return response()->json(['filename' => $filename, 'url' => Storage::url('images/'.$filename)]);
     }
 }

@@ -58,9 +58,9 @@
                                             <td>{{ $postCategory->slug }}</td>
                                             <td>
                                                 @if ($postCategory->image)
-                                                    <a href="{{ asset('storage/images/original/' . $postCategory->image) }}"
+                                                   <a href="{{ asset('storage/' . $postCategory->image) }}"
                                                         data-fancybox="gallery" data-caption="{{ $postCategory->title }}">
-                                                        <img src="{{ asset('storage/images/resized/' . $postCategory->image) }}"
+                                                        <img src="{{ asset('storage/images/resized/' . basename($postCategory->image)) }}"
                                                             alt="{{ $postCategory->title }}" style="height: 50px;">
                                                     </a>
                                                 @else
