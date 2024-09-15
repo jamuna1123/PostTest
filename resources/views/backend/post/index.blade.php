@@ -61,9 +61,9 @@
                                             </td>
                                             <td>
                                                 @if ($posts->image)
-                                                    <a href="{{ asset('storage/images/original/' . $posts->image) }}"
+                                                   <a href="{{ asset('storage/' . $posts->image) }}"
                                                         data-fancybox="gallery" data-caption="{{ $posts->title }}">
-                                                        <img src="{{ asset('storage/images/resized/' . $posts->image) }}"
+                                                        <img src="{{ asset('storage/images/resized/' . basename($posts->image)) }}"
                                                             alt="{{ $posts->title }}" style="height: 50px;">
                                                     </a>
                                                 @else

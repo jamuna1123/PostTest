@@ -27,21 +27,23 @@
 
 
            <div class="mb-3">
-               <label for="description" class="form-label"><strong>Description: @if (true)
+               <label for="description" class="form-label"><strong>Description: @if (false)
                            <!-- Replace 'false' with your condition for the required field if any -->
                            <span class="text-danger">*</span>
                        @endif
                    </strong>
                </label>
-               <textarea name="description" id="description" class="form-control @error('description') is-invalid @enderror"
-                   rows="4" placeholder="Enter a description...">{{ old('description', $postcategory->description ?? '') }}</textarea>
-               @error('description')
-                   <div class="form-text text-danger">{{ $message }}</div>
-               @enderror
+              <textarea name="description" class="form-control @error('description') is-invalid @enderror" rows="4" placeholder="Enter a description...">{{ old('description', isset($postcategory->description) ? strip_tags($postcategory->description) : '') }}</textarea>
+@error('description')
+    <div class="form-text text-danger">{{ $message }}</div>
+@enderror
            </div>
            <!-- Image Input -->
      <div class="mb-3">
-    <label for="image" class="form-label"><strong>Image:<span class="text-danger">*</span></strong></label>
+    <label for="image" class="form-label"><strong>Image:@if (false)
+                           <!-- Replace 'false' with your condition for the required field if any -->
+                           <span class="text-danger">*</span>
+                       @endif</strong></label>
     <input type="file" name="image" id="image" class="form-control">
     
     @error('image')

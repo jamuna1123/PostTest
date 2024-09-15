@@ -71,7 +71,7 @@ class PostCategoryController extends Controller
 
         Alert::success('Success', 'Post Category created successfully.');
 
-        return redirect()->route('post-category.index');
+        return redirect()->route('post-category.show', $postcategory->id);
 
     }
 
@@ -141,7 +141,7 @@ class PostCategoryController extends Controller
 
         Alert::success('Success', 'Post Category update successfully.');
 
-        return redirect()->route('post-category.index');
+        return redirect()->route('post-category.show', $postcategory->id);
     }
 
     /**

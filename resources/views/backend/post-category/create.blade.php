@@ -1,8 +1,5 @@
 @extends('layouts.app')
-@push('styles')
-<link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
-<link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet" />
-@endpush
+
 @section('content')
     <div class="app-content-header">
         <div class="container-fluid">
@@ -52,9 +49,7 @@
 
 
 @push('scripts')
-<script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
-<script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
-<script src="https://unpkg.com/filepond@^4/dist/filepond.js"></script>
+
 
 <script>
     FilePond.registerPlugin(FilePondPluginImagePreview);

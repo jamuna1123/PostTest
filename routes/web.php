@@ -34,6 +34,10 @@ Route::middleware('auth')->group(function () {
     // post
     Route::patch('/post/update-status/{id}', [PostController::class, 'updateStatus'])->name('post.update-status');
     Route::resource('/post', PostController::class);
+     Route::post('upload', [PostController::class, 'upload'])->name('upload');
+    Route::delete('revert', [PostController::class, 'revert'])->name('revert');
+    Route::get('/load/{filename}', [PostController::class, 'load'])->name('load');
+    Route::get('/fetch/{filename}', [PostController::class, 'fetch'])->name('fetch');
     Route::resource('/users', AdminUserController::class);
     Route::get('/admin/users/export-pdf', [AdminUserController::class, 'exportPDF'])->name('users.export.pdf');
 

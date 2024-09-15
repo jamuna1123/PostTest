@@ -112,26 +112,21 @@
         @enderror
     </div>
 
-    <!-- Image Field -->
+    <!-- Image Input -->
     <div class="mb-3">
-        <label for="image" class="form-label">
-            <strong>Image:
-                @if (true)
+        <label for="image" class="form-label"><strong>Image:@if (false)
+                    <!-- Replace 'false' with your condition for the required field if any -->
                     <span class="text-danger">*</span>
                 @endif
-            </strong>
-        </label>
-        <input type="file" name="image" class="dropify @error('image') is-invalid @enderror"
-            data-default-file="{{ isset($post->image) ? asset('storage/images/original/' . $post->image) : asset('storage/images/default-image.png') }}">
+            </strong></label>
+        <input type="file" name="image" id="image" class="form-control">
+
         @error('image')
             <div class="form-text text-danger">{{ $message }}</div>
         @enderror
 
-        {{-- @if (isset($post) && $post->image)
-            <div class="mt-2">
-                <img src="{{ asset('storage/images/original/' . $post->image) }}" alt="Current Image" class="img-thumbnail" width="150">
-            </div>
-        @endif --}}
+
+
     </div>
 
     <!-- Status Field -->

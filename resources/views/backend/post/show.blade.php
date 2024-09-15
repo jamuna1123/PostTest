@@ -46,6 +46,10 @@
                                     <th>Post Category Name:</th>
                                     <td>{{ $post->postCategory->title }}</td>
                                 </tr>
+                                 <tr>
+                                    <th>Publish At:</th>
+                                    <td>{{ $post->published_at }}</td>
+                                </tr>
                                 <tr>
                                     <th>Description:</th>
                                     <td>{!! $post->description !!}</td>
@@ -54,9 +58,9 @@
                                     <th>Image:</th>
                                     <td>
                                        @if ($post->image)
-                                                    <a href="{{ asset('storage/images/original/' . $post->image) }}"
+                                                   <a href="{{ asset('storage/' . $post->image) }}"
                                                         data-fancybox="gallery" data-caption="{{ $post->title }}">
-                                                        <img src="{{ asset('storage/images/resized/' . $post->image) }}"
+                                                        <img src="{{ asset('storage/images/resized/' . basename($post->image)) }}"
                                                             alt="{{ $post->title }}" style="height: 50px;">
                                                     </a>
                                                 @else
