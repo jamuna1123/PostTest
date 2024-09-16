@@ -72,12 +72,12 @@
                           class="bi bi-fullscreen-exit" style="display: none;"></i> </a> </li>
               <!--end::Fullscreen Toggle--> <!--begin::User Menu Dropdown-->
               <li class="nav-item dropdown user-menu"> <a href="#" class="nav-link dropdown-toggle"
-                      data-bs-toggle="dropdown"> <img src="{{ asset('storage/images/resized/' . Auth::user()->image) }}"
+                      data-bs-toggle="dropdown"> <img src="{{ asset('storage/' . Auth::user()->image) }}"
                           class="user-image rounded-circle shadow" alt="User Image"> <span
                           class="d-none d-md-inline">{{ Auth::user()->name }}
                       </span> </a>
                   <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end"> <!--begin::User Image-->
-                      <li class="user-header text-bg-primary"> <img src="{{ asset('storage/images/resized/' . Auth::user()->image) }}"
+                      <li class="user-header text-bg-primary"> <img src="{{ asset('storage/' . Auth::user()->image) }}"
                               class="rounded-circle shadow" alt="User Image">
                           <p>
                               {{ Auth::user()->name }}

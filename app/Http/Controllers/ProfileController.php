@@ -32,22 +32,39 @@ class ProfileController extends Controller
         $request->user()->fill($request->validated());
 
         // Handle the profile image
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $imageName = time().'.'.$image->getClientOriginalExtension();
+         if ($request->input('image')) {
+            // Delete old images
+            if ($request->user()->image) {
+                $oldOriginalImagePath = 'images/original/'. $request->user()->image;
+                $oldResizedImagePath = 'images/resized/'. $request->user()->image;
 
-            // Store original image
-            $originalImagePath = 'images/original/'.$imageName;
-            Storage::disk('public')->put($originalImagePath, file_get_contents($image));
+                if (Storage::exists($oldOriginalImagePath)) {
+                    Storage::delete($oldOriginalImagePath);
+                }
+                if (Storage::exists($oldResizedImagePath)) {
+                    Storage::delete($oldResizedImagePath);
+                }
+            }
 
-            // Resize image
-            $resizedImage = Image::make($image)->resize(300, 200);
+            if ($request->input('image')) {
+                $imagePath = $request->input('image');
+                $filename = basename($imagePath);
 
-            // Store resized image
-            $resizedImagePath = 'images/resized/'.$imageName;
-            Storage::disk('public')->put($resizedImagePath, (string) $resizedImage->encode());
+                // Define paths
+                $originalPath = 'images/original/'.$filename;
+                $resizedPath = 'images/resized/'.$filename;
 
-            $request->user()->image = $imageName;
+                // Move the file from 'tmp' to 'images'
+                Storage::disk('public')->move($imagePath, $originalPath);
+
+                // Resize the image using Intervention Image
+                $resizedImage = Image::make(storage_path('app/public/'.$originalPath))->resize(300, 200);
+
+                // Store the resized image
+                Storage::disk('public')->put($resizedPath, (string) $resizedImage->encode());
+
+                 $request->user()->image = $originalPath;
+            }
         }
 
         if ($request->user()->isDirty('email')) {
@@ -81,4 +98,38 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
+
+ public function upload(Request $request)
+    {
+        if ($request->file('image')) {
+            $path = $request->file('image')->store('tmp', 'public');
+
+            return response()->json(['path' => $path]);
+        }
+
+        return response()->json(['error' => 'No file uploaded'], 400);
+    }
+
+    public function revert(Request $request)
+    {
+        $path = $request->getContent();
+        if (Storage::disk('public')->exists($path)) {
+            Storage::disk('public')->delete($path);
+        }
+
+        return response()->json(['success' => true]);
+    }
+
+    public function load($filename)
+    {
+        return response()->file(storage_path('app/public/images/'.$filename));
+
+    }
+
+    // Handle fetching image (e.g., after upload or on form load)
+    public function fetch($filename)
+    {
+        return response()->json(['filename' => $filename, 'url' => Storage::url('images/'.$filename)]);
+    }
+
 }

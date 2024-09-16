@@ -45,13 +45,15 @@
                                 <tr>
                                     <th>Image:</th>
                                     <td>
-                                        @if ($user->image)
-                                            <img src="{{ asset('storage/images/resized/' . $user->image) }}" 
-                                                 alt="{{ $user->name }}" 
-                                                 style="width: 100px; height: auto;">
-                                        @else
-                                            <p>No image available</p>
-                                        @endif
+                                       @if ($user->image)
+                                                <a href="{{ asset('storage/' . $user->image) }}"
+                                                    data-fancybox="gallery" data-caption="{{ $user->name }}">
+                                                    <img src="{{ asset('storage/images/resized/' . basename($user->image)) }}"
+                                                        alt="{{ $user->name }}" style="height: 50px;">
+                                                </a>
+                                            @else
+                                                <p>No image available</p>
+                                            @endif
                                     </td>
                                 </tr>
                             </tbody>

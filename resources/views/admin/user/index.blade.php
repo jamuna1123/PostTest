@@ -53,14 +53,14 @@
                                             <td>{{ $user->email }}</td>
                                             <td>
                                                 @if ($user->image)
-                                                    <a href="{{ asset('storage/images/original/' . $user->image) }}"
-                                                        data-fancybox="gallery" data-caption="{{ $user->name }}">
-                                                        <img src="{{ asset('storage/images/resized/' . $user->image) }}"
-                                                            alt="{{ $user->name }}" style="height: 50px;">
-                                                    </a>
-                                                @else
-                                                    <p>No image available</p>
-                                                @endif
+                                                <a href="{{ asset('storage/' . $user->image) }}"
+                                                    data-fancybox="gallery" data-caption="{{ $user->name }}">
+                                                    <img src="{{ asset('storage/images/resized/' . basename($user->image)) }}"
+                                                        alt="{{ $user->name }}" style="height: 50px;">
+                                                </a>
+                                            @else
+                                                <p>No image available</p>
+                                            @endif
                                             </td>
                                             <td>{{ $user->phone }}</td>
                                             <td>{{ $user->address }}</td>

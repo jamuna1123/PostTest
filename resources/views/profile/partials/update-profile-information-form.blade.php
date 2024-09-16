@@ -68,9 +68,7 @@
                             <div class="mb-3">
                                 <label for="image"
                                     class="form-label"><strong>{{ __('Profile Image') }}:</strong></label>
-                                <input name="image" type="file"
-                                    class="dropify @error('image') is-invalid @enderror"
-                                    data-default-file="{{ isset($user->image) ? asset('storage/images/original/' . $user->image) : asset('storage/images/default-image.png') }}">
+                                <input type="file" name="image" id="image" class="form-control">
                                 @error('image')
                                     <div class="form-text text-danger">{{ $message }}</div>
                                 @enderror
