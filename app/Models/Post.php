@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
@@ -11,6 +12,7 @@ class Post extends Model
 {
     use HasFactory;
     use HasSlug;
+    use SoftDeletes;
 
     protected $fillable = ['title', 'slug', 'image', 'description', 'post_category_id', 'status', 'user_id', 'published_at'];
 
@@ -31,15 +33,34 @@ class Post extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public static function getNewsCategoryLists($parentCategoriesList = null)
+    // public static function getNewsCategoryLists($parentCategoriesList = null)
+    // {
+    //     $query = self::where('status', '=', '1')
+    //         ->orderBy('title');
+
+    //     $returnArray = $query->get()
+
+    //         ->pluck('title', 'id')
+    //         ->toArray();
+
+    //     return $returnArray;
+    // }
+
+    protected static function boot()
     {
-        $query = self::where('status', '=', '1')
-            ->orderBy('title');
+        parent::boot();
 
-        $returnArray = $query->get()
-            ->pluck('title', 'id')
-            ->toArray();
+        static::creating(function ($post) {
+            $post->created_by = auth()->id();
+        });
 
-        return $returnArray;
+        static::updating(function ($post) {
+            $post->updated_by = auth()->id();
+        });
+
+        static::deleting(function ($post) {
+            $post->deleted_by = auth()->id();
+            $post->save();
+        });
     }
 }

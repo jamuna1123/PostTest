@@ -6,10 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePostCategory;
 use App\Models\PostCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 use RealRashid\SweetAlert\Facades\Alert;
-use Illuminate\Support\Facades\File;
+
 class PostCategoryController extends Controller
 {
     public function index(Request $request)
@@ -46,24 +47,23 @@ class PostCategoryController extends Controller
         $postcategory->slug = $request->slug;
 
         if ($request->input('image')) {
-             $imagePath = $request->input('image');
-        $filename = basename($imagePath);
+            $imagePath = $request->input('image');
+            $filename = basename($imagePath);
 
-        // Define paths
-        $originalPath = 'images/original/'.$filename;
-        $resizedPath = 'images/resized/'.$filename;
+            // Define paths
+            $originalPath = 'images/original/'.$filename;
+            $resizedPath = 'images/resized/'.$filename;
 
-        // Move the file from 'tmp' to 'images'
-        Storage::disk('public')->move($imagePath, $originalPath);
+            // Move the file from 'tmp' to 'images'
+            Storage::disk('public')->move($imagePath, $originalPath);
 
-        // Resize the image using Intervention Image
-        $resizedImage = Image::make(storage_path('app/public/'.$originalPath))->resize(300, 200);
+            // Resize the image using Intervention Image
+            $resizedImage = Image::make(storage_path('app/public/'.$originalPath))->resize(300, 200);
 
-        // Store the resized image
-        Storage::disk('public')->put($resizedPath, (string) $resizedImage->encode());
+            // Store the resized image
+            Storage::disk('public')->put($resizedPath, (string) $resizedImage->encode());
 
-
-            $postcategory->image =  $originalPath;
+            $postcategory->image = $originalPath;
         }
         $postcategory->status = $request->has('status') ? 1 : 0;
 
@@ -116,24 +116,23 @@ class PostCategoryController extends Controller
                 }
             }
 
-        $imagePath = $request->input('image');
-        $filename = basename($imagePath);
+            $imagePath = $request->input('image');
+            $filename = basename($imagePath);
 
-        // Define paths
-        $originalPath = 'images/original/'.$filename;
-        $resizedPath = 'images/resized/'.$filename;
+            // Define paths
+            $originalPath = 'images/original/'.$filename;
+            $resizedPath = 'images/resized/'.$filename;
 
-        // Move the file from 'tmp' to 'images'
-        Storage::disk('public')->move($imagePath, $originalPath);
+            // Move the file from 'tmp' to 'images'
+            Storage::disk('public')->move($imagePath, $originalPath);
 
-        // Resize the image using Intervention Image
-        $resizedImage = Image::make(storage_path('app/public/'.$originalPath))->resize(300, 200);
+            // Resize the image using Intervention Image
+            $resizedImage = Image::make(storage_path('app/public/'.$originalPath))->resize(300, 200);
 
-        // Store the resized image
-        Storage::disk('public')->put($resizedPath, (string) $resizedImage->encode());
+            // Store the resized image
+            Storage::disk('public')->put($resizedPath, (string) $resizedImage->encode());
 
-
-            $postcategory->image =  $originalPath;
+            $postcategory->image = $originalPath;
         }
 
         $postcategory->status = $request->has('status') ? 1 : 0;
@@ -183,8 +182,7 @@ class PostCategoryController extends Controller
 
     }
 
-
-     public function upload(Request $request)
+    public function upload(Request $request)
     {
         if ($request->file('image')) {
             $path = $request->file('image')->store('tmp', 'public');
@@ -205,7 +203,7 @@ class PostCategoryController extends Controller
         return response()->json(['success' => true]);
     }
 
-     public function load($filename)
+    public function load($filename)
     {
         return response()->file(storage_path('app/public/images/'.$filename));
 

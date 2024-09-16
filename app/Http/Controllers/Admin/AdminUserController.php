@@ -4,10 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use Barryvdh\DomPDF\Facade\Pdf;
-use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Storage;
-use Intervention\Image\Facades\Image;
+use RealRashid\SweetAlert\Facades\Alert;
+
 class AdminUserController extends Controller
 {
     public function index()
@@ -18,14 +17,9 @@ class AdminUserController extends Controller
         return view('admin.user.index', compact('users'));
     }
 
-  
-
     /**
      * Store a newly created resource in storage.
      */
-  
-       
-
     public function show($id)
     {
 
@@ -49,6 +43,4 @@ class AdminUserController extends Controller
         return redirect()->route('users.index');
 
     }
-
-   
 }

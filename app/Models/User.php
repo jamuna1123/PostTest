@@ -47,4 +47,22 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($user) {
+            $user->created_by = auth()->id();
+        });
+
+        static::updating(function ($user) {
+            $user->updated_by = auth()->id();
+        });
+
+        static::deleting(function ($user) {
+            $user->deleted_by = auth()->id();
+            $user->save();
+        });
+    }
 }

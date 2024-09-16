@@ -23,7 +23,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-
     // Post Category
     Route::resource('/post-category', PostCategoryController::class);
     Route::post('upload', [PostCategoryController::class, 'upload'])->name('upload');
@@ -34,7 +33,7 @@ Route::middleware('auth')->group(function () {
     // post
     Route::patch('/post/update-status/{id}', [PostController::class, 'updateStatus'])->name('post.update-status');
     Route::resource('/post', PostController::class);
-     Route::post('upload', [PostController::class, 'upload'])->name('upload');
+    Route::post('upload', [PostController::class, 'upload'])->name('upload');
     Route::delete('revert', [PostController::class, 'revert'])->name('revert');
     Route::get('/load/{filename}', [PostController::class, 'load'])->name('load');
     Route::get('/fetch/{filename}', [PostController::class, 'fetch'])->name('fetch');

@@ -45,10 +45,10 @@
         <select class="form-select @error('post_category_id') is-invalid @enderror" name="post_category_id"
             id="post_category_id">
             <option value="">Select Post Category</option>
-            @foreach ($parentCategoriesList as $id => $title)
-                <option value="{{ $id }}"
-                    {{ isset($post) && $post->post_category_id == $id ? 'selected' : '' }}>
-                    {{ $title }}
+            @foreach ($parentCategoriesList as $category)
+                <option value="{{$category->id }}"
+                    {{ isset($post) && $post->post_category_id == $category->id ? 'selected' : '' }}>
+                    {{ $category->title }}
                 </option>
             @endforeach
         </select>
@@ -114,7 +114,7 @@
 
     <!-- Image Input -->
     <div class="mb-3">
-        <label for="image" class="form-label"><strong>Image:@if (false)
+        <label for="image" class="form-label"><strong>Image:@if (true)
                     <!-- Replace 'false' with your condition for the required field if any -->
                     <span class="text-danger">*</span>
                 @endif
@@ -125,14 +125,15 @@
             <div class="form-text text-danger">{{ $message }}</div>
         @enderror
 
-
-
     </div>
 
     <!-- Status Field -->
     <div class="mb-3">
         <label for="status" class="form-label">
-            <strong>Status:</strong>
+            <strong>Status:@if (true)
+                    <!-- Replace 'false' with your condition for the required field if any -->
+                    <span class="text-danger">*</span>
+                @endif</strong>
         </label>
         <div class="form-check form-switch">
             <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" role="switch"

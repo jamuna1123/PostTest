@@ -46,7 +46,8 @@
     {{-- <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" /> --}}
     {{-- <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet" /> --}}
     {{-- filepond js --}}
-    <script src="{{ asset('Backend/plugins/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js') }}">
+    <script
+        src="{{ asset('Backend/plugins/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js') }}">
     </script>
     <script src="{{ asset('Backend/plugins/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js') }}">
     </script>
@@ -56,6 +57,7 @@
 <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
 <script src="https://unpkg.com/filepond@^4/dist/filepond.js"></script> --}}
     {{-- tinymce --}}
+
     {{-- <script src="https://cdn.tiny.cloud/1/lz3stx6dwxywl56d146m3msq6l66bfvqz2iyl49ikdndki4k/tinymce/6/tinymce.min.js"
         referrerpolicy="origin"></script> --}}
     <script src="{{ asset('Backend/plugins/tinymce/js/tinymce/tinymce.min.js') }}"></script>

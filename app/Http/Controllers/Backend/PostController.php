@@ -30,7 +30,7 @@ class PostController extends Controller
     {
         $post = new Post;
 
-        $parentCategoriesList = PostCategory::getNewsCategoryLists(null);
+        $parentCategoriesList = PostCategory::all();
 
         $users = User::all();
 
@@ -52,25 +52,24 @@ class PostController extends Controller
         $post->user_id = $request->user_id;
         $post->published_at = $request->published_at ? Carbon::parse($request->published_at) : Carbon::now();
 
-         if ($request->input('image')) {
-             $imagePath = $request->input('image');
-        $filename = basename($imagePath);
+        if ($request->input('image')) {
+            $imagePath = $request->input('image');
+            $filename = basename($imagePath);
 
-        // Define paths
-        $originalPath = 'images/original/'.$filename;
-        $resizedPath = 'images/resized/'.$filename;
+            // Define paths
+            $originalPath = 'images/original/'.$filename;
+            $resizedPath = 'images/resized/'.$filename;
 
-        // Move the file from 'tmp' to 'images'
-        Storage::disk('public')->move($imagePath, $originalPath);
+            // Move the file from 'tmp' to 'images'
+            Storage::disk('public')->move($imagePath, $originalPath);
 
-        // Resize the image using Intervention Image
-        $resizedImage = Image::make(storage_path('app/public/'.$originalPath))->resize(300, 200);
+            // Resize the image using Intervention Image
+            $resizedImage = Image::make(storage_path('app/public/'.$originalPath))->resize(300, 200);
 
-        // Store the resized image
-        Storage::disk('public')->put($resizedPath, (string) $resizedImage->encode());
+            // Store the resized image
+            Storage::disk('public')->put($resizedPath, (string) $resizedImage->encode());
 
-
-            $post->image =  $originalPath;
+            $post->image = $originalPath;
         }
 
         $post->status = $request->has('status') ? 1 : 0;
@@ -91,8 +90,8 @@ class PostController extends Controller
         $post = Post::findOrFail($id);
 
         $users = User::all();
-        $parentCategoriesList = PostCategory::getNewsCategoryLists(null);
-
+        // $parentCategoriesList = PostCategory::getNewsCategoryLists(null);
+        $parentCategoriesList = PostCategory::all();
         $post->published_at = $post->published_at ? Carbon::parse($post->published_at) : null;
 
         return view('backend.post.edit', compact('post', 'users', 'parentCategoriesList'));
@@ -117,7 +116,7 @@ class PostController extends Controller
 
         $post->slug = $request->slug;
 
-         if ($request->input('image')) {
+        if ($request->input('image')) {
             // Delete old images
             if ($post->image) {
                 $oldOriginalImagePath = 'images/original/'.$post->image;
@@ -131,26 +130,25 @@ class PostController extends Controller
                 }
             }
 
-             if ($request->input('image')) {
-             $imagePath = $request->input('image');
-        $filename = basename($imagePath);
+            if ($request->input('image')) {
+                $imagePath = $request->input('image');
+                $filename = basename($imagePath);
 
-        // Define paths
-        $originalPath = 'images/original/'.$filename;
-        $resizedPath = 'images/resized/'.$filename;
+                // Define paths
+                $originalPath = 'images/original/'.$filename;
+                $resizedPath = 'images/resized/'.$filename;
 
-        // Move the file from 'tmp' to 'images'
-        Storage::disk('public')->move($imagePath, $originalPath);
+                // Move the file from 'tmp' to 'images'
+                Storage::disk('public')->move($imagePath, $originalPath);
 
-        // Resize the image using Intervention Image
-        $resizedImage = Image::make(storage_path('app/public/'.$originalPath))->resize(300, 200);
+                // Resize the image using Intervention Image
+                $resizedImage = Image::make(storage_path('app/public/'.$originalPath))->resize(300, 200);
 
-        // Store the resized image
-        Storage::disk('public')->put($resizedPath, (string) $resizedImage->encode());
+                // Store the resized image
+                Storage::disk('public')->put($resizedPath, (string) $resizedImage->encode());
 
-
-            $post->image =  $originalPath;
-        }
+                $post->image = $originalPath;
+            }
         }
         $post->status = $request->has('status') ? 1 : 0;
         $post->save();
@@ -200,7 +198,6 @@ class PostController extends Controller
 
     }
 
-
     public function upload(Request $request)
     {
         if ($request->file('image')) {
@@ -222,7 +219,7 @@ class PostController extends Controller
         return response()->json(['success' => true]);
     }
 
-     public function load($filename)
+    public function load($filename)
     {
         return response()->file(storage_path('app/public/images/'.$filename));
 

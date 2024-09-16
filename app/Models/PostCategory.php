@@ -3,12 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
 class PostCategory extends Model
 {
     use HasSlug;
+    use SoftDeletes;
 
     protected $fillable = ['title', 'slug', 'image', 'description', 'parent_id', 'status'];
 
@@ -46,4 +48,21 @@ class PostCategory extends Model
     //         ->get(); // Return the collection of categories
     // }
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($category) {
+            $category->created_by = auth()->id();
+        });
+
+        static::updating(function ($category) {
+            $category->updated_by = auth()->id();
+        });
+
+        static::deleting(function ($category) {
+            $category->deleted_by = auth()->id();
+            $category->save();
+        });
+    }
 }
