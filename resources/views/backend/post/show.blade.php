@@ -46,7 +46,11 @@
                                     </tr>
                                     <tr>
                                         <th>Category Name:</th>
-                                        <td>{{ $post->postCategory->title }}</td>
+                                        <td>  @if ($post->postCategory)
+                                                    {{ $post->postCategory->title }}
+                                                @else
+                                                    None
+                                                @endif</td>
                                     </tr>
                                     <tr>
                                         <th>Publish At:</th>
@@ -79,9 +83,9 @@
                         </div>
 
                         <div class="d-flex justify-content-start mt-3">
-                            <a href="{{ route('post.index') }}" class="btn btn-secondary btn-sm me-2">Back</a>
-                            <a href="{{ route('post.create') }}" class="btn btn-primary btn-sm me-2">Create</a>
-                            <a href="{{ route('post.edit', $post->id) }}" class="btn btn-success btn-sm">Edit</a>
+                            <a href="{{ route('post.index') }}" class="btn btn-secondary  me-2">Back</a>
+                            <a href="{{ route('post.create') }}" class="btn btn-primary  me-2">Create</a>
+                            <a href="{{ route('post.edit', $post->id) }}" class="btn btn-success">Edit</a>
                         </div>
                     </div>
                 </div>

@@ -59,13 +59,13 @@
                             </tbody>
                         </table>
                         <div class="d-flex justify-content-start mt-3">
-                            <a href="{{ route('post-category.index') }}" class="btn btn-secondary btn-sm me-2">
+                            <a href="{{ route('post-category.index') }}" class="btn btn-secondary me-2">
                                 Back
                             </a>
-                            <a href="{{ route('post-category.create') }}" class="btn btn-primary btn-sm me-2">
+                            <a href="{{ route('post-category.create') }}" class="btn btn-primary  me-2">
                                 Create
                             </a>
-                            <a href="{{ route('post-category.edit', $postcategory->id) }}" class="btn btn-success btn-sm">
+                            <a href="{{ route('post-category.edit', $postcategory->id) }}" class="btn btn-success">
                                 Edit
                             </a>
                         </div>

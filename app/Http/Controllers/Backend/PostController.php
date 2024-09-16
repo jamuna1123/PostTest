@@ -30,7 +30,7 @@ class PostController extends Controller
     {
         $post = new Post;
 
-        $parentCategoriesList = PostCategory::all();
+        $parentCategoriesList = PostCategory::withTrashed()->get();
 
         $users = User::all();
 
@@ -91,7 +91,7 @@ class PostController extends Controller
 
         $users = User::all();
         // $parentCategoriesList = PostCategory::getNewsCategoryLists(null);
-        $parentCategoriesList = PostCategory::all();
+        $parentCategoriesList = PostCategory::withTrashed()->get();
         $post->published_at = $post->published_at ? Carbon::parse($post->published_at) : null;
 
         return view('backend.post.edit', compact('post', 'users', 'parentCategoriesList'));
@@ -184,9 +184,10 @@ class PostController extends Controller
     {
 
         $post = Post::findOrFail($id);
-
+//  $category = PostCategory::withTrashed()->findOrFail($id);
         return view('backend.post.show', compact('post'));
     }
+    
 
     public function updateStatus(Request $request, $id)
     {
