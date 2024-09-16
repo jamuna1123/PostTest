@@ -116,7 +116,7 @@ class PostCategoryController extends Controller
                 }
             }
 
-             $imagePath = $request->input('image');
+        $imagePath = $request->input('image');
         $filename = basename($imagePath);
 
         // Define paths

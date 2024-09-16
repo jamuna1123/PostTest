@@ -39,14 +39,23 @@
     {{-- use toggle --}}
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-   {{-- filepond css --}}
-<link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
-<link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet" />
-{{-- filepond js --}}
-<script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
+    {{-- filepond css --}}
+    <link rel="stylesheet" href="{{ asset('Backend/plugins/filepond/dist/filepond.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('Backend/plugins/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css') }}">
+    {{-- <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" /> --}}
+    {{-- <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet" /> --}}
+    {{-- filepond js --}}
+    <script src="{{ asset('Backend/plugins/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js') }}">
+    </script>
+    <script src="{{ asset('Backend/plugins/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js') }}">
+    </script>
+    <script src="{{ asset('Backend/plugins/filepond/dist/filepond.js') }}"></script>
+
+    {{-- <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
 <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
-<script src="https://unpkg.com/filepond@^4/dist/filepond.js"></script>
-{{-- tinymce --}}
+<script src="https://unpkg.com/filepond@^4/dist/filepond.js"></script> --}}
+    {{-- tinymce --}}
     {{-- <script src="https://cdn.tiny.cloud/1/lz3stx6dwxywl56d146m3msq6l66bfvqz2iyl49ikdndki4k/tinymce/6/tinymce.min.js"
         referrerpolicy="origin"></script> --}}
     <script src="{{ asset('Backend/plugins/tinymce/js/tinymce/tinymce.min.js') }}"></script>
@@ -57,13 +66,13 @@
     <link rel="stylesheet" href="{{ asset('Backend/plugins/sweetalert2/sweetalert2.min.css') }}">
     <script src="{{ asset('Backend/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
 
-   
+
 
     <!-- Fancybox CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" />
     <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script>
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="{{asset('Backend/plugins/fontawesome-free/css/all.min.css')}}">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{{ asset('Backend/plugins/fontawesome-free/css/all.min.css') }}">
 
     @stack('styles')
 
@@ -143,7 +152,7 @@
     </script> <!-- apexcharts -->
     <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.min.js"
         integrity="sha256-+vh8GkaU7C9/wbSLIcwq82tQ2wTf44aOHA8HlBMwRI8=" crossorigin="anonymous"></script> <!-- ChartJS -->
-    
+
     <script src="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/js/jsvectormap.min.js"
         integrity="sha256-/t1nN2956BT869E6H4V1dnt0X5pAQHPytli+1nTZm2Y=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/maps/world.js"
@@ -210,7 +219,7 @@
             content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:16px }'
         });
     </script>
-   
+
 
 </body><!--end::Body-->
 
