@@ -1,13 +1,13 @@
        <div class="card-body">
            <div class="mb-3">
-               <label for="title" class="form-label"><strong>Title: @if (true)
+               <label for="title" class="form-label"><strong>Category Name: @if (true)
                            <!-- Replace 'false' with your condition for the required field if any -->
                            <span class="text-danger">*</span>
                        @endif
                    </strong>
                </label>
                <input type="text" name="title" class="form-control @error('title') is-invalid @enderror" id="title"
-                   placeholder="Title" value="{{ old('title', $postcategory->title ?? '') }}">
+                   placeholder="Category Name" value="{{ old('title', $postcategory->title ?? '') }}">
                @error('title')
                    <div class="form-text text-danger">{{ $message }}</div>
                @enderror
@@ -19,7 +19,7 @@
                    </strong>
                </label>
                <input type="text" name="slug" class="form-control @error('slug') is-invalid @enderror"
-                   id="slug" placeholder="Slug" value="{{ old('slug', $postcategory->slug ?? '') }}">
+                   id="slug" placeholder="Slug will be auto generate" value="{{ old('slug', $postcategory->slug ?? '') }}">
                @error('slug')
                    <div class="form-text text-danger">{{ $message }}</div>
                @enderror
@@ -55,7 +55,7 @@
 
            <div class="mb-3">
                <label for="status" class="form-label"><strong>Status:
-                       @if (true)
+                       @if (false)
                            <span class="text-danger">*</span>
                        @endif
                    </strong></label>

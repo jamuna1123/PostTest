@@ -30,7 +30,7 @@ class PostController extends Controller
     {
         $post = new Post;
 
-        $parentCategoriesList = PostCategory::withTrashed()->get();
+        $parentCategoriesList = PostCategory::getNewsCategoryLists(null);
 
         $users = User::all();
 
@@ -49,7 +49,7 @@ class PostController extends Controller
 
         $post->slug = $request->slug;
         $post->post_category_id = $request->post_category_id;
-        $post->user_id = $request->user_id;
+      
         $post->published_at = $request->published_at ? Carbon::parse($request->published_at) : Carbon::now();
 
         if ($request->input('image')) {
@@ -90,8 +90,8 @@ class PostController extends Controller
         $post = Post::findOrFail($id);
 
         $users = User::all();
-        // $parentCategoriesList = PostCategory::getNewsCategoryLists(null);
-        $parentCategoriesList = PostCategory::withTrashed()->get();
+        $parentCategoriesList = PostCategory::getNewsCategoryLists(null);
+     
         $post->published_at = $post->published_at ? Carbon::parse($post->published_at) : null;
 
         return view('backend.post.edit', compact('post', 'users', 'parentCategoriesList'));
@@ -108,7 +108,7 @@ class PostController extends Controller
         $post->title = $request->title;
         $post->description = $request->description;
         $post->post_category_id = $request->post_category_id; // Add parent_id
-        $post->user_id = $request->user_id;
+   
 
         $post->published_at = $request->published_at
            ? Carbon::parse($request->published_at)
@@ -184,10 +184,10 @@ class PostController extends Controller
     {
 
         $post = Post::findOrFail($id);
-//  $category = PostCategory::withTrashed()->findOrFail($id);
+
+        //  $category = PostCategory::withTrashed()->findOrFail($id);
         return view('backend.post.show', compact('post'));
     }
-    
 
     public function updateStatus(Request $request, $id)
     {

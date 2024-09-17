@@ -32,11 +32,11 @@ class ProfileController extends Controller
         $request->user()->fill($request->validated());
 
         // Handle the profile image
-         if ($request->input('image')) {
+        if ($request->input('image')) {
             // Delete old images
             if ($request->user()->image) {
-                $oldOriginalImagePath = 'images/original/'. $request->user()->image;
-                $oldResizedImagePath = 'images/resized/'. $request->user()->image;
+                $oldOriginalImagePath = 'images/original/'.$request->user()->image;
+                $oldResizedImagePath = 'images/resized/'.$request->user()->image;
 
                 if (Storage::exists($oldOriginalImagePath)) {
                     Storage::delete($oldOriginalImagePath);
@@ -63,7 +63,7 @@ class ProfileController extends Controller
                 // Store the resized image
                 Storage::disk('public')->put($resizedPath, (string) $resizedImage->encode());
 
-                 $request->user()->image = $originalPath;
+                $request->user()->image = $originalPath;
             }
         }
 
@@ -99,7 +99,7 @@ class ProfileController extends Controller
         return Redirect::to('/');
     }
 
- public function upload(Request $request)
+    public function upload(Request $request)
     {
         if ($request->file('image')) {
             $path = $request->file('image')->store('tmp', 'public');
@@ -131,5 +131,4 @@ class ProfileController extends Controller
     {
         return response()->json(['filename' => $filename, 'url' => Storage::url('images/'.$filename)]);
     }
-
 }

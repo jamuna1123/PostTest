@@ -1,4 +1,27 @@
 
+
+   <!-- for delete conformation  -->
+        <script>
+            function handleDelete(id) {
+                // Trigger SweetAlert2 for confirmation
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Set the form action to the correct delete route
+                        var form = document.getElementById('deletePostForm');
+                        // Submit the form
+                        form.submit();
+                    }
+                });
+            }
+        </script>
  {{-- post-category toggle status update --}}
  
  <script>

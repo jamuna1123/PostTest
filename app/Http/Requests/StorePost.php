@@ -30,7 +30,7 @@ class StorePost extends FormRequest
             'image' => 'nullable|string', // Image is optional
             'description' => 'nullable|string',
             'post_category_id' => 'required|exists:post_categories,id',
-            'user_id' => 'required|exists:users,id',
+            // 'user_id' => 'nullable|exists:users,id',
             'status' => 'boolean',
         ];
 

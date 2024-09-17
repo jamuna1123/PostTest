@@ -45,10 +45,11 @@
                             <!--end::Body-->
                             <!--begin::Footer-->
                             <div class="card-footer">
-                                   <a href="{{ route('post-category.index') }}" class="btn btn-secondary">
-                                Cancel</a>
-                                <button type="submit" class="btn btn-primary">
-                                    Submit</button>
+                                 
+                                <button type="submit" class="btn btn-primary"><i class="fas fa-edit"></i>
+                                    Update</button>
+                                      <a href="{{ route('post-category.index') }}" class="btn btn-warning">
+                             <i class="fas fa-times-circle"></i>    Cancel</a>
                              
                             </div>
                             <!--end::Footer-->

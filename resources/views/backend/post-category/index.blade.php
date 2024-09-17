@@ -29,10 +29,10 @@
                     <div class="card mb-4">
 
                         <div class="card-header">
-                            <h3 class="card-title">Post Category List</h3>
-                            <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-1">
-                                <a class="btn btn-primary" href="{{ route('post-category.create') }}" id="createNewProduct">
-                                    <i class="fa fa-plus"></i> Add Post Category
+                            {{-- <h3 class="card-title">Post Category List</h3> --}}
+                            <div class="d-grid gap-2 d-md-flex  mb-1">
+                                <a class="btn btn-success" href="{{ route('post-category.create') }}" id="createNewProduct">
+                                    <i class="fa fa-plus"></i> Create
                                 </a>
                             </div>
                         </div>
@@ -42,21 +42,40 @@
                                 <thead>
                                     <tr>
                                         {{-- <th style="width: 60px">No</th> --}}
-                                        <th>Title</th>
-                                        <th>Slug</th>
-                                        <th>Image</th>
+                                        <th style="width: 280px">Action</th>
+                                        <th>Category Name</th>
+                                        <th>Category Image</th>
+            
                                         <th>Status</th>
 
-                                        <th style="width: 280px">Action</th>
+                                      
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @forelse ($postCategories as $postCategory)
                                         <tr class="align-middle">
                                             {{-- <td>{{ $loop->iteration }}</td> --}}
+                                             <td>
+                                                <a href="{{ route('post-category.show', $postCategory->id) }}"
+                                                    class="btn btn-success btn-sm"><i class="fas fa-eye"></i>
+                                                    </a>
+                                                <a href="{{ route('post-category.edit', $postCategory->id) }}"
+                                                    class="btn btn-primary btn-sm"><i class="fas fa-pencil-alt"></i>
+                                                    </a>
+                                                <a class="btn btn-danger btn-sm"
+                                                    onclick="handleDelete({{ $postCategory->id }})">
+                                                    <i class="fas fa-trash"></i>
+                                                </a>
+                                                <form id="deletePostForm" action="{{ route('post-category.destroy', $postCategory->id) }}" method="POST"
+                                                    style="display: none;">
+                                                    @csrf
+                                                    @method('DELETE')
+
+
+                                                </form>
+                                            </td>
                                             <td>{{ $postCategory->title }}</td>
-                                            <td>{{ $postCategory->slug }}</td>
-                                            <td>
+                                              <td>
                                                 @if ($postCategory->image)
                                                     <a href="{{ asset('storage/' . $postCategory->image) }}"
                                                         data-fancybox="gallery" data-caption="{{ $postCategory->title }}">
@@ -67,6 +86,8 @@
                                                     <a>No image available</a>
                                                 @endif
                                             </td>
+                                           
+                                          
 
                                             <td>
                                                 <div class="form-check form-switch">
@@ -80,25 +101,7 @@
                                             </td>
 
 
-                                            <td>
-                                                <a href="{{ route('post-category.show', $postCategory->id) }}"
-                                                    class="btn btn-info btn-sm text-white"><i class="fas fa-folder"></i>
-                                                    View</a>
-                                                <a href="{{ route('post-category.edit', $postCategory->id) }}"
-                                                    class="btn btn-success btn-sm"><i class="fas fa-pencil-alt"></i>
-                                                    Edit</a>
-                                                <a class="btn btn-danger btn-sm"
-                                                    onclick="handleDelete({{ $postCategory->id }})">
-                                                    <i class="fas fa-trash"></i> Delete
-                                                </a>
-                                                <form id="deletePostForm" action="" method="POST"
-                                                    style="display: none;">
-                                                    @csrf
-                                                    @method('DELETE')
-
-
-                                                </form>
-                                            </td>
+                                           
                                         </tr>
                                     @empty
                                         <tr>
@@ -139,27 +142,4 @@
                 </div>
             </div>
         @endsection
-        <!-- for delete conformation  -->
-        <script>
-            function handleDelete(id) {
-                // Trigger SweetAlert2 for confirmation
-                Swal.fire({
-                    title: 'Are you sure?',
-                    text: "You won't be able to revert this!",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, delete it!'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        // Set the form action to the correct delete route
-                        var form = document.getElementById('deletePostForm');
-                        form.action = '/post-category/' + id; // Correct route
-
-                        // Submit the form
-                        form.submit();
-                    }
-                });
-            }
-        </script>
+     

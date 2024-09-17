@@ -28,6 +28,10 @@ class PostCategory extends Model
     {
         return $this->belongsTo(PostCategory::class, 'parent_id');
     }
+      public function username()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
 
     public static function getNewsCategoryLists($parentCategoriesList = null)
     {

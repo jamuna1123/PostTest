@@ -45,10 +45,10 @@
         <select class="form-select @error('post_category_id') is-invalid @enderror" name="post_category_id"
             id="post_category_id">
             <option value="">Select Post Category</option>
-            @foreach ($parentCategoriesList as $category)
-                <option value="{{$category->id }}"
-                    {{ isset($post) && $post->post_category_id == $category->id ? 'selected' : '' }}>
-                    {{ $category->title }}
+            @foreach ($parentCategoriesList as $id => $title)
+                <option value="{{$id }}"
+                    {{ isset($post) && $post->post_category_id == $id ? 'selected' : '' }}>
+                    {{ $title }}
                 </option>
             @endforeach
         </select>
@@ -58,7 +58,7 @@
     </div>
 
     <!-- User Field -->
-    <div class="mb-3">
+    {{-- <div class="mb-3">
         <label for="user_id" class="form-label">
             <strong>User:
                 @if (true)
@@ -77,7 +77,7 @@
         @error('user_id')
             <div class="form-text text-danger">{{ $message }}</div>
         @enderror
-    </div>
+    </div> --}}
 
     <!-- Publish Date Field -->
     <div class="mb-3">
@@ -100,7 +100,7 @@
     <div class="mb-3">
         <label for="description" class="form-label">
             <strong>Description:
-                @if (true)
+                @if (false)
                     <span class="text-danger">*</span>
                 @endif
             </strong>
@@ -114,7 +114,7 @@
 
     <!-- Image Input -->
     <div class="mb-3">
-        <label for="image" class="form-label"><strong>Image:@if (true)
+        <label for="image" class="form-label"><strong>Image:@if (false)
                     <!-- Replace 'false' with your condition for the required field if any -->
                     <span class="text-danger">*</span>
                 @endif
@@ -130,7 +130,7 @@
     <!-- Status Field -->
     <div class="mb-3">
         <label for="status" class="form-label">
-            <strong>Status:@if (true)
+            <strong>Status:@if (false)
                     <!-- Replace 'false' with your condition for the required field if any -->
                     <span class="text-danger">*</span>
                 @endif</strong>

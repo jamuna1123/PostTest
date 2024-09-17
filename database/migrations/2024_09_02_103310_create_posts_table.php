@@ -18,7 +18,6 @@ return new class extends Migration
             $table->longText('description')->nullable();
             $table->timestamp('published_at')->nullable();
             $table->foreignId('post_category_id')->constrained('post_categories')->onDelete('cascade');
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->string('image')->nullable();
             $table->boolean('status')->default(1);
             $table->unsignedBigInteger('created_by')->nullable();

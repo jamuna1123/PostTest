@@ -21,7 +21,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-     Route::post('upload', [ProfileController::class, 'upload'])->name('upload');
+    Route::post('upload', [ProfileController::class, 'upload'])->name('upload');
     Route::delete('revert', [ProfileController::class, 'revert'])->name('revert');
     Route::get('/load/{filename}', [ProfileController::class, 'load'])->name('load');
     Route::get('/fetch/{filename}', [ProfileController::class, 'fetch'])->name('fetch');

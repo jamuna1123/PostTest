@@ -30,9 +30,10 @@
                             @csrf
                             @include('backend.post.field')
                             <div class="card-footer">
-                                <a href="{{ route('post.index') }}" class="btn btn-secondary">Cancel</a>
-                                <button type="submit" class="btn btn-primary">
-                                    Submit</button>
+                               
+                                <button type="submit" class="btn btn-success"> <i class="fas fa-save"></i>
+                                    Create</button>
+                                     <a href="{{ route('post.index') }}" class="btn btn-warning"><i class="fas fa-times-circle"></i> Cancel</a>
                                 
                             </div>
                         </form>

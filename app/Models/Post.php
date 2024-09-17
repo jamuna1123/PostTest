@@ -25,26 +25,27 @@ class Post extends Model
 
     public function postCategory()
     {
-        return $this->belongsTo(PostCategory::class)->withTrashed();
+        return $this->belongsTo(PostCategory::class);
     }
 
     public function username()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class, 'created_by');
     }
+    
 
-    // public static function getNewsCategoryLists($parentCategoriesList = null)
-    // {
-    //     $query = self::where('status', '=', '1')
-    //         ->orderBy('title');
+    public static function getNewsCategoryLists($parentCategoriesList = null)
+    {
+        $query = self::where('status', '=', '1')
+            ->orderBy('title');
 
-    //     $returnArray = $query->get()
+        $returnArray = $query->get()
 
-    //         ->pluck('title', 'id')
-    //         ->toArray();
+            ->pluck('title', 'id')
+            ->toArray();
 
-    //     return $returnArray;
-    // }
+        return $returnArray;
+    }
 
     protected static function boot()
     {

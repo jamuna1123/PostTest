@@ -5,12 +5,12 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-6">
-                    <h3 class="mb-0">Post</h3>
+                    <h3 class="mb-0">Post Detail</h3>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-end">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Post</li>
+                        <li class="breadcrumb-item active" aria-current="page">Post Detail</li>
                     </ol>
                 </div>
             </div>
@@ -21,30 +21,22 @@
         <div class="row mt-4">
             <div class="col-lg-12">
                 <div class="card">
-                    <div class="card-header">
+                    {{-- <div class="card-header">
                         <div class="card-title">Post Details</div>
-                    </div>
-                    <div class="card-body mt-3">
+                    </div> --}}
+                    <div class="card-body mt-1">
                         <div class="table-responsive">
                             <table class="table table-striped">
                                 <tbody>
                                     <tr>
-                                        <th style="width: 30%">Title:</th>
+                                        <th style="width: 30%">Post Title:</th>
                                         <td>{{ $post->title }}</td>
                                     </tr>
                                     <tr>
                                         <th>Slug:</th>
                                         <td>{{ $post->slug }}</td>
                                     </tr>
-                                    <tr>
-                                        <th>Status:</th>
-                                        <td>{{ $post->status ? 'published' : 'unpublished' }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>User Name:</th>
-                                        <td>{{ $post->username->name }}</td>
-                                    </tr>
-                                    <tr>
+                                     <tr>
                                         <th>Category Name:</th>
                                         <td>
                                             @if ($post->postCategory)
@@ -53,12 +45,9 @@
                                                 None
                                             @endif
                                         </td>
+                                         
                                     </tr>
-                                    <tr>
-                                        <th>Publish At:</th>
-                                        <td>{{ $post->published_at }}</td>
-                                    </tr>
-                                    <tr>
+                                       <tr>
                                         <th>Description:</th>
                                         <td>
                                             <div class="text-truncate" style="max-width: 100%; white-space: pre-wrap;">
@@ -66,6 +55,24 @@
                                             </div>
                                         </td>
                                     </tr>
+                                    <tr>
+                                        <th>Status:</th>
+                                        <td> <div class="form-check form-switch">
+                                                    <input class="form-check-input statuspost-toggle" type="checkbox"
+                                                        data-id="{{ $post->id }}"
+                                                        {{ $post->status ? 'checked' : '' }}>
+                                                    <label class="form-check-label" id="statusLabel{{ $post->id }}">
+                                                        {{-- {{ $posts->status ? 'Active' : 'Inactive' }} --}}
+                                                    </label>
+                                                </div></td>
+                                    </tr>
+                                   
+                                   
+                                    <tr>
+                                        <th>Publish At:</th>
+                                        <td>{{ $post->published_at }}</td>
+                                    </tr>
+                                 
                                     <tr>
                                         <th>Image:</th>
                                         <td>
@@ -79,15 +86,39 @@
                                                 <p>No image available</p>
                                             @endif
                                         </td>
+
+                                         <tr>
+                                    <th>Created At:</th>
+                                    <td>{{ $post->created_at}}</td>
+                                </tr>
+                                  <tr>
+                                    <th>Created By:</th>
+                                    <td>{{$post->username->name}}</td>
+                                </tr>
+                                  <tr>
+                                    
+                                    <th>Updated At:</th>
+                                    <td>{{$post->updated_at}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Updated By:</th>
+                                     <td>{{$post->username->name}}</td>
+                                </tr>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
 
                         <div class="d-flex justify-content-start mt-3">
-                            <a href="{{ route('post.index') }}" class="btn btn-secondary  me-2">Back</a>
-                            <a href="{{ route('post.create') }}" class="btn btn-primary  me-2">Create</a>
-                            <a href="{{ route('post.edit', $post->id) }}" class="btn btn-success">Edit</a>
+                            <a href="{{ route('post.index') }}" class="btn btn-warning me-2"><i class="fas fa-arrow-left"></i>
+                                Back
+                            </a>
+                            <a href="{{ route('post.create') }}" class="btn btn-success  me-2"> <i class="fas fa-plus"></i>
+                                Create
+                            </a>
+                            <a href="{{ route('post.edit', $post->id) }}" class="btn btn-primary">
+                               <i class="fas fa-edit"></i> Update
+                            </a>
                         </div>
                     </div>
                 </div>

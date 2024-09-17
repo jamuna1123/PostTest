@@ -31,10 +31,11 @@
                             @include('backend.post-category.field')
                              
                             <div class="card-footer">
-                                 <a href="{{ route('post-category.index') }}" class="btn btn-secondary">Cancel</a>
-                                <button type="submit" class="btn btn-primary">
+                                 
+                                <button type="submit" class="btn btn-success"><i class="fas fa-save"></i>
            
-                                    Submit</button>
+                                    Create</button>
+                                    <a href="{{ route('post-category.index') }}" class="btn btn-warning"><i class="fas fa-times-circle"></i> Cancel</a>
                                
                             </div>
                         </form>
