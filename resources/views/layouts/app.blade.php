@@ -68,8 +68,6 @@
     <link rel="stylesheet" href="{{ asset('Backend/plugins/sweetalert2/sweetalert2.min.css') }}">
     <script src="{{ asset('Backend/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
 
-
-
     <!-- Fancybox CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" />
     <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script>

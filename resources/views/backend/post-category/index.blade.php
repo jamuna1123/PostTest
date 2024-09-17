@@ -80,8 +80,6 @@
                                             </td>
 
 
-
-
                                             <td>
                                                 <a href="{{ route('post-category.show', $postCategory->id) }}"
                                                     class="btn btn-info btn-sm text-white"><i class="fas fa-folder"></i> View</a>

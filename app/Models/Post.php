@@ -25,7 +25,7 @@ class Post extends Model
 
     public function postCategory()
     {
-        return $this->belongsTo(PostCategory::class, 'post_category_id');
+        return $this->belongsTo(PostCategory::class)->withTrashed();
     }
 
     public function username()
