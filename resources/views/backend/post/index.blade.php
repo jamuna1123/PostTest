@@ -61,13 +61,13 @@
                                             </td>
                                             <td>
                                                 @if ($posts->image)
-                                                   <a href="{{ asset('storage/' . $posts->image) }}"
+                                                    <a href="{{ asset('storage/' . $posts->image) }}"
                                                         data-fancybox="gallery" data-caption="{{ $posts->title }}">
                                                         <img src="{{ asset('storage/images/resized/' . basename($posts->image)) }}"
                                                             alt="{{ $posts->title }}" style="height: 50px;">
                                                     </a>
                                                 @else
-                                                    <p>No image available</p>
+                                                    <a>No image available</a>
                                                 @endif
                                             </td>
 
@@ -90,14 +90,23 @@
                                             </td>
                                             <td>
                                                 <a href="{{ route('post.show', $posts->id) }}"
-                                                    class="btn btn-info btn-sm text-white"><i class="fas fa-folder"></i> View</a>
+                                                    class="btn btn-info btn-sm text-white"><i class="fas fa-folder"></i>
+                                                    View</a>
                                                 <a href="{{ route('post.edit', $posts->id) }}"
-                                                    class="btn btn-success btn-sm"><i class="fas fa-pencil-alt"></i> Edit</a>
-                                                <a class="btn btn-danger btn-sm"
-                                                    onclick="handleDelete({{ $posts->id }})" data-bs-toggle="modal"
-                                                    data-bs-target="#modal-danger"><i class="fas fa-trash"></i>
-                                                    Delete
-                                                </a>
+                                                    class="btn btn-success btn-sm"><i class="fas fa-pencil-alt"></i>
+                                                    Edit</a>
+                                                        <a class="btn btn-danger btn-sm"
+                                                        onclick="handleDelete({{ $posts->id }})">
+                                                        <i class="fas fa-trash"></i> Delete
+                                                    </a>
+                                                <form id="deletePostForm" action="" method="POST"
+                                                    style="display: none;">
+                                                    @csrf
+                                                    @method('DELETE')
+
+                                                
+                                                </form>
+
 
                                             </td>
 
@@ -124,31 +133,7 @@
                 </div>
             </div> <!-- /.col -->
         </div> <!--end::Row-->
-        <div class="modal fade" id="modal-danger" tabindex="-1" aria-labelledby="modal-dangerLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <form action="" id="confirmDeleteButton" method="POST" style="display: inline-block;">
-                    @csrf
-                    @method('DELETE')
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="modal-dangerLabel">Delete Confirmation</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
-                                onclick="redirectToPost()"></button>
-                        </div>
-                        <div class="modal-body">
-                            <p>Are you sure you want to delete this item? This action cannot be undone.</p>
-                        </div>
-                        <div class="modal-footer justify-content-between">
-                            <button type="bu
-                            tton" class="btn btn-secondary"
-                                data-bs-dismiss="modal" onclick="redirectToPost()">Close</button>
-                            <button type="submit" class="btn btn-danger">Yes, Delete</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-
+     
         <!-- Toggle Status Modal -->
         <div class="modal fade" id="modal-statuspost-toggle" tabindex="-1" aria-labelledby="modal-statuspost-toggleLabel"
             aria-hidden="true">
@@ -170,21 +155,27 @@
         </div>
     @endsection
     <!-- for delete conformation  -->
-    <script>
-        function handleDelete(id) {
-            var form = document.getElementById('confirmDeleteButton');
-            form.action = 'post/' + id;
-            var modal = new bootstrap.Modal(document.getElementById('modal-danger'));
-            modal.show();
-        }
+ <script>
+    function handleDelete(id) {
+        // Trigger SweetAlert2 for confirmation
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Set the form action to the correct delete route
+                var form = document.getElementById('deletePostForm');
+                form.action = '/post/' + id; // Correct route
 
-        function redirectToPost() {
-            window.location.href = "{{ route('post.index') }}";
-        }
-
-        // Optionally handle modal hidden event (if user dismisses using the backdrop or other means)
-        var deleteModal = document.getElementById('modal-danger');
-        deleteModal.addEventListener('hidden.bs.modal', function(event) {
-            redirectToPostCategory();
+                // Submit the form
+                form.submit();
+            }
         });
-    </script>
+    }
+</script>
+

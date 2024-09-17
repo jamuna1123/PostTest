@@ -139,9 +139,6 @@
         </script>
    
    
- 
-
-
 
  <script>
     Fancybox.bind("[data-fancybox]", {

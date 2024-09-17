@@ -38,7 +38,7 @@
                                     </tr>
                                     <tr>
                                         <th>Status:</th>
-                                        <td>{{ $post->status ? 'Active' : 'Inactive' }}</td>
+                                        <td>{{ $post->status ? 'published' : 'unpublished' }}</td>
                                     </tr>
                                     <tr>
                                         <th>User Name:</th>

@@ -40,7 +40,7 @@
                                 </tr>
                                 <tr>
                                     <th>Status:</th>
-                                    <td>{{ $postcategory->status ? 'Active' : 'Inactive' }}</td>
+                                    <td>{{ $postcategory->status ? 'published' : 'unpublished' }}</td>
                                 </tr>
                                 <tr>
                                     <th>Image:</th>

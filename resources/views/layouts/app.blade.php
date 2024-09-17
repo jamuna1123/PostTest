@@ -164,9 +164,9 @@
             const statusLabel = document.getElementById('statusLabel');
 
             if (statusCheckbox.checked) {
-                statusLabel.textContent = 'Active';
+                statusLabel.textContent = 'published';
             } else {
-                statusLabel.textContent = 'Inactive';
+                statusLabel.textContent = 'unpublished';
             }
         }
 
