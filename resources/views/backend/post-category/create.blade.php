@@ -21,7 +21,7 @@
     <div class="app-content">
         <div class="container-fluid">
             <div class="row g-4">
-                <div class="col-md-8">
+                <div class="col-md-12">
                     <div class="card card-primary card-outline mb-4">
                         <div class="card-header">
                             <div class="card-title">Create Post Category</div>
@@ -35,7 +35,7 @@
                                 <button type="submit" class="btn btn-success"><i class="fas fa-save"></i>
            
                                     Create</button>
-                                    <a href="{{ route('post-category.index') }}" class="btn btn-warning"><i class="fas fa-times-circle"></i> Cancel</a>
+                                    <a href="{{ route('post-category.index') }}" class="btn btn-warning text-white"><i class="fas fa-times-circle"></i> Cancel</a>
                                
                             </div>
                         </form>

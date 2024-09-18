@@ -72,24 +72,27 @@
                                     <th>Created By:</th>
                                     <td>{{$postcategory->username->name}}</td>
                                 </tr>
-                                  <tr>
-                                    <th>Updated At:</th>
-                                    <td>{{$postcategory->updated_at}}</td>
-                                </tr>
-                                <tr>
-                                    <th>Updated By:</th>
-                                     <td>{{$postcategory->username->name}}</td>
-                                </tr>
+                                   {{-- Only show Updated At and Updated By if the record has been updated --}}
+                                @if ($postcategory->created_at != $postcategory->updated_at)
+                                    <tr>
+                                        <th>Updated At:</th>
+                                        <td>{{ $postcategory->updated_at }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Updated By:</th>
+                                        <td>{{ $postcategory->userupdate->name ?? 'Unknown' }}</td> {{-- Assuming the relation is updatedBy --}}
+                                    </tr>
+                                @endif
                             </tbody>
                         </table>
                         <div class="d-flex justify-content-start mt-3">
-                            <a href="{{ route('post-category.index') }}" class="btn btn-warning me-2"><i class="fas fa-arrow-left"></i>
+                            <a href="{{ route('post-category.index') }}" class="btn btn-warning me-2 text-white"><i class="fas fa-arrow-left"></i>
                                 Back
                             </a>
                             <a href="{{ route('post-category.create') }}" class="btn btn-success  me-2"> <i class="fas fa-plus"></i>
                                 Create
                             </a>
-                            <a href="{{ route('post-category.edit', $postcategory->id) }}" class="btn btn-primary">
+                            <a href="{{ route('post-category.edit', $postcategory->id) }}" class="btn btn-primary me-2">
                                <i class="fas fa-edit"></i> Update
                             </a>
                         </div>

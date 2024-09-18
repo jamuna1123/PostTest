@@ -26,7 +26,7 @@
                 <div class="col-12"></div>
                 <!--end::Col-->
                 <!--begin::Col-->
-                <div class="col-md-8">
+                <div class="col-md-12">
                     <!--begin::Quick Example-->
                     <div class="card card-primary card-outline mb-4">
                         <!--begin::Header-->
@@ -47,7 +47,7 @@
                             <div class="card-footer">
                                    <button type="submit" class="btn btn-primary"><i class="fas fa-edit"></i>
                                     Update</button>
-                                      <a href="{{ route('post.index') }}" class="btn btn-warning">
+                                      <a href="{{ route('post.index') }}" class="btn btn-warning text-white">
                              <i class="fas fa-times-circle"></i>  Cancel</a>
                               
                             </div>

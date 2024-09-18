@@ -5,13 +5,13 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-6">
-                    <h3 class="mb-0">Post</h3>
+                    <h3 class="mb-0">User</h3>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-end">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
                         <li class="breadcrumb-item active" aria-current="page">
-                            Post
+                            User
                         </li>
                     </ol>
                 </div>
@@ -24,16 +24,16 @@
                 <div class="col-md-12">
                     <div class="card card-primary card-outline mb-4">
                         <div class="card-header">
-                            <div class="card-title">Create Post</div>
+                            <div class="card-title">Create User</div>
                         </div>
-                        <form action="{{ route('post.store') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('users.store') }}" method="Post" enctype="multipart/form-data">
                             @csrf
-                            @include('backend.post.field')
+                            @include('admin.user.field')
                             <div class="card-footer">
                                
                                 <button type="submit" class="btn btn-success"> <i class="fas fa-save"></i>
                                     Create</button>
-                                     <a href="{{ route('post.index') }}" class="btn btn-warning text-white"><i class="fas fa-times-circle"></i> Cancel</a>
+                                     <a href="{{ route('users.index') }}" class="btn btn-warning text-white"><i class="fas fa-times-circle"></i> Cancel</a>
                                 
                             </div>
                         </form>

@@ -26,29 +26,47 @@
 
                     <!-- Second Card: Striped Full Width Table -->
                     <div class="card mb-4">
-                        <div class="card-header">
-                            <h3 class="card-title">Users List</h3>
-                            <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-1">
-                                {{-- <a class="btn btn-primary" href="{{ route('users.create') }}" id="createNewProduct">
-                                    <i class="fa fa-plus"></i> Add Users
-                                </a> --}}
+                       <div class="card-header">
+                            {{-- <h3 class="card-title">Post List</h3> --}}
+                            <div class="d-grid gap-2 d-md-flex  mb-1">
+                                <a class="btn btn-success" href="{{ route('users.create') }}" id="createNewProduct">
+                                    <i class="fa fa-plus"></i> Create
+                                </a>
                             </div>
                         </div> <!-- /.card-header -->
                         <div class="card-body p-0">
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
+                                        <th>Action</th>
+
                                         <th>Name</th>
                                         <th>Email</th>
                                         <th>Image</th>
                                         <th>Phone</th>
-                                        <th>Address</th>
-                                        <th style="width: 280px">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @forelse ($users as $user)
                                         <tr class="align-middle">
+                                             <td>
+
+                                                <a href="{{ route('users.show', $user->id) }}"
+                                                    class="btn btn-success btn-sm text-white"><i class="fas fa-eye"></i>
+                                                    </a>
+                                                {{-- <a class="btn btn-danger btn-sm" onclick="handleDelete({{ $user->id }})"
+                                                    data-bs-toggle="modal" data-bs-target="#modal-danger"><i
+                                                        class="fas fa-trash"></i>
+                                                    Delete
+                                                </a> --}}
+
+                                                {{-- <a class="btn btn-primary btn-sm" href="{{ route('users.export.pdf') }}">
+                                                    <i class="fa fa-file-pdf"></i> Export PDF
+                                                </a> --}}
+
+
+
+                                            </td>
                                             <td>{{ $user->name }}</td>
                                             <td>{{ $user->email }}</td>
                                             <td>
@@ -63,25 +81,7 @@
                                             @endif
                                             </td>
                                             <td>{{ $user->phone }}</td>
-                                            <td>{{ $user->address }}</td>
-                                            <td>
-
-                                                <a href="{{ route('users.show', $user->id) }}"
-                                                    class="btn btn-info btn-sm text-white"><i class="fas fa-folder"></i>
-                                                    View</a>
-                                                {{-- <a class="btn btn-danger btn-sm" onclick="handleDelete({{ $user->id }})"
-                                                    data-bs-toggle="modal" data-bs-target="#modal-danger"><i
-                                                        class="fas fa-trash"></i>
-                                                    Delete
-                                                </a> --}}
-
-                                                {{-- <a class="btn btn-primary btn-sm" href="{{ route('users.export.pdf') }}">
-                                                    <i class="fa fa-file-pdf"></i> Export PDF
-                                                </a> --}}
-
-
-
-                                            </td>
+                                           
 
 
                                         </tr>

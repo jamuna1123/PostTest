@@ -95,28 +95,30 @@
                                     <th>Created By:</th>
                                     <td>{{$post->username->name}}</td>
                                 </tr>
-                                  <tr>
-                                    
-                                    <th>Updated At:</th>
-                                    <td>{{$post->updated_at}}</td>
-                                </tr>
-                                <tr>
-                                    <th>Updated By:</th>
-                                     <td>{{$post->username->name}}</td>
-                                </tr>
+                                   {{-- Only show Updated At and Updated By if the record has been updated --}}
+                                @if ($post->created_at != $post->updated_at)
+                                    <tr>
+                                        <th>Updated At:</th>
+                                        <td>{{ $post->updated_at }}</td>
                                     </tr>
+                                    <tr>
+                                        <th>Updated By:</th>
+                                        <td>{{ $post->userupdate->name ?? 'Unknown' }}</td> {{-- Assuming the relation is updatedBy --}}
+                                    </tr>
+                                @endif
+                                
                                 </tbody>
                             </table>
                         </div>
 
                         <div class="d-flex justify-content-start mt-3">
-                            <a href="{{ route('post.index') }}" class="btn btn-warning me-2"><i class="fas fa-arrow-left"></i>
+                            <a href="{{ route('post.index') }}" class="btn btn-warning me-2 text-white"><i class="fas fa-arrow-left"></i>
                                 Back
                             </a>
                             <a href="{{ route('post.create') }}" class="btn btn-success  me-2"> <i class="fas fa-plus"></i>
                                 Create
                             </a>
-                            <a href="{{ route('post.edit', $post->id) }}" class="btn btn-primary">
+                            <a href="{{ route('post.edit', $post->id) }}" class="btn btn-primary me-2">
                                <i class="fas fa-edit"></i> Update
                             </a>
                         </div>

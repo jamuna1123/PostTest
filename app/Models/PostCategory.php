@@ -32,7 +32,10 @@ class PostCategory extends Model
     {
         return $this->belongsTo(User::class, 'created_by');
     }
-
+    public function userupdate()
+    {
+        return $this->belongsTo(User::class, 'updated_by');
+    }
     public static function getNewsCategoryLists($parentCategoriesList = null)
     {
         $query = self::where('status', '=', '1')

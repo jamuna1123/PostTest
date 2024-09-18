@@ -15,7 +15,7 @@ class AdminSeeder extends Seeder
         User::insert([
             'name' => 'Jamuna',
             'email' => 'jamunagrg98@gmail.com',
-            'password' => bcrypt('admin12345'),
+            'password' => bcrypt('jamuna12'),
 
         ]);
     }

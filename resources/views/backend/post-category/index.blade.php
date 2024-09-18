@@ -45,29 +45,30 @@
                                         <th style="width: 280px">Action</th>
                                         <th>Category Name</th>
                                         <th>Category Image</th>
-            
+
                                         <th>Status</th>
 
-                                      
+
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @forelse ($postCategories as $postCategory)
                                         <tr class="align-middle">
                                             {{-- <td>{{ $loop->iteration }}</td> --}}
-                                             <td>
+                                            <td>
                                                 <a href="{{ route('post-category.show', $postCategory->id) }}"
                                                     class="btn btn-success btn-sm"><i class="fas fa-eye"></i>
-                                                    </a>
+                                                </a>
                                                 <a href="{{ route('post-category.edit', $postCategory->id) }}"
                                                     class="btn btn-primary btn-sm"><i class="fas fa-pencil-alt"></i>
-                                                    </a>
+                                                </a>
                                                 <a class="btn btn-danger btn-sm"
                                                     onclick="handleDelete({{ $postCategory->id }})">
                                                     <i class="fas fa-trash"></i>
                                                 </a>
-                                                <form id="deletePostForm" action="{{ route('post-category.destroy', $postCategory->id) }}" method="POST"
-                                                    style="display: none;">
+                                                <form id="deletePostForm"
+                                                    action="{{ route('post-category.destroy', $postCategory->id) }}"
+                                                    method="POST" style="display: none;">
                                                     @csrf
                                                     @method('DELETE')
 
@@ -75,7 +76,7 @@
                                                 </form>
                                             </td>
                                             <td>{{ $postCategory->title }}</td>
-                                              <td>
+                                            <td>
                                                 @if ($postCategory->image)
                                                     <a href="{{ asset('storage/' . $postCategory->image) }}"
                                                         data-fancybox="gallery" data-caption="{{ $postCategory->title }}">
@@ -86,22 +87,23 @@
                                                     <a>No image available</a>
                                                 @endif
                                             </td>
-                                           
-                                          
+
+
 
                                             <td>
                                                 <div class="form-check form-switch">
                                                     <input class="form-check-input status-toggle" type="checkbox"
                                                         data-id="{{ $postCategory->id }}"
                                                         {{ $postCategory->status ? 'checked' : '' }}>
-                                                    <label class="form-check-label" id="statusLabel{{ $postCategory->id }}">
+                                                    <label class="form-check-label"
+                                                        id="statusLabel{{ $postCategory->id }}">
                                                         {{-- {{ $postCategory->status ? 'Active' : 'Inactive' }} --}}
                                                     </label>
                                                 </div>
                                             </td>
 
 
-                                           
+
                                         </tr>
                                     @empty
                                         <tr>
@@ -142,4 +144,3 @@
                 </div>
             </div>
         @endsection
-     

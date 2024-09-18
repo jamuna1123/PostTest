@@ -5,12 +5,12 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-6">
-                    <h3 class="mb-0">User</h3>
+                    <h3 class="mb-0">User Detail</h3>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-end">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">User</li>
+                        <li class="breadcrumb-item active" aria-current="page">User Detail</li>
                     </ol>
                 </div>
             </div>
@@ -20,9 +20,9 @@
         <div class="row mt-4">
             <div class="col-lg-12">
                 <div class="card">
-                    <div class="card-header">
+                    {{-- <div class="card-header">
                         <div class="card-title">User Details</div>
-                    </div>
+                    </div> --}}
                     <div class="card-body mt-3">
                         <table class="table table-striped">
                             <tbody>
@@ -38,10 +38,7 @@
                                     <th>Phone:</th>
                                     <td>{{ $user->phone }}</td>
                                 </tr>
-                                <tr>
-                                    <th>Address:</th>
-                                    <td>{{ $user->address }}</td>
-                                </tr>
+                               
                                 <tr>
                                     <th>Image:</th>
                                     <td>
@@ -59,7 +56,7 @@
                             </tbody>
                         </table>
                         <div class="d-flex justify-content-start mt-3">
-                            <a href="{{ route('users.index') }}" class="btn btn-secondary btn-sm me-2">
+                            <a href="{{ route('users.index') }}" class="btn btn-warning me-2"><i class="fas fa-arrow-left"></i>
                                 Back
                             </a>
                         </div>
