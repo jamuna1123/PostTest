@@ -34,6 +34,10 @@
     </div>
 
     <div class="row">
+
+
+      
+
         <!-- Post Category Field -->
         <div class="mb-3 col-md-6">
             <label for="post_category_id" class="form-label">
@@ -45,11 +49,12 @@
             </label>
             <select class="form-select @error('post_category_id') is-invalid @enderror" name="post_category_id" id="post_category_id">
                 <option value="">Select Post Category</option>
-                @foreach ($parentCategoriesList as $id => $title)
-                    <option value="{{$id }}" {{ isset($post) && $post->post_category_id == $id ? 'selected' : '' }}>
-                        {{ $title }}
-                    </option>
-                @endforeach
+                @foreach ($categories as $category)
+            <option value="{{ $category->id }}" 
+                {{ $post->post_category_id == $category->id ? 'selected' : '' }}>
+                {{ $category->title }}
+            </option>
+        @endforeach
             </select>
             @error('post_category_id')
                 <div class="form-text text-danger">{{ $message }}</div>

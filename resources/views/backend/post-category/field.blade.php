@@ -28,9 +28,7 @@
     </div>
 
    
-       
-   
-
+    
 <div class="row">
        
  <!-- Description -->

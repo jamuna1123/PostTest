@@ -24,7 +24,7 @@
                 <div class="col-md-12">
                     <div class="card card-primary card-outline mb-4">
                         <div class="card-header">
-                            <div class="card-title">Create User</div>
+                            <div class="card-title">Edit User</div>
                         </div>
                         <form action="{{ route('users.store') }}" method="Post" enctype="multipart/form-data">
                             @csrf
@@ -40,7 +40,7 @@
                                         </label>
                                         <input type="text" name="name"
                                             class="form-control @error('name') is-invalid @enderror" id="name"
-                                            placeholder="Name">
+                                            placeholder="Name" value="{{ old('title', $user->name ?? '') }}">
                                         @error('name')
                                             <div class="form-text text-danger">{{ $message }}</div>
                                         @enderror
@@ -56,13 +56,11 @@
                                         </label>
                                         <input type="text" name="email"
                                             class="form-control @error('email') is-invalid @enderror" id="email"
-                                            placeholder="Email" value="">
+                                            placeholder="Email" value="{{ old('email', $user->email ?? '') }}">
                                         @error('email')
                                             <div class="form-text text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
-
-                                   
 
                                     <div class="mb-3 col-md-6">
                                         <label for="phone" class="form-label">
@@ -74,7 +72,7 @@
                                         </label>
                                         <input type="text" name="phone"
                                             class="form-control @error('phone') is-invalid @enderror" id="phone"
-                                            placeholder="Phone" value="">
+                                            placeholder="Phone" value="{{ old('phone', $user->phone ?? '') }}">
                                         @error('phone')
                                             <div class="form-text text-danger">{{ $message }}</div>
                                         @enderror
@@ -116,11 +114,10 @@
 
                             <div class="card-footer">
 
-                                <button type="submit" class="btn btn-success"> <i class="fas fa-save"></i>
-                                    Create</button>
-                                <a href="{{ route('users.index') }}" class="btn btn-warning text-white"><i
-                                        class="fas fa-times-circle"></i> Cancel</a>
-
+                                <button type="submit" class="btn btn-primary"><i class="fas fa-edit"></i>
+                                    Update</button>
+                                <a href="{{ route('users.index') }}" class="btn btn-warning text-white">
+                                    <i class="fas fa-times-circle"></i> Cancel</a>
                             </div>
                         </form>
                     </div>
@@ -135,9 +132,18 @@
         FilePond.registerPlugin(FilePondPluginImagePreview);
         FilePond.registerPlugin(FilePondPluginFileValidateType);
 
-        const pond = FilePond.create(document.querySelector('#image'), {
+        const inputElement = document.querySelector('#image');
+
+        const pond = FilePond.create(inputElement, {
             acceptedFileTypes: ['image/*'],
             server: {
+                load: (source, load, error, progress, abort, headers) => {
+                    fetch(source, {
+                        mode: 'cors'
+                    }).then((res) => {
+                        return res.blob();
+                    }).then(load).catch(error);
+                },
                 process: {
                     url: '{{ route('upload') }}',
                     headers: {
@@ -154,7 +160,18 @@
                         'X-CSRF-TOKEN': '{{ csrf_token() }}'
                     }
                 }
-            }
+            },
+
+            files: [
+                @if (isset($postcategory) && $postcategory->image)
+                    {
+                        source: '{{ asset('storage/' . $postcategory->image) }}',
+                        options: {
+                            type: 'local',
+                        },
+                    }
+                @endif
+            ],
         });
     </script>
 @endpush

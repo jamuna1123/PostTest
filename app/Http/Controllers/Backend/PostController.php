@@ -30,11 +30,12 @@ class PostController extends Controller
     {
         $post = new Post;
 
-        $parentCategoriesList = PostCategory::getNewsCategoryLists(null);
+        // $parentCategoriesList = PostCategory::getNewsCategoryLists(null);
+      $categories = PostCategory::where('status', '=', '1')->get();
 
         $users = User::all();
 
-        return view('backend.post.create', compact('post', 'users', 'parentCategoriesList'));
+        return view('backend.post.create', compact('post', 'users', 'categories'));
     }
 
     /**
@@ -89,12 +90,21 @@ class PostController extends Controller
 
         $post = Post::findOrFail($id);
 
-        $users = User::all();
-        $parentCategoriesList = PostCategory::getNewsCategoryLists(null);
      
+        // Fetch only active categories
+      $categories = PostCategory::whereNull('deleted_at')->where('status', '=', '1')->get();
+
+    // Check if the post's category is soft-deleted
+    $deletedCategory = PostCategory::withTrashed()->find($post->post_category_id);
+
+    // If the category is soft-deleted, add it to the categories list
+    if ($deletedCategory && $deletedCategory->trashed()) {
+        $categories->push($deletedCategory);
+    }
+
         $post->published_at = $post->published_at ? Carbon::parse($post->published_at) : null;
 
-        return view('backend.post.edit', compact('post', 'users', 'parentCategoriesList'));
+        return view('backend.post.edit', compact('post','categories'));
     }
 
     /**
@@ -199,36 +209,36 @@ class PostController extends Controller
 
     }
 
-    public function upload(Request $request)
-    {
-        if ($request->file('image')) {
-            $path = $request->file('image')->store('tmp', 'public');
+    // public function upload(Request $request)
+    // {
+    //     if ($request->file('image')) {
+    //         $path = $request->file('image')->store('tmp', 'public');
 
-            return response()->json(['path' => $path]);
-        }
+    //         return response()->json(['path' => $path]);
+    //     }
 
-        return response()->json(['error' => 'No file uploaded'], 400);
-    }
+    //     return response()->json(['error' => 'No file uploaded'], 400);
+    // }
 
-    public function revert(Request $request)
-    {
-        $path = $request->getContent();
-        if (Storage::disk('public')->exists($path)) {
-            Storage::disk('public')->delete($path);
-        }
+    // public function revert(Request $request)
+    // {
+    //     $path = $request->getContent();
+    //     if (Storage::disk('public')->exists($path)) {
+    //         Storage::disk('public')->delete($path);
+    //     }
 
-        return response()->json(['success' => true]);
-    }
+    //     return response()->json(['success' => true]);
+    // }
 
-    public function load($filename)
-    {
-        return response()->file(storage_path('app/public/images/'.$filename));
+    // public function load($filename)
+    // {
+    //     return response()->file(storage_path('app/public/images/'.$filename));
 
-    }
+    // }
 
-    // Handle fetching image (e.g., after upload or on form load)
-    public function fetch($filename)
-    {
-        return response()->json(['filename' => $filename, 'url' => Storage::url('images/'.$filename)]);
-    }
+    // // Handle fetching image (e.g., after upload or on form load)
+    // public function fetch($filename)
+    // {
+    //     return response()->json(['filename' => $filename, 'url' => Storage::url('images/'.$filename)]);
+    // }
 }

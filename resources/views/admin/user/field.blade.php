@@ -9,7 +9,7 @@
                  </strong>
              </label>
              <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" id="name"
-                 placeholder="Name" value="{{ old('name', $user->name ?? '') }}">
+                 placeholder="Name" value="{{ old('title', $user->name ?? '') }}">
              @error('name')
                  <div class="form-text text-danger">{{ $message }}</div>
              @enderror
@@ -39,7 +39,7 @@
                  </strong>
              </label>
              <input type="text" name="phone" class="form-control @error('phone') is-invalid @enderror"
-                 id="phone" placeholder="Phone" value="{{ old('phone', $user->phone ?? '') }}">
+                 id="phone" placeholder="Phone" value="{{ old('phone', $postcategory->phone ?? '') }}">
              @error('phone')
                  <div class="form-text text-danger">{{ $message }}</div>
              @enderror
@@ -78,4 +78,3 @@
          @endif
      </div>
  @endif
- </div>

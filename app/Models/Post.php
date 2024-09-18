@@ -25,7 +25,7 @@ class Post extends Model
 
     public function postCategory()
     {
-        return $this->belongsTo(PostCategory::class);
+        return $this->belongsTo(PostCategory::class)->withTrashed();
     }
 
     public function username()
@@ -37,18 +37,18 @@ class Post extends Model
         return $this->belongsTo(User::class, 'updated_by');
     }
 
-    public static function getNewsCategoryLists($parentCategoriesList = null)
-    {
-        $query = self::where('status', '=', '1')
-            ->orderBy('title');
+    // public static function getNewsCategoryLists($parentCategoriesList = null)
+    // {
+    //     $query = self::where('status', '=', '1')
+    //         ->orderBy('title');
 
-        $returnArray = $query->get()
+    //     $returnArray = $query->get()
 
-            ->pluck('title', 'id')
-            ->toArray();
+    //         ->pluck('title', 'id')
+    //         ->toArray();
 
-        return $returnArray;
-    }
+    //     return $returnArray;
+    // }
 
     protected static function boot()
     {

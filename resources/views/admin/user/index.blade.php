@@ -54,6 +54,10 @@
                                                 <a href="{{ route('users.show', $user->id) }}"
                                                     class="btn btn-success btn-sm text-white"><i class="fas fa-eye"></i>
                                                     </a>
+
+                                                    <a href="{{ route('users.edit', $user->id) }}"
+                                                    class="btn btn-primary btn-sm"><i class="fas fa-pencil-alt"></i>
+                                                </a>
                                                 {{-- <a class="btn btn-danger btn-sm" onclick="handleDelete({{ $user->id }})"
                                                     data-bs-toggle="modal" data-bs-target="#modal-danger"><i
                                                         class="fas fa-trash"></i>

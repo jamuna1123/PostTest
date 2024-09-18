@@ -4,9 +4,13 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Http\Requests\StoreUser;
 use Illuminate\Support\Facades\Storage;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
+use Illuminate\Support\Facades\File;
+use Intervention\Image\Facades\Image;
 
 class AdminUserController extends Controller
 {
@@ -32,40 +36,45 @@ class AdminUserController extends Controller
     }
 
 
-      public function store(StoreUser $request): RedirectResponse
-    {
-        $request->user()->fill($request->validated());
+     public function store(StoreUser $request): RedirectResponse
+{
+    // Create a new user instance
+    $user = new User();
+    $user->fill($request->validated());
 
+    
             if ($request->input('image')) {
-            $imagePath = $request->input('image');
-            $filename = basename($imagePath);
+                $imagePath = $request->input('image');
+                $filename = basename($imagePath);
 
-            // Define paths
-            $originalPath = 'images/original/'.$filename;
-            $resizedPath = 'images/resized/'.$filename;
+                // Define paths
+                $originalPath = 'images/original/'.$filename;
+                $resizedPath = 'images/resized/'.$filename;
 
-            // Move the file from 'tmp' to 'images'
-            Storage::disk('public')->move($imagePath, $originalPath);
+                // Move the file from 'tmp' to 'images'
+                Storage::disk('public')->move($imagePath, $originalPath);
 
-            // Resize the image using Intervention Image
-            $resizedImage = Image::make(storage_path('app/public/'.$originalPath))->resize(300, 200);
+                // Resize the image using Intervention Image
+                $resizedImage = Image::make(storage_path('app/public/'.$originalPath))->resize(300, 200);
 
-            // Store the resized image
-            Storage::disk('public')->put($resizedPath, (string) $resizedImage->encode());
+                // Store the resized image
+                Storage::disk('public')->put($resizedPath, (string) $resizedImage->encode());
 
-             $request->user()->image = $originalPath;
-        }
+                $user->image = $originalPath;
+            }
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
-        }
-
-        $request->user()->save();
-        Alert::success('Success', 'User Create successfully.');
-
-        return redirect()->route('users.show',$request->user()->id);
-       
+    // Set email_verified_at to null if email is changed
+    if ($user->isDirty('email')) {
+        $user->email_verified_at = null;
     }
+
+    // Save the new user
+    $user->save();
+
+    Alert::success('Success', 'User created successfully.');
+
+    return redirect()->route('users.show', $user->id);
+}
 
      public function edit($id)
     {
@@ -123,7 +132,7 @@ class AdminUserController extends Controller
         Alert::success('Success', 'User update successfully.');
 
         return redirect()->route('users.show',$request->user()->id);
-        // return Redirect::route('profile.edit')->with('status', 'profile-updated');
+      
     }
 
 
@@ -150,4 +159,7 @@ class AdminUserController extends Controller
         return redirect()->route('users.index');
 
     }
+
+
+   
 }

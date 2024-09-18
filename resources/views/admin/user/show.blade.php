@@ -56,8 +56,14 @@
                             </tbody>
                         </table>
                         <div class="d-flex justify-content-start mt-3">
-                            <a href="{{ route('users.index') }}" class="btn btn-warning me-2"><i class="fas fa-arrow-left"></i>
+                            <a href="{{ route('users.index') }}" class="btn btn-warning me-2 text-white"><i class="fas fa-arrow-left"></i>
                                 Back
+                            </a>
+                             <a href="{{ route('users.create') }}" class="btn btn-success  me-2"> <i class="fas fa-plus"></i>
+                                Create
+                            </a>
+                            <a href="{{ route('users.edit', $user->id) }}" class="btn btn-primary me-2">
+                               <i class="fas fa-edit"></i> Update
                             </a>
                         </div>
                     </div>
