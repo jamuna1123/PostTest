@@ -3,15 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
 use App\Http\Requests\StoreUser;
-use Illuminate\Support\Facades\Storage;
-use RealRashid\SweetAlert\Facades\Alert;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\View\View;
-use Illuminate\Support\Facades\File;
-use Intervention\Image\Facades\Image;
+use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
+use RealRashid\SweetAlert\Facades\Alert;
+
 class AdminUserController extends Controller
 {
     public function index()
@@ -25,9 +24,7 @@ class AdminUserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-
-
-       public function create()
+    public function create()
     {
 
         $user = User::all();
@@ -35,55 +32,54 @@ class AdminUserController extends Controller
         return view('admin.user.create', compact('user'));
     }
 
+    public function store(StoreUser $request)
+    {
+        // Create a new user instance
+        $user = new User;
+        $user->fill($request->validated());
 
-     public function store(StoreUser $request)
-{
-    // Create a new user instance
-    $user = new User();
-    $user->fill($request->validated());
-
-     // Set created_at and updated_at with Nepal timezone
+        // Set created_at and updated_at with Nepal timezone
         $currentTime = Carbon::now();
         $user->created_at = $currentTime;
-        $user->updated_at = $currentTime;
+        $user->updated_at = null;
 
-            if ($request->input('image')) {
-                $imagePath = $request->input('image');
-                $filename = basename($imagePath);
+        if ($request->input('image')) {
+            $imagePath = $request->input('image');
+            $filename = basename($imagePath);
 
-                // Define paths
-                $originalPath = 'images/original/'.$filename;
-                $resizedPath = 'images/resized/'.$filename;
+            // Define paths
+            $originalPath = 'images/original/'.$filename;
+            $resizedPath = 'images/resized/'.$filename;
 
-                // Move the file from 'tmp' to 'images'
-                Storage::disk('public')->move($imagePath, $originalPath);
+            // Move the file from 'tmp' to 'images'
+            Storage::disk('public')->move($imagePath, $originalPath);
 
-                // Resize the image using Intervention Image
-                $resizedImage = Image::make(storage_path('app/public/'.$originalPath))->resize(300, 200);
+            // Resize the image using Intervention Image
+            $resizedImage = Image::make(storage_path('app/public/'.$originalPath))->resize(300, 200);
 
-                // Store the resized image
-                Storage::disk('public')->put($resizedPath, (string) $resizedImage->encode());
+            // Store the resized image
+            Storage::disk('public')->put($resizedPath, (string) $resizedImage->encode());
 
-                $user->image = $originalPath;
-            }
-// Only set the password if it's provided
-    if ($request->filled('password')) {
-        $user->password = bcrypt($request->password);
+            $user->image = $originalPath;
+        }
+        // Only set the password if it's provided
+        if ($request->filled('password')) {
+            $user->password = bcrypt($request->password);
+        }
+        // Set email_verified_at to null if email is changed
+        if ($user->isDirty('email')) {
+            $user->email_verified_at = null;
+        }
+
+        // Save the new user
+        $user->save();
+
+        Alert::success('Success', 'User created successfully.');
+
+        return redirect()->route('users.show', $user->id);
     }
-    // Set email_verified_at to null if email is changed
-    if ($user->isDirty('email')) {
-        $user->email_verified_at = null;
-    }
 
-    // Save the new user
-    $user->save();
-
-    Alert::success('Success', 'User created successfully.');
-
-    return redirect()->route('users.show', $user->id);
-}
-
-     public function edit($id)
+    public function edit($id)
     {
 
         $user = User::findOrFail($id);
@@ -94,7 +90,7 @@ class AdminUserController extends Controller
     public function update(StoreUser $request, $id)
     {
 
-            $user= User::findOrFail($id);
+        $user = User::findOrFail($id);
         $user->fill($request->validated());
 
         // Handle the profile image
@@ -140,10 +136,9 @@ class AdminUserController extends Controller
         $user->save();
         Alert::success('Success', 'User update successfully.');
 
-        return redirect()->route('users.show',$user->id);
-      
-    }
+        return redirect()->route('users.show', $user->id);
 
+    }
 
     public function show($id)
     {
@@ -168,7 +163,4 @@ class AdminUserController extends Controller
         return redirect()->route('users.index');
 
     }
-
-
-   
 }

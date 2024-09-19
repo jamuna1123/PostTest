@@ -66,8 +66,8 @@ return [
     */
 
     // 'timezone' => env('APP_TIMEZONE', 'UTC'),
-     // config/app.php
-   'timezone' => 'Asia/Kathmandu',
+    // config/app.php
+    'timezone' => 'Asia/Kathmandu',
 
     /*
     |--------------------------------------------------------------------------

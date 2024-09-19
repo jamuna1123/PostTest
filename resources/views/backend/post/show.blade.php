@@ -29,7 +29,7 @@
                             <table class="table table-striped">
                                 <tbody>
                                     <tr>
-                                        <th style="width: 30%">Post Title:</th>
+                                        <th>Post Title:</th>
                                         <td>{{ $post->title }}</td>
                                     </tr>
                                     <tr>
@@ -99,14 +99,14 @@
                                         <td>{{ $post->username->name }}</td>
                                     </tr>
                                     {{-- Only show Updated At and Updated By if the record has been updated --}}
-                                    @if ($post->created_at != $post->updated_at)
+                                  @if ($post->updated_at && $post->updated_by)
                                         <tr>
                                             <th>Updated At:</th>
                                             <td>{{ $post->updated_at }}</td>
                                         </tr>
                                         <tr>
                                             <th>Updated By:</th>
-                                            <td>{{ $post->userupdate->name ?? 'Unknown' }}</td> {{-- Assuming the relation is updatedBy --}}
+                                            <td>{{ $post->userupdate->name}}</td> {{-- Assuming the relation is updatedBy --}}
                                         </tr>
                                     @endif
 

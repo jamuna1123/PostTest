@@ -26,7 +26,7 @@
                         <div class="card-header">
                             <div class="card-title">Edit User</div>
                         </div>
-                        <form action="{{ route('users.update',$user->id) }}" method="Post" enctype="multipart/form-data">
+                        <form action="{{ route('users.update', $user->id) }}" method="Post" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
 
@@ -34,7 +34,7 @@
                                 <div class="row">
                                     <div class="mb-3 col-md-6">
                                         <label for="name" class="form-label">
-                                            <strong>name:
+                                            <strong>Name:
                                                 @if (true)
                                                     <span class="text-danger">*</span>
                                                 @endif
@@ -42,7 +42,7 @@
                                         </label>
                                         <input type="text" name="name"
                                             class="form-control @error('name') is-invalid @enderror" id="name"
-                                            placeholder="Name" value="{{ old('title', $user->name ?? '') }}">
+                                            placeholder="Name" value="{{ old('name', $user->name ?? '') }}">
                                         @error('name')
                                             <div class="form-text text-danger">{{ $message }}</div>
                                         @enderror
@@ -50,7 +50,7 @@
 
                                     <div class="mb-3 col-md-6">
                                         <label for="email" class="form-label">
-                                            <strong>email:
+                                            <strong>Email:
                                                 @if (true)
                                                     <span class="text-danger">*</span>
                                                 @endif
@@ -63,7 +63,17 @@
                                             <div class="form-text text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
-
+                                    <!-- Image Input -->
+                                    <div class="mb-3 col-md-6">
+                                        <label for="image" class="form-label"><strong>Image:@if (false)
+                                                    <span class="text-danger">*</span>
+                                                @endif
+                                            </strong></label>
+                                        <input type="file" name="image" id="image" class="form-control">
+                                        @error('image')
+                                            <div class="form-text text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
                                     <div class="mb-3 col-md-6">
                                         <label for="phone" class="form-label">
                                             <strong>Phone:
@@ -96,17 +106,7 @@
                                         @enderror
                                     </div>
 
-                                    <!-- Image Input -->
-                                    <div class="mb-3 col-md-6">
-                                        <label for="image" class="form-label"><strong>Image:@if (false)
-                                                    <span class="text-danger">*</span>
-                                                @endif
-                                            </strong></label>
-                                        <input type="file" name="image" id="image" class="form-control">
-                                        @error('image')
-                                            <div class="form-text text-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
+
                                 </div>
 
                             </div>

@@ -21,11 +21,15 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable(); // Make password nullable
             $table->unsignedBigInteger('created_by')->nullable();
+            $table->timestamp('created_at')->nullable();
+
             $table->unsignedBigInteger('updated_by')->nullable();
+            $table->timestamp('updated_at')->nullable();
+
             $table->unsignedBigInteger('deleted_by')->nullable();
             $table->softDeletes();
+
             $table->rememberToken();
-            $table->timestamps();
 
             $table->foreign('created_by')->references('id')->on('users')->onDelete('set null');
             $table->foreign('updated_by')->references('id')->on('users')->onDelete('set null');

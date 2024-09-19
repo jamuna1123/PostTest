@@ -47,7 +47,8 @@ class PostCategoryController extends Controller
         // Set created_at and updated_at with Nepal timezone
         $currentTime = Carbon::now();
         $postcategory->created_at = $currentTime;
-        $postcategory->updated_at = $currentTime;
+        $postcategory->updated_at = null;
+
         $postcategory->slug = $request->slug;
 
         if ($request->input('image')) {
@@ -105,7 +106,7 @@ class PostCategoryController extends Controller
         $postcategory->description = $request->description;
 
         $postcategory->slug = $request->slug;
-        
+
         if ($request->input('image')) {
             // Delete old images
             if ($postcategory->image) {

@@ -30,11 +30,12 @@ class Post extends Model
 
     public function username()
     {
-        return $this->belongsTo(User::class, 'created_by');
+        return $this->belongsTo(User::class, 'created_by')->withTrashed();
     }
-     public function userupdate()
+
+    public function userupdate()
     {
-        return $this->belongsTo(User::class, 'updated_by');
+        return $this->belongsTo(User::class, 'updated_by')->withTrashed();
     }
 
     // public static function getNewsCategoryLists($parentCategoriesList = null)

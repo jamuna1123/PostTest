@@ -2,10 +2,11 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 use App\Models\User;
 use Elegant\Sanitizer\Sanitizer;
+use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+
 class StoreUser extends FormRequest
 {
     /**
@@ -23,9 +24,10 @@ class StoreUser extends FormRequest
      */
     public function rules(): array
     {
-       
-// Determine if we are updating an existing user or creating a new one
+
+        // Determine if we are updating an existing user or creating a new one
         $userId = $this->route('user') ? $this->route('user') : null;
+
         return [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)->ignore($userId)],
@@ -38,7 +40,7 @@ class StoreUser extends FormRequest
 
     }
 
-      protected function prepareForValidation()
+    protected function prepareForValidation()
     {
         // Define sanitization rules
         $sanitizer = new Sanitizer($this->all(), [

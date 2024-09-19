@@ -64,17 +64,17 @@
                                 </tr>
                                 <tr>
                                     <th>Created By:</th>
-                                    <td>{{ $user->username->name }}</td>
+                                    <td>{{ $user->username ? $user->username->name : 'N/A' }}</td> {{-- Check if 'created_by' exists --}}
                                 </tr>
                                 {{-- Only show Updated At and Updated By if the record has been updated --}}
-                                @if ($user->created_at != $user->updated_at)
+                                @if ($user->updated_at && $user->updated_by)
                                     <tr>
                                         <th>Updated At:</th>
                                         <td>{{ $user->updated_at }}</td>
                                     </tr>
                                     <tr>
                                         <th>Updated By:</th>
-                                        <td>{{ $user->userupdate->name ?? 'Unknown' }}</td> {{-- Assuming the relation is updatedBy --}}
+                                        <td>{{ $user->userupdate->name }}</td> {{-- Assuming the relation is updatedBy --}}
                                     </tr>
                                 @endif
 
@@ -99,17 +99,20 @@
         </div>
     </div>
 
-     <style>
+    <style>
         /* Ensures the table has a consistent layout even with long text */
-        table th, table td {
+        table th,
+        table td {
             vertical-align: middle;
         }
 
         /* For long descriptions */
         table td {
             word-wrap: break-word;
-            white-space: normal; /* Ensures that long words break */
-            max-width: 400px; /* Adjust as necessary */
+            white-space: normal;
+            /* Ensures that long words break */
+            max-width: 400px;
+            /* Adjust as necessary */
         }
     </style>
 @endsection

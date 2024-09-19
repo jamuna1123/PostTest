@@ -31,7 +31,7 @@ class PostController extends Controller
         $post = new Post;
 
         // $parentCategoriesList = PostCategory::getNewsCategoryLists(null);
-      $categories = PostCategory::where('status', '=', '1')->get();
+        $categories = PostCategory::where('status', '=', '1')->get();
 
         $users = User::all();
 
@@ -50,10 +50,11 @@ class PostController extends Controller
 
         $post->slug = $request->slug;
         $post->post_category_id = $request->post_category_id;
-       // Set created_at and updated_at with Nepal timezone
+        // Set created_at and updated_at with Nepal timezone
         $currentTime = Carbon::now();
         $post->created_at = $currentTime;
-        $post->updated_at = $currentTime;
+        $post->updated_at = null;
+
         $post->published_at = $request->published_at ? Carbon::parse($request->published_at) : Carbon::now();
 
         if ($request->input('image')) {
@@ -93,21 +94,20 @@ class PostController extends Controller
 
         $post = Post::findOrFail($id);
 
-     
         // Fetch only active categories
-      $categories = PostCategory::whereNull('deleted_at')->where('status', '=', '1')->get();
+        $categories = PostCategory::whereNull('deleted_at')->where('status', '=', '1')->get();
 
-    // Check if the post's category is soft-deleted
-    $deletedCategory = PostCategory::withTrashed()->find($post->post_category_id);
+        // Check if the post's category is soft-deleted
+        $deletedCategory = PostCategory::withTrashed()->find($post->post_category_id);
 
-    // If the category is soft-deleted, add it to the categories list
-    if ($deletedCategory && $deletedCategory->trashed()) {
-        $categories->push($deletedCategory);
-    }
+        // If the category is soft-deleted, add it to the categories list
+        if ($deletedCategory && $deletedCategory->trashed()) {
+            $categories->push($deletedCategory);
+        }
 
         $post->published_at = $post->published_at ? Carbon::parse($post->published_at) : null;
 
-        return view('backend.post.edit', compact('post','categories'));
+        return view('backend.post.edit', compact('post', 'categories'));
     }
 
     /**
@@ -121,7 +121,6 @@ class PostController extends Controller
         $post->title = $request->title;
         $post->description = $request->description;
         $post->post_category_id = $request->post_category_id; // Add parent_id
-   
 
         $post->published_at = $request->published_at
            ? Carbon::parse($request->published_at)

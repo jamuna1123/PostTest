@@ -115,6 +115,4 @@
                 </div>
             </div> <!-- /.col -->
         </div> <!--end::Row-->
-       
     @endsection
-   

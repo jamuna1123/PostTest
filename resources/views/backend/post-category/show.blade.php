@@ -63,7 +63,7 @@
                                         </div>
                                     </td>
                                 </tr>
-                                
+
                                 <tr>
                                     <th>Created At:</th>
                                     <td>{{ $postcategory->created_at }}</td>
@@ -72,14 +72,14 @@
                                     <th>Created By:</th>
                                     <td>{{ $postcategory->username->name }}</td>
                                 </tr>
-                                @if ($postcategory->created_at != $postcategory->updated_at)
+                                @if ($postcategory->updated_at && $postcategory->updated_by)
                                     <tr>
                                         <th>Updated At:</th>
                                         <td>{{ $postcategory->updated_at }}</td>
                                     </tr>
                                     <tr>
                                         <th>Updated By:</th>
-                                        <td>{{ $postcategory->userupdate->name ?? 'Unknown' }}</td>
+                                        <td>{{ $postcategory->userupdate->name }}</td>
                                     </tr>
                                 @endif
                             </tbody>
@@ -109,21 +109,25 @@
         </div>
     </div>
 
-     <style>
+    <style>
         table th {
             vertical-align: middle;
-            width: 30%; /* Ensuring fixed width for table headers */
+            width: 30%;
+            /* Ensuring fixed width for table headers */
         }
 
         table td {
             word-wrap: break-word;
-            white-space: normal; /* Ensures that long words break */
-            max-width: 70%; /* Adjust as necessary to fit the layout */
+            white-space: normal;
+            /* Ensures that long words break */
+            max-width: 70%;
+            /* Adjust as necessary to fit the layout */
         }
 
         /* For long descriptions */
         table td {
-            max-width: 400px; /* Adjust as necessary */
+            max-width: 400px;
+            /* Adjust as necessary */
         }
     </style>
 @endsection

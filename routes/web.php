@@ -42,8 +42,7 @@ Route::middleware('auth')->group(function () {
     // Route::get('/post/load/{filename}', [PostController::class, 'load'])->name('load');
     // Route::get('/post/fetch/{filename}', [PostController::class, 'fetch'])->name('fetch');
     Route::resource('/users', AdminUserController::class);
-    
-    
+
     Route::get('/admin/users/export-pdf', [AdminUserController::class, 'exportPDF'])->name('users.export.pdf');
 
 });

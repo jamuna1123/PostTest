@@ -32,7 +32,7 @@
                                 <div class="row">
                                     <div class="mb-3 col-md-6">
                                         <label for="name" class="form-label">
-                                            <strong>name:
+                                            <strong>Name:
                                                 @if (true)
                                                     <span class="text-danger">*</span>
                                                 @endif
@@ -40,7 +40,7 @@
                                         </label>
                                         <input type="text" name="name"
                                             class="form-control @error('name') is-invalid @enderror" id="name"
-                                            placeholder="Name">
+                                            placeholder="Name" value="{{ old('name', '') }}">
                                         @error('name')
                                             <div class="form-text text-danger">{{ $message }}</div>
                                         @enderror
@@ -48,7 +48,7 @@
 
                                     <div class="mb-3 col-md-6">
                                         <label for="email" class="form-label">
-                                            <strong>email:
+                                            <strong>Email:
                                                 @if (true)
                                                     <span class="text-danger">*</span>
                                                 @endif
@@ -56,7 +56,7 @@
                                         </label>
                                         <input type="text" name="email"
                                             class="form-control @error('email') is-invalid @enderror" id="email"
-                                            placeholder="Email" value="">
+                                            placeholder="Email" value="{{ old('email', '') }}">
                                         @error('email')
                                             <div class="form-text text-danger">{{ $message }}</div>
                                         @enderror
@@ -85,7 +85,7 @@
                                         </label>
                                         <input type="text" name="phone"
                                             class="form-control @error('phone') is-invalid @enderror" id="phone"
-                                            placeholder="Phone" value="">
+                                            placeholder="Phone" value="{{ old('phone', '') }}">
                                         @error('phone')
                                             <div class="form-text text-danger">{{ $message }}</div>
                                         @enderror
@@ -100,8 +100,8 @@
                                         </label>
                                         <input type="text" name="address"
                                             class="form-control @error('address') is-invalid @enderror" id="address"
-                                            placeholder="Address" value="">
-                                        @error('phone')
+                                            placeholder="Address" value="{{ old('address', '') }}">
+                                        @error('address')
                                             <div class="form-text text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
@@ -146,30 +146,39 @@
 
 @endsection
 @push('scripts')
-    <script>
-        FilePond.registerPlugin(FilePondPluginImagePreview);
-        FilePond.registerPlugin(FilePondPluginFileValidateType);
+   <script>
+    FilePond.registerPlugin(FilePondPluginImagePreview);
+    FilePond.registerPlugin(FilePondPluginFileValidateType);
 
-        const pond = FilePond.create(document.querySelector('#image'), {
-            acceptedFileTypes: ['image/*'],
-            server: {
-                process: {
-                    url: '{{ route('upload') }}',
-                    headers: {
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                    },
-                    onload: (response) => {
-                        const data = JSON.parse(response);
-                        return data.path;
-                    }
+    const pond = FilePond.create(document.querySelector('#image'), {
+        acceptedFileTypes: ['image/*'],
+        server: {
+            process: {
+                url: '{{ route('upload') }}',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
                 },
-                revert: {
-                    url: '{{ route('revert') }}',
-                    headers: {
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                    }
+                onload: (response) => {
+                    const data = JSON.parse(response);
+                    // Store the uploaded image path in a hidden input
+                    document.getElementById('image').value = data.path;
+                    return data.path;
+                }
+            },
+            revert: {
+                url: '{{ route('revert') }}',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
                 }
             }
-        });
-    </script>
+        }
+    });
+
+    // If validation fails, reload the image in FilePond
+    @if (old('image'))
+    pond.addFile('{{ asset('storage/' . old('image')) }}').then(function(file) {
+        console.log('File added', file);
+    });
+    @endif
+</script>
 @endpush

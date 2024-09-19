@@ -49,9 +49,9 @@
             </label>
             <select class="form-select @error('post_category_id') is-invalid @enderror" name="post_category_id" id="post_category_id">
                 <option value="">Select Post Category</option>
-                @foreach ($categories as $category)
+               @foreach ($categories as $category)
             <option value="{{ $category->id }}" 
-                {{ $post->post_category_id == $category->id ? 'selected' : '' }}>
+                {{ old('post_category_id', $post->post_category_id) == $category->id ? 'selected' : '' }}>
                 {{ $category->title }}
             </option>
         @endforeach
@@ -67,7 +67,7 @@
                         <span class="text-danger">*</span>
                     @endif
                 </strong></label>
-            <input type="file" name="image" id="image" class="form-control">
+            <input type="hidden" name="image" id="image" class="form-control">
             @error('image')
                 <div class="form-text text-danger">{{ $message }}</div>
             @enderror
