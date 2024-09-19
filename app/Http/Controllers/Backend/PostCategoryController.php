@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePostCategory;
 use App\Models\PostCategory;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
@@ -43,7 +44,10 @@ class PostCategoryController extends Controller
         $postcategory = new PostCategory;
         $postcategory->title = $request->title;
         $postcategory->description = $request->description;
-
+        // Set created_at and updated_at with Nepal timezone
+        $currentTime = Carbon::now();
+        $postcategory->created_at = $currentTime;
+        $postcategory->updated_at = $currentTime;
         $postcategory->slug = $request->slug;
 
         if ($request->input('image')) {
@@ -101,7 +105,7 @@ class PostCategoryController extends Controller
         $postcategory->description = $request->description;
 
         $postcategory->slug = $request->slug;
-
+        
         if ($request->input('image')) {
             // Delete old images
             if ($postcategory->image) {

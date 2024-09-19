@@ -26,7 +26,7 @@
 
                     <!-- Second Card: Striped Full Width Table -->
                     <div class="card mb-4">
-                       <div class="card-header">
+                        <div class="card-header">
                             {{-- <h3 class="card-title">Post List</h3> --}}
                             <div class="d-grid gap-2 d-md-flex  mb-1">
                                 <a class="btn btn-success" href="{{ route('users.create') }}" id="createNewProduct">
@@ -49,24 +49,29 @@
                                 <tbody>
                                     @forelse ($users as $user)
                                         <tr class="align-middle">
-                                             <td>
+                                            <td>
 
                                                 <a href="{{ route('users.show', $user->id) }}"
                                                     class="btn btn-success btn-sm text-white"><i class="fas fa-eye"></i>
-                                                    </a>
+                                                </a>
 
-                                                    <a href="{{ route('users.edit', $user->id) }}"
+                                                <a href="{{ route('users.edit', $user->id) }}"
                                                     class="btn btn-primary btn-sm"><i class="fas fa-pencil-alt"></i>
                                                 </a>
-                                                {{-- <a class="btn btn-danger btn-sm" onclick="handleDelete({{ $user->id }})"
-                                                    data-bs-toggle="modal" data-bs-target="#modal-danger"><i
-                                                        class="fas fa-trash"></i>
-                                                    Delete
-                                                </a> --}}
-
-                                                {{-- <a class="btn btn-primary btn-sm" href="{{ route('users.export.pdf') }}">
-                                                    <i class="fa fa-file-pdf"></i> Export PDF
-                                                </a> --}}
+                                                @if (auth()->id() !== $user->id)
+                                                    <!-- Check if the authenticated user is not the same as the current user -->
+                                                    <a class="btn btn-danger btn-sm"
+                                                        onclick="handleDelete({{ $user->id }})" data-bs-toggle="modal"
+                                                        data-bs-target="#modal-danger">
+                                                        <i class="fas fa-trash"></i>
+                                                    </a>
+                                                    <form id="deletePostForm"
+                                                        action="{{ route('users.destroy', $user->id) }}" method="POST"
+                                                        style="display: none;">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                    </form>
+                                                @endif
 
 
 
@@ -75,17 +80,17 @@
                                             <td>{{ $user->email }}</td>
                                             <td>
                                                 @if ($user->image)
-                                                <a href="{{ asset('storage/' . $user->image) }}"
-                                                    data-fancybox="gallery" data-caption="{{ $user->name }}">
-                                                    <img src="{{ asset('storage/images/resized/' . basename($user->image)) }}"
-                                                        alt="{{ $user->name }}" style="height: 50px;">
-                                                </a>
-                                            @else
-                                                <a>No image available</a>
-                                            @endif
+                                                    <a href="{{ asset('storage/' . $user->image) }}" data-fancybox="gallery"
+                                                        data-caption="{{ $user->name }}">
+                                                        <img src="{{ asset('storage/images/resized/' . basename($user->image)) }}"
+                                                            alt="{{ $user->name }}" style="height: 50px;">
+                                                    </a>
+                                                @else
+                                                    <a>No image available</a>
+                                                @endif
                                             </td>
                                             <td>{{ $user->phone }}</td>
-                                           
+
 
 
                                         </tr>
@@ -110,46 +115,6 @@
                 </div>
             </div> <!-- /.col -->
         </div> <!--end::Row-->
-        <div class="modal fade" id="modal-danger" tabindex="-1" aria-labelledby="modal-dangerLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <form action="" id="confirmDeleteButton" method="Post" style="display: inline-block;">
-                    @csrf
-                    @method('DELETE')
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="modal-dangerLabel">Delete Confirmation</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
-                                onclick="redirectToUsers()"></button>
-                        </div>
-                        <div class="modal-body">
-                            <p>Are you sure you want to delete this item? This action cannot be undone.</p>
-                        </div>
-                        <div class="modal-footer justify-content-between">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
-                                onclick="redirectToUsers()">Close</button>
-                            <button type="submit" class="btn btn-danger">Yes, Delete</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
+       
     @endsection
-    <!-- for delete conformation  -->
-    <script>
-        function handleDelete(id) {
-            var form = document.getElementById('confirmDeleteButton');
-            form.action = 'users/' + id;
-            var modal = new bootstrap.Modal(document.getElementById('modal-danger'));
-            modal.show();
-        }
-
-        function redirectToUsers() {
-            window.location.href = "{{ route('users.index') }}";
-        }
-
-        // Optionally handle modal hidden event (if user dismisses using the backdrop or other means)
-        var deleteModal = document.getElementById('modal-danger');
-        deleteModal.addEventListener('hidden.bs.modal', function(event) {
-            redirectToUsersCategory();
-        });
-    </script>
+   

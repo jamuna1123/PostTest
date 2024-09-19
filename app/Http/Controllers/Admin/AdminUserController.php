@@ -11,7 +11,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
-
+use Carbon\Carbon;
 class AdminUserController extends Controller
 {
     public function index()
@@ -42,7 +42,11 @@ class AdminUserController extends Controller
     $user = new User();
     $user->fill($request->validated());
 
-    
+     // Set created_at and updated_at with Nepal timezone
+        $currentTime = Carbon::now();
+        $user->created_at = $currentTime;
+        $user->updated_at = $currentTime;
+
             if ($request->input('image')) {
                 $imagePath = $request->input('image');
                 $filename = basename($imagePath);
@@ -152,7 +156,7 @@ class AdminUserController extends Controller
     public function destroy($id)
     {
 
-        $users = User::findOrFail($id);
+        $user = User::findOrFail($id);
 
         if ($user->image) {
             Storage::disk('public')->delete('images/original/'.$user->image);

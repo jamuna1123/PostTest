@@ -50,7 +50,10 @@ class PostController extends Controller
 
         $post->slug = $request->slug;
         $post->post_category_id = $request->post_category_id;
-      
+       // Set created_at and updated_at with Nepal timezone
+        $currentTime = Carbon::now();
+        $post->created_at = $currentTime;
+        $post->updated_at = $currentTime;
         $post->published_at = $request->published_at ? Carbon::parse($request->published_at) : Carbon::now();
 
         if ($request->input('image')) {

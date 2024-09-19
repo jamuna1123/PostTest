@@ -109,16 +109,20 @@
         </div>
     </div>
 
-    <style>
-        /* Ensures the table has a consistent layout even with long text */
-        table th, table td {
+     <style>
+        table th {
             vertical-align: middle;
+            width: 30%; /* Ensuring fixed width for table headers */
+        }
+
+        table td {
+            word-wrap: break-word;
+            white-space: normal; /* Ensures that long words break */
+            max-width: 70%; /* Adjust as necessary to fit the layout */
         }
 
         /* For long descriptions */
         table td {
-            word-wrap: break-word;
-            white-space: normal; /* Ensures that long words break */
             max-width: 400px; /* Adjust as necessary */
         }
     </style>

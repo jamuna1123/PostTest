@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use App\Models\User;
+use Elegant\Sanitizer\Sanitizer;
 class StoreUser extends FormRequest
 {
     /**
@@ -34,5 +35,17 @@ class StoreUser extends FormRequest
             'password' => ['nullable|min:8'], // Password is not required
 
         ];
+
+    }
+
+      protected function prepareForValidation()
+    {
+        // Define sanitization rules
+        $sanitizer = new Sanitizer($this->all(), [
+            'name' => 'trim|escape',
+        ]);
+
+        // Replace request data with sanitized data
+        $this->merge($sanitizer->sanitize());
     }
 }

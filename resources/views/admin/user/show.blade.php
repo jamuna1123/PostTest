@@ -55,7 +55,7 @@
                                 </tr>
                                 <tr>
                                     <th>Address:</th>
-                                    <td>{{ $user->address ? $user->address : 'User Addrerss Not found' }}</td>
+                                    <td>{{ $user->address ? $user->address : 'User Address Not found' }}</td>
                                 </tr>
 
                                 <tr>
