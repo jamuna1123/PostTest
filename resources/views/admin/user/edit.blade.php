@@ -26,8 +26,10 @@
                         <div class="card-header">
                             <div class="card-title">Edit User</div>
                         </div>
-                        <form action="{{ route('users.store') }}" method="Post" enctype="multipart/form-data">
+                        <form action="{{ route('users.update',$user->id) }}" method="Post" enctype="multipart/form-data">
                             @csrf
+                            @method('PUT')
+
                             <div class="card-body">
                                 <div class="row">
                                     <div class="mb-3 col-md-6">
@@ -78,7 +80,21 @@
                                         @enderror
                                     </div>
 
-
+                                    <div class="mb-3 col-md-6">
+                                        <label for="address" class="form-label">
+                                            <strong>Address:
+                                                @if (false)
+                                                    <span class="text-danger">*</span>
+                                                @endif
+                                            </strong>
+                                        </label>
+                                        <input type="text" name="address"
+                                            class="form-control @error('address') is-invalid @enderror" id="address"
+                                            placeholder="Address" value="{{ old('address', $user->address ?? '') }}">
+                                        @error('address')
+                                            <div class="form-text text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
 
                                     <!-- Image Input -->
                                     <div class="mb-3 col-md-6">
@@ -163,9 +179,9 @@
             },
 
             files: [
-                @if (isset($postcategory) && $postcategory->image)
+                @if (isset($user) && $user->image)
                     {
-                        source: '{{ asset('storage/' . $postcategory->image) }}',
+                        source: '{{ asset('storage/' . $user->image) }}',
                         options: {
                             type: 'local',
                         },

@@ -110,7 +110,7 @@
                 <div class="form-text text-danger">{{ $message }}</div>
             @enderror
         </div>
-        
+    </div>
 
         <!-- Status Field -->
         <div class="mb-3 col-md-6">
@@ -131,5 +131,5 @@
                 <div class="form-text text-danger">{{ $message }}</div>
             @enderror
         </div>
-    </div>
+    
 </div>

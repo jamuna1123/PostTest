@@ -36,7 +36,7 @@ class AdminUserController extends Controller
     }
 
 
-     public function store(StoreUser $request): RedirectResponse
+     public function store(StoreUser $request)
 {
     // Create a new user instance
     $user = new User();
@@ -62,7 +62,10 @@ class AdminUserController extends Controller
 
                 $user->image = $originalPath;
             }
-
+// Only set the password if it's provided
+    if ($request->filled('password')) {
+        $user->password = bcrypt($request->password);
+    }
     // Set email_verified_at to null if email is changed
     if ($user->isDirty('email')) {
         $user->email_verified_at = null;
@@ -84,16 +87,18 @@ class AdminUserController extends Controller
         return view('admin.user.edit', compact('user'));
     }
 
-        public function update(StoreUser $request): RedirectResponse
+    public function update(StoreUser $request, $id)
     {
-        $request->user()->fill($request->validated());
+
+            $user= User::findOrFail($id);
+        $user->fill($request->validated());
 
         // Handle the profile image
         if ($request->input('image')) {
             // Delete old images
-            if ($request->user()->image) {
-                $oldOriginalImagePath = 'images/original/'.$request->user()->image;
-                $oldResizedImagePath = 'images/resized/'.$request->user()->image;
+            if ($user->image) {
+                $oldOriginalImagePath = 'images/original/'.$user->image;
+                $oldResizedImagePath = 'images/resized/'.$user->image;
 
                 if (Storage::exists($oldOriginalImagePath)) {
                     Storage::delete($oldOriginalImagePath);
@@ -120,18 +125,18 @@ class AdminUserController extends Controller
                 // Store the resized image
                 Storage::disk('public')->put($resizedPath, (string) $resizedImage->encode());
 
-                $request->user()->image = $originalPath;
+                $user->image = $originalPath;
             }
         }
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        if ($user->isDirty('email')) {
+            $user->email_verified_at = null;
         }
 
-        $request->user()->save();
+        $user->save();
         Alert::success('Success', 'User update successfully.');
 
-        return redirect()->route('users.show',$request->user()->id);
+        return redirect()->route('users.show',$user->id);
       
     }
 

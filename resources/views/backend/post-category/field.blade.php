@@ -31,7 +31,19 @@
     
 <div class="row">
        
- <!-- Description -->
+         <!-- Image -->
+        <div class="mb-3 col-md-6">
+            <label for="image" class="form-label"><strong>Image: @if (false)
+                    <span class="text-danger">*</span>
+                @endif
+            </strong></label>
+         <input type="hidden" name="image" id="image" value="{{ old('image')}}">
+            @error('image')
+                <div class="form-text text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <!-- Description -->
         <div class="mb-3 col-md-6">
             <label for="description" class="form-label"><strong>Description: @if (false)
                     <span class="text-danger">*</span>
@@ -39,18 +51,6 @@
             </strong></label>
             <textarea name="description" class="form-control @error('description') is-invalid @enderror" rows="4" placeholder="Enter a description...">{{ old('description', isset($postcategory->description) ? strip_tags($postcategory->description) : '') }}</textarea>
             @error('description')
-                <div class="form-text text-danger">{{ $message }}</div>
-            @enderror
-        </div>
-
-         <!-- Image -->
-        <div class="mb-3 col-md-6">
-            <label for="image" class="form-label"><strong>Image: @if (false)
-                    <span class="text-danger">*</span>
-                @endif
-            </strong></label>
-            <input type="file" name="image" id="image" class="form-control">
-            @error('image')
                 <div class="form-text text-danger">{{ $message }}</div>
             @enderror
         </div>

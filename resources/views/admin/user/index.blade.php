@@ -81,7 +81,7 @@
                                                         alt="{{ $user->name }}" style="height: 50px;">
                                                 </a>
                                             @else
-                                                <p>No image available</p>
+                                                <a>No image available</a>
                                             @endif
                                             </td>
                                             <td>{{ $user->phone }}</td>

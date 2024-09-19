@@ -23,13 +23,16 @@ class StoreUser extends FormRequest
     public function rules(): array
     {
        
-
+// Determine if we are updating an existing user or creating a new one
+        $userId = $this->route('user') ? $this->route('user') : null;
         return [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)->ignore($this->user()->id)],
-            'phone' => ['nullable', 'string', 'max:10'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)->ignore($userId)],
+            'phone' => ['required', 'string', 'max:10'],
+            'address' => ['nullable', 'string'],
             'image' => ['nullable', 'string'],
-            'password' => ['required', 'string'],
+            'password' => ['nullable|min:8'], // Password is not required
+
         ];
     }
 }

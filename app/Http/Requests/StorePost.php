@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Elegant\Sanitizer\Sanitizer;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StorePost extends FormRequest
 {
@@ -26,10 +27,18 @@ class StorePost extends FormRequest
         $postId = $this->route('post'); // Assuming 'post' is passed as a route parameter
 
         return [
-            'title' => 'required|max:255|unique:posts,title,'.$postId,
+            'title' => [
+                'required',
+                'max:255',
+                // Unique title within the same category
+                Rule::unique('posts')->where(function ($query) {
+                    return $query->where('post_category_id', $this->post_category_id);
+                })->ignore($postId),
+            ],
             'image' => 'nullable|string', // Image is optional
             'description' => 'nullable|string',
             'post_category_id' => 'required|exists:post_categories,id',
+            'published_at' => 'required|date',
             // 'user_id' => 'nullable|exists:users,id',
             'status' => 'boolean',
         ];

@@ -47,6 +47,14 @@ class User extends Authenticatable
         ];
     }
 
+     public function username()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+     public function userupdate()
+    {
+        return $this->belongsTo(User::class, 'updated_by');
+    }
     protected static function boot()
     {
         parent::boot();

@@ -20,11 +20,8 @@
         <div class="row mt-4">
             <div class="col-lg-12">
                 <div class="card">
-                    {{-- <div class="card-header">
-                        <div class="card-title">Post Category Details</div>
-                    </div> --}}
                     <div class="card-body mt-1">
-                        <table class="table  table-striped">
+                        <table class="table table-striped">
                             <tbody>
                                 <tr>
                                     <th style="width: 30%">Category Name:</th>
@@ -34,45 +31,47 @@
                                     <th>Slug:</th>
                                     <td>{{ $postcategory->slug }}</td>
                                 </tr>
-                                 <tr>
-                                    <th>Description:</th>
-                                    <td>{!! $postcategory->description !!}</td>
-                                </tr>
-                                <tr>
-                                    <th>Status:</th>
-                                    <td> <div class="form-check form-switch">
-                                                    <input class="form-check-input status-toggle" type="checkbox"
-                                                        data-id="{{ $postcategory->id }}"
-                                                        {{ $postcategory->status ? 'checked' : '' }}>
-                                                    <label class="form-check-label" id="statusLabel{{ $postcategory->id }}">
-                                                        {{-- {{ $postCategory->status ? 'Active' : 'Inactive' }} --}}
-                                                    </label>
-                                                </div></td>
-                                </tr>
                                 <tr>
                                     <th>Image:</th>
                                     <td>
                                         @if ($postcategory->image)
-                                             <a href="{{ asset('storage/' . $postcategory->image) }}"
-                                                        data-fancybox="gallery" data-caption="{{ $postcategory->title }}">
-                                                        <img src="{{ asset('storage/images/resized/' . basename($postcategory->image)) }}"
-                                                            alt="{{ $postcategory->title }}" style="height: 50px;">
-                                                    </a>
+                                            <a href="{{ asset('storage/' . $postcategory->image) }}" data-fancybox="gallery"
+                                                data-caption="{{ $postcategory->title }}">
+                                                <img src="{{ asset('storage/images/resized/' . basename($postcategory->image)) }}"
+                                                    alt="{{ $postcategory->title }}" style="height: 50px;">
+                                            </a>
                                         @else
-                                            <p>No image available</p>
+                                            <a>No image available</a>
                                         @endif
                                     </td>
                                 </tr>
-
-                                  <tr>
+                                <tr>
+                                    <th>Description:</th>
+                                    <td style="max-width: 400px; word-wrap: break-word; white-space: normal;">
+                                        {!! $postcategory->description !!}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Status:</th>
+                                    <td>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input status-toggle" type="checkbox"
+                                                data-id="{{ $postcategory->id }}"
+                                                {{ $postcategory->status ? 'checked' : '' }}>
+                                            <label class="form-check-label" id="statusLabel{{ $postcategory->id }}">
+                                            </label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                
+                                <tr>
                                     <th>Created At:</th>
-                                    <td>{{ $postcategory->created_at}}</td>
+                                    <td>{{ $postcategory->created_at }}</td>
                                 </tr>
-                                  <tr>
+                                <tr>
                                     <th>Created By:</th>
-                                    <td>{{$postcategory->username->name}}</td>
+                                    <td>{{ $postcategory->username->name }}</td>
                                 </tr>
-                                   {{-- Only show Updated At and Updated By if the record has been updated --}}
                                 @if ($postcategory->created_at != $postcategory->updated_at)
                                     <tr>
                                         <th>Updated At:</th>
@@ -80,25 +79,47 @@
                                     </tr>
                                     <tr>
                                         <th>Updated By:</th>
-                                        <td>{{ $postcategory->userupdate->name ?? 'Unknown' }}</td> {{-- Assuming the relation is updatedBy --}}
+                                        <td>{{ $postcategory->userupdate->name ?? 'Unknown' }}</td>
                                     </tr>
                                 @endif
                             </tbody>
                         </table>
                         <div class="d-flex justify-content-start mt-3">
-                            <a href="{{ route('post-category.index') }}" class="btn btn-warning me-2 text-white"><i class="fas fa-arrow-left"></i>
-                                Back
+                            <a href="{{ route('post-category.index') }}" class="btn btn-warning me-2 text-white"><i
+                                    class="fas fa-arrow-left"></i> Back
                             </a>
-                            <a href="{{ route('post-category.create') }}" class="btn btn-success  me-2"> <i class="fas fa-plus"></i>
-                                Create
+                            <a href="{{ route('post-category.create') }}" class="btn btn-success me-2"><i
+                                    class="fas fa-plus"></i> Create
                             </a>
                             <a href="{{ route('post-category.edit', $postcategory->id) }}" class="btn btn-primary me-2">
-                               <i class="fas fa-edit"></i> Update
+                                <i class="fas fa-edit"></i> Update
                             </a>
+                            <a class="btn btn-danger me-2" onclick="handleDelete({{ $postcategory->id }})">
+                                <i class="fas fa-trash"></i> Delete
+                            </a>
+                            <form id="deletePostForm" action="{{ route('post-category.destroy', $postcategory->id) }}"
+                                method="POST" style="display: none;">
+                                @csrf
+                                @method('DELETE')
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <style>
+        /* Ensures the table has a consistent layout even with long text */
+        table th, table td {
+            vertical-align: middle;
+        }
+
+        /* For long descriptions */
+        table td {
+            word-wrap: break-word;
+            white-space: normal; /* Ensures that long words break */
+            max-width: 400px; /* Adjust as necessary */
+        }
+    </style>
 @endsection

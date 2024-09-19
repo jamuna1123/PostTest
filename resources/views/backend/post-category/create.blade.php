@@ -66,6 +66,8 @@
                 },
                 onload: (response) => {
                     const data = JSON.parse(response);
+                    // Store the uploaded image path in a hidden input
+                    document.getElementById('image').value = data.path;
                     return data.path;
                 }
             },
@@ -77,5 +79,16 @@
             }
         }
     });
-    </script>
+
+    // If validation fails, reload the image in FilePond
+    @if (old('image'))
+    pond.addFile('{{ asset('storage/' . old('image')) }}').then(function(file) {
+        console.log('File added', file);
+    });
+    @endif
+</script>
+
+
+
+
 @endpush

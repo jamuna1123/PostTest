@@ -125,23 +125,5 @@
             </div> <!-- /.col -->
         </div> <!--end::Row-->
 
-        <!-- Toggle Status Modal -->
-        <div class="modal fade" id="modal-statuspost-toggle" tabindex="-1" aria-labelledby="modal-statuspost-toggleLabel"
-            aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="modal-statuspost-toggleLabel">Confirm Status Update</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <p>Are you sure you want to update the status of this post category?</p>
-                    </div>
-                    <div class="modal-footer justify-content-between">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-primary" id="confirmStatusUpdate">Update</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+        
     @endsection
