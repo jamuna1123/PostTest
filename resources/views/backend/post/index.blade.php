@@ -38,7 +38,7 @@
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
-                                        <th style="width: 280px">Action</th>
+                                        <th>Action</th>
                                         <th>Post Title</th>
 
                                         <th>Category</th>
@@ -92,7 +92,7 @@
 
                                             <td>
                                                 <div class="form-check form-switch">
-                                                    <input class="form-check-input statuspost-toggle" type="checkbox"
+                                                    <input class="form-check-input statuspost-toggle" type="checkbox" 
                                                         data-id="{{ $posts->id }}"
                                                         {{ $posts->status ? 'checked' : '' }}>
                                                     <label class="form-check-label" id="statusLabel{{ $posts->id }}">

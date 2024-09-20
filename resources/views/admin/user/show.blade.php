@@ -5,12 +5,12 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-6">
-                    <h3 class="mb-0">User Detail</h3>
+                    <h3 class="mb-0">User</h3>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-end">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">User Detail</li>
+                        <li class="breadcrumb-item active" aria-current="page">User</li>
                     </ol>
                 </div>
             </div>
@@ -20,22 +20,22 @@
         <div class="row mt-4">
             <div class="col-lg-12">
                 <div class="card">
-                    {{-- <div class="card-header">
+                    <div class="card-header">
                         <div class="card-title">User Details</div>
-                    </div> --}}
-                    <div class="card-body mt-1">
-                        <table class="table table-striped">
+                    </div>
+                    <div class="card-body mt-3">
+                        <table class="table table-striped table-fixed">
                             <tbody>
                                 <tr>
-                                    <th style="width: 30%">Name:</th>
+                                    <th style="width: 200px">Name:</th>
                                     <td>{{ $user->name }}</td>
                                 </tr>
                                 <tr>
-                                    <th>Email:</th>
+                                    <th style="width: 200px">Email:</th>
                                     <td>{{ $user->email }}</td>
                                 </tr>
                                 <tr>
-                                    <th>Image:</th>
+                                    <th style="width: 200px">Image:</th>
                                     <td>
                                         @if ($user->image)
                                             <a href="{{ asset('storage/' . $user->image) }}" data-fancybox="gallery"
@@ -49,31 +49,31 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>Phone:</th>
+                                    <th style="width: 200px">Phone:</th>
 
                                     <td>{{ $user->phone }}</td>
                                 </tr>
                                 <tr>
-                                    <th>Address:</th>
-                                    <td>{{ $user->address ? $user->address : 'User Address Not found' }}</td>
+                                    <th style="width: 200px">Address:</th>
+                                    <td>{{ $user->address ? $user->address : 'N/A' }}</td>
                                 </tr>
 
                                 <tr>
-                                    <th>Created At:</th>
+                                    <th style="width: 200px">Created At:</th>
                                     <td>{{ $user->created_at }}</td>
                                 </tr>
                                 <tr>
-                                    <th>Created By:</th>
+                                    <th style="width: 200px">Created By:</th>
                                     <td>{{ $user->username ? $user->username->name : 'N/A' }}</td> {{-- Check if 'created_by' exists --}}
                                 </tr>
                                 {{-- Only show Updated At and Updated By if the record has been updated --}}
                                 @if ($user->updated_at && $user->updated_by)
                                     <tr>
-                                        <th>Updated At:</th>
+                                        <th style="width: 200px">Updated At:</th>
                                         <td>{{ $user->updated_at }}</td>
                                     </tr>
                                     <tr>
-                                        <th>Updated By:</th>
+                                        <th style="width: 200px">Updated By:</th>
                                         <td>{{ $user->userupdate->name }}</td> {{-- Assuming the relation is updatedBy --}}
                                     </tr>
                                 @endif
@@ -92,27 +92,42 @@
                             <a href="{{ route('users.edit', $user->id) }}" class="btn btn-primary me-2">
                                 <i class="fas fa-edit"></i> Update
                             </a>
+                            @if (auth()->id() !== $user->id)
+                                <!-- Check if the authenticated user is not the same as the current user -->
+                                <a class="btn btn-danger me-2" onclick="handleDelete({{ $user->id }})"
+                                    data-bs-toggle="modal" data-bs-target="#modal-danger">
+                                    <i class="fas fa-trash"></i> Delete
+                                </a>
+                                <form id="deletePostForm" action="{{ route('users.destroy', $user->id) }}" method="POST"
+                                    style="display: none;">
+                                    @csrf
+                                    @method('DELETE')
+                                </form>
+                            @endif
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
+@endsection
+@push('styles')
     <style>
-        /* Ensures the table has a consistent layout even with long text */
-        table th,
-        table td {
-            vertical-align: middle;
+        /* / Ensure the table header (th) has a fixed width / */
+        .fixed-table {
+            table-layout: fixed;
+            width: 100%;
         }
 
-        /* For long descriptions */
-        table td {
+        .fixed-table th {
+            width: 200px;
+            white-space: nowrap;
+        }
+
+        .fixed-table td {
+            width: auto;
+            overflow-wrap: break-word;
             word-wrap: break-word;
-            white-space: normal;
-            /* Ensures that long words break */
-            max-width: 400px;
-            /* Adjust as necessary */
         }
     </style>
-@endsection
+@endpush

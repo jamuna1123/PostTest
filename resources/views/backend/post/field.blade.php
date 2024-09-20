@@ -26,7 +26,7 @@
                 </strong>
             </label>
             <input type="text" name="slug" class="form-control @error('slug') is-invalid @enderror" id="slug"
-                placeholder="Slug will be auto generated" value="{{ old('slug', $post->slug ?? '') }}">
+                placeholder="Slug will be auto generated if left empty" value="{{ old('slug', $post->slug ?? '') }}">
             @error('slug')
                 <div class="form-text text-danger">{{ $message }}</div>
             @enderror
@@ -95,7 +95,7 @@
     <div class="row">
 
         <!-- Publish Date Field -->
-        <div class="mb-3 col-md-6">
+        <div class="mb-3 col-md-3">
             <label for="published_at" class="form-label">
                 <strong>Publish Date:
                     @if (true)

@@ -79,9 +79,9 @@
 </head> <!--end::Head--> <!--begin::Body-->
 
 <body class="layout-fixed sidebar-expand-lg bg-body-tertiary"> <!--begin::App Wrapper-->
-    @include('sweetalert::alert')
+ 
     <div class="app-wrapper"> <!--begin::Header-->
-
+   
         @include('backend.layouts.navbar')
 
         @include('backend.layouts.sidebar')
@@ -90,7 +90,7 @@
         <main class="app-main"> <!--begin::App Content Header-->
 
             @yield('content')
-
+@include('sweetalert::alert')
         </main>
         <!--end::App Wrapper--> <!--begin::Script--> <!--begin::Third Party Plugin(OverlayScrollbars)-->
 

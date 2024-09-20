@@ -31,7 +31,8 @@ class StoreUser extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)->ignore($userId)],
-            'phone' => ['required', 'string', 'max:10'],
+            'phone' => ['required', 'string', 'max:10', Rule::unique(User::class)->ignore($userId)], // Unique phone number
+
             'address' => ['nullable', 'string'],
             'image' => ['nullable', 'string'],
             'password' => ['nullable|min:8'], // Password is not required

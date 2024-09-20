@@ -47,7 +47,7 @@
                     </ul>
                 </li>
                 <!-- Tables Module -->
-                <li class="nav-item {{ request()->routeIs('post-category.index') || request()->routeIs('post.index') ? 'menu-open' : '' }}">
+                <li class="nav-item {{ request()->routeIs('post-category.index') || request()->routeIs('post.index')  ? 'menu-open' : '' }}">
                     <a href="#" class="nav-link">
                      
                         <i class="nav-icon bi bi-postcard"></i>

@@ -5,12 +5,12 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-6">
-                    <h3 class="mb-0">Post Category Detail</h3>
+                    <h3 class="mb-0">Post Category</h3>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-end">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Post Category Detail</li>
+                        <li class="breadcrumb-item active" aria-current="page">Post Category</li>
                     </ol>
                 </div>
             </div>
@@ -20,19 +20,22 @@
         <div class="row mt-4">
             <div class="col-lg-12">
                 <div class="card">
-                    <div class="card-body mt-1">
-                        <table class="table table-striped">
+                    <div class="card-header">
+                        <div class="card-title">Post Category Details</div>
+                    </div>
+                    <div class="card-body mt-3">
+                        <table class="table table-striped table-fixed">
                             <tbody>
                                 <tr>
-                                    <th style="width: 30%">Category Name:</th>
+                                    <th style="width: 200px">Category Name:</th>
                                     <td>{{ $postcategory->title }}</td>
                                 </tr>
                                 <tr>
-                                    <th>Slug:</th>
+                                    <th style="width: 200px">Slug:</th>
                                     <td>{{ $postcategory->slug }}</td>
                                 </tr>
                                 <tr>
-                                    <th>Image:</th>
+                                    <th style="width: 200px">Image:</th>
                                     <td>
                                         @if ($postcategory->image)
                                             <a href="{{ asset('storage/' . $postcategory->image) }}" data-fancybox="gallery"
@@ -41,18 +44,22 @@
                                                     alt="{{ $postcategory->title }}" style="height: 50px;">
                                             </a>
                                         @else
-                                            <a>No image available</a>
+                                            No image available
                                         @endif
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>Description:</th>
+                                    <th style="width: 200px">Description:</th>
                                     <td style="max-width: 400px; word-wrap: break-word; white-space: normal;">
+                                         @if ($postcategory->description)
                                         {!! $postcategory->description !!}
+                                         @else
+                                            N/A
+                                        @endif
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>Status:</th>
+                                    <th style="width: 200px">Status:</th>
                                     <td>
                                         <div class="form-check form-switch">
                                             <input class="form-check-input status-toggle" type="checkbox"
@@ -63,22 +70,21 @@
                                         </div>
                                     </td>
                                 </tr>
-
                                 <tr>
-                                    <th>Created At:</th>
+                                    <th style="width: 200px">Created At:</th>
                                     <td>{{ $postcategory->created_at }}</td>
                                 </tr>
                                 <tr>
-                                    <th>Created By:</th>
+                                    <th style="width: 200px">Created By:</th>
                                     <td>{{ $postcategory->username->name }}</td>
                                 </tr>
                                 @if ($postcategory->updated_at && $postcategory->updated_by)
                                     <tr>
-                                        <th>Updated At:</th>
+                                        <th style="width: 200px">Updated At:</th>
                                         <td>{{ $postcategory->updated_at }}</td>
                                     </tr>
                                     <tr>
-                                        <th>Updated By:</th>
+                                        <th style="width: 200px">Updated By:</th>
                                         <td>{{ $postcategory->userupdate->name }}</td>
                                     </tr>
                                 @endif
@@ -108,26 +114,24 @@
             </div>
         </div>
     </div>
-
+@endsection
+@push('styles')
     <style>
-        table th {
-            vertical-align: middle;
-            width: 30%;
-            /* Ensuring fixed width for table headers */
+        /* / Ensure the table header (th) has a fixed width / */
+        .fixed-table {
+            table-layout: fixed;
+            width: 100%;
         }
 
-        table td {
+        .fixed-table th {
+            width: 200px;
+            white-space: nowrap;
+        }
+
+        .fixed-table td {
+            width: auto;
+            overflow-wrap: break-word;
             word-wrap: break-word;
-            white-space: normal;
-            /* Ensures that long words break */
-            max-width: 70%;
-            /* Adjust as necessary to fit the layout */
-        }
-
-        /* For long descriptions */
-        table td {
-            max-width: 400px;
-            /* Adjust as necessary */
         }
     </style>
-@endsection
+@endpush
