@@ -29,6 +29,7 @@
                         <form action="{{ route('post.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             @include('backend.post.field')
+
                             <div class="card-footer">
                                
                                 <button type="submit" class="btn btn-success"> <i class="fas fa-save"></i>

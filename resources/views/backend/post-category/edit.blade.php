@@ -94,6 +94,8 @@
                     },
                     onload: (response) => {
                         const data = JSON.parse(response);
+                        document.getElementById('image').value = data.path;
+
                         return data.path;
                     }
                 },
@@ -116,6 +118,13 @@
                 @endif
             ],
         });
+
+         // If validation fails, reload the image in FilePond
+    @if (old('image'))
+    pond.addFile('{{ asset('storage/' . old('image')) }}').then(function(file) {
+        console.log('File added', file);
+    });
+    @endif
     </script>
 
 

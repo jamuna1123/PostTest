@@ -68,6 +68,7 @@
                     @endif
                 </strong></label>
             <input type="hidden" name="image" id="image" class="form-control">
+            
             @error('image')
                 <div class="form-text text-danger">{{ $message }}</div>
             @enderror
