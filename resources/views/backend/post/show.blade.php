@@ -24,7 +24,7 @@
                       <div class="card-header">
                         <div class="card-title">Post Details</div>
                     </div>
-                    <div class="card-body mt-3">
+                    <div class="card-body">
                         <table class="table table-striped table-fixed">
                             <tbody>
                                 <tr>
@@ -79,10 +79,12 @@
                                      <th style="width: 200px">Status:</th>
                                     <td>
                                         <div class="form-check form-switch">
-                                            <input class="form-check-input statuspost-toggle" type="checkbox"
-                                                data-id="{{ $post->id }}" {{ $post->status ? 'checked' : '' }}>
-                                            <label class="form-check-label" id="statusLabel{{ $post->id }}"></label>
-                                        </div>
+                                                    <input class="form-check-input statuspost-toggle" type="checkbox" data-id="{{ $post->id }}"
+                                                        {{ $post->status ? 'checked' : '' }}>
+                                                    <label class="form-check-label" for="statusLabel{{ $post->id }}">
+                                                        {{ $post->status ? 'On' : 'Off' }}
+                                                    </label>
+                                                </div>
                                     </td>
                                 </tr>
                                 <tr>

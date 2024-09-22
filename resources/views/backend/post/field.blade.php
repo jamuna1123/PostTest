@@ -85,7 +85,7 @@
                 </strong>
             </label>
             <textarea name="description" id="description" class="form-control @error('description') is-invalid @enderror"
-                rows="4" placeholder="Enter a description...">{{ old('description', $post->description ?? '') }}</textarea>
+                rows="4" placeholder="Enter description here...">{{ old('description', $post->description ?? '') }}</textarea>
             @error('description')
                 <div class="form-text text-danger">{{ $message }}</div>
             @enderror

@@ -63,9 +63,12 @@
                                             <div class="form-text text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
+
+                                 
+
                                     <!-- Image Input -->
                                     <div class="mb-3 col-md-6">
-                                        <label for="image" class="form-label"><strong>Image:@if (false)
+                                        <label for="image" class="form-label"><strong>Profile Image:@if (false)
                                                     <span class="text-danger">*</span>
                                                 @endif
                                             </strong></label>

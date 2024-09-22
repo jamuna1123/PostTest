@@ -88,7 +88,7 @@
                 }
             });
         </script> --}}
-
+{{-- post category status --}}
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         document.querySelectorAll('.status-toggle').forEach(toggle => {
@@ -134,8 +134,14 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        // Show success alert using SweetAlert
+                        // Update the toggle checkbox
                         document.querySelector(`input[data-id="${id}"]`).checked = status;
+
+                        // Update the label text
+                        let label = document.querySelector(`label[for="statusLabel${id}"]`);
+                        label.textContent = status ? 'On' : 'Off';
+
+                        // Show success alert using SweetAlert
                         Swal.fire({
                             title: 'Success!',
                             text: 'Status updated successfully.',
@@ -143,11 +149,12 @@
                             confirmButtonText: 'OK'
                         });
 
-                        // Optionally update the label or any other UI element
-                        // Hide the modal after update`
+                        // Hide the modal if needed
                         var modal = bootstrap.Modal.getInstance(document.getElementById(
                             'modal-status-toggle'));
-                        modal.hide();
+                        if (modal) {
+                            modal.hide();
+                        }
                     }
                 })
                 .catch(error => {
@@ -156,6 +163,7 @@
         }
     });
 </script>
+
 {{-- post toggle status update --}}
 
 <script>
@@ -205,6 +213,10 @@
                     if (data.success) {
                         // Show success alert using SweetAlert
                         document.querySelector(`input[data-id="${id}"]`).checked = status;
+                        // Update the label text
+                        let label = document.querySelector(`label[for="statusLabel${id}"]`);
+                        label.textContent = status ? 'On' : 'Off';
+
                         Swal.fire({
                             title: 'Success!',
                             text: 'Status updated successfully.',
@@ -216,7 +228,9 @@
                         // Hide the modal after update`
                         var modal = bootstrap.Modal.getInstance(document.getElementById(
                             'modal-status-toggle'));
-                        modal.hide();
+                        if (modal) {
+                            modal.hide();
+                        }
                     }
                 })
                 .catch(error => {

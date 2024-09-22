@@ -23,7 +23,7 @@
                     <div class="card-header">
                         <div class="card-title">User Details</div>
                     </div>
-                    <div class="card-body mt-3">
+                    <div class="card-body">
                         <table class="table table-striped table-fixed">
                             <tbody>
                                 <tr>
@@ -51,7 +51,7 @@
                                 <tr>
                                     <th style="width: 200px">Phone:</th>
 
-                                    <td>{{ $user->phone }}</td>
+                                      <td>{{ $user->phone ? $user->phone : 'N/A' }}</td>
                                 </tr>
                                 <tr>
                                     <th style="width: 200px">Address:</th>

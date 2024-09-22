@@ -17,7 +17,7 @@ class PostCategoryController extends Controller
     public function index(Request $request)
     {
 
-        $postCategories = PostCategory::paginate(5); // Adjust the number per page as needed
+        $postCategories = PostCategory::orderBy('id', 'asc')->paginate(5); // Adjust the number per page as needed
 
         return view('backend.post-category.index', compact('postCategories'));
     }

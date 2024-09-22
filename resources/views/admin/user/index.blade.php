@@ -44,6 +44,7 @@
                                         <th>Email</th>
                                         <th>Image</th>
                                         <th>Phone</th>
+                                        <th>Address</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -89,10 +90,10 @@
                                                     <a>No image available</a>
                                                 @endif
                                             </td>
-                                            <td>{{ $user->phone }}</td>
+                                            <td>{{ $user->phone ? $user->phone : 'N/A' }}</td>
 
 
-
+                                            <td>{{ $user->address ? $user->address : 'N/A' }}</td>
                                         </tr>
                                     @empty
                                         <tr>

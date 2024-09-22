@@ -7,6 +7,7 @@ use App\Http\Requests\StoreUser;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -16,7 +17,7 @@ class AdminUserController extends Controller
     public function index()
     {
 
-        $users = User::paginate(5);
+        $users = User::orderBy('id', 'asc')->paginate(5);
 
         return view('admin.user.index', compact('users'));
     }
@@ -37,7 +38,10 @@ class AdminUserController extends Controller
         // Create a new user instance
         $user = new User;
         $user->fill($request->validated());
-
+        // Hash the password
+        if ($request->filled('password')) {
+            $user->password = Hash::make($request->input('password'));
+        }
         // Set created_at and updated_at with Nepal timezone
         $currentTime = Carbon::now();
         $user->created_at = $currentTime;
@@ -62,10 +66,7 @@ class AdminUserController extends Controller
 
             $user->image = $originalPath;
         }
-        // Only set the password if it's provided
-        if ($request->filled('password')) {
-            $user->password = bcrypt($request->password);
-        }
+
         // Set email_verified_at to null if email is changed
         if ($user->isDirty('email')) {
             $user->email_verified_at = null;
@@ -92,7 +93,7 @@ class AdminUserController extends Controller
 
         $user = User::findOrFail($id);
         $user->fill($request->validated());
-
+      
         // Handle the profile image
         if ($request->input('image')) {
             // Delete old images

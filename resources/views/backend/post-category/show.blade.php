@@ -23,7 +23,7 @@
                     <div class="card-header">
                         <div class="card-title">Post Category Details</div>
                     </div>
-                    <div class="card-body mt-3">
+                    <div class="card-body">
                         <table class="table table-striped table-fixed">
                             <tbody>
                                 <tr>
@@ -51,9 +51,9 @@
                                 <tr>
                                     <th style="width: 200px">Description:</th>
                                     <td style="max-width: 400px; word-wrap: break-word; white-space: normal;">
-                                         @if ($postcategory->description)
-                                        {!! $postcategory->description !!}
-                                         @else
+                                        @if ($postcategory->description)
+                                            {!! $postcategory->description !!}
+                                        @else
                                             N/A
                                         @endif
                                     </td>
@@ -65,7 +65,8 @@
                                             <input class="form-check-input status-toggle" type="checkbox"
                                                 data-id="{{ $postcategory->id }}"
                                                 {{ $postcategory->status ? 'checked' : '' }}>
-                                            <label class="form-check-label" id="statusLabel{{ $postcategory->id }}">
+                                            <label class="form-check-label" for="statusLabel{{ $postcategory->id }}">
+                                                {{ $postcategory->status ? 'On' : 'Off' }}
                                             </label>
                                         </div>
                                     </td>

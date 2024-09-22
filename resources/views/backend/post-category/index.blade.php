@@ -92,12 +92,10 @@
 
                                             <td>
                                                 <div class="form-check form-switch">
-                                                    <input class="form-check-input status-toggle" type="checkbox"
-                                                        data-id="{{ $postCategory->id }}"
+                                                    <input class="form-check-input status-toggle" type="checkbox" data-id="{{ $postCategory->id }}"
                                                         {{ $postCategory->status ? 'checked' : '' }}>
-                                                    <label class="form-check-label"
-                                                        id="statusLabel{{ $postCategory->id }}">
-                                                        {{-- {{ $postCategory->status ? 'Active' : 'Inactive' }} --}}
+                                                    <label class="form-check-label" for="statusLabel{{ $postCategory->id }}">
+                                                        {{ $postCategory->status ? 'On' : 'Off' }}
                                                     </label>
                                                 </div>
                                             </td>

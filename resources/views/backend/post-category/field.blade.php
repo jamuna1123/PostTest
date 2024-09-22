@@ -49,7 +49,7 @@
                     <span class="text-danger">*</span>
                 @endif
             </strong></label>
-            <textarea name="description" class="form-control @error('description') is-invalid @enderror" rows="4" placeholder="Enter a description...">{{ old('description', isset($postcategory->description) ? strip_tags($postcategory->description) : '') }}</textarea>
+            <textarea name="description" class="form-control @error('description') is-invalid @enderror" rows="4" placeholder="Enter description here...">{{ old('description', isset($postcategory->description) ? strip_tags($postcategory->description) : '') }}</textarea>
             @error('description')
                 <div class="form-text text-danger">{{ $message }}</div>
             @enderror
@@ -71,6 +71,8 @@
                     {{ (isset($postcategory) && $postcategory->status) || old('status') ? 'Active' : 'Inactive' }}
                 </label>
             </div>
+               
+
             @error('status')
                 <div class="form-text text-danger">{{ $message }}</div>
             @enderror

@@ -62,10 +62,25 @@
                                         @enderror
                                     </div>
 
+                                      <!-- Password Field -->
+                                    <div class="mb-3 col-md-6">
+                                        <label for="password" class="form-label"><strong>Password: @if (true)
+                                                    <span class="text-danger">*</span>
+                                                @endif</strong></label>
+                                        <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" id="password" placeholder="Password">
+                                        @error('password')
+                                            <div class="form-text text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
 
+                                    {{-- <!-- Confirm Password Field -->
+                                    <div class="mb-3 col-md-6">
+                                        <label for="password_confirmation" class="form-label"><strong>Confirm Password:<span class="text-danger">*</span></strong></label>
+                                        <input type="password" name="password_confirmation" class="form-control" id="password_confirmation" placeholder="Confirm Password">
+                                    </div> --}}
                                     <!-- Image Input -->
                                     <div class="mb-3 col-md-6">
-                                        <label for="image" class="form-label"><strong>Image:@if (false)
+                                        <label for="image" class="form-label"><strong>Profile Image:@if (false)
                                                     <span class="text-danger">*</span>
                                                 @endif
                                             </strong></label>

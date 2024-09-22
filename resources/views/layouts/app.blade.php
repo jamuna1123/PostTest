@@ -36,6 +36,10 @@
         integrity="sha256-4MX+61mt9NVvvuPjUWdUdyfZfxSB1/Rf9WtqRHgG5S0=" crossorigin="anonymous"><!-- jsvectormap -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/css/jsvectormap.min.css"
         integrity="sha256-+uGLJmmTKOqBr+2E6KDYs/NRsHxSkONXFHUL0fy2O/4=" crossorigin="anonymous">
+
+  
+
+
     {{-- use toggle --}}
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
@@ -79,9 +83,9 @@
 </head> <!--end::Head--> <!--begin::Body-->
 
 <body class="layout-fixed sidebar-expand-lg bg-body-tertiary"> <!--begin::App Wrapper-->
- 
+
     <div class="app-wrapper"> <!--begin::Header-->
-   
+
         @include('backend.layouts.navbar')
 
         @include('backend.layouts.sidebar')
@@ -90,7 +94,7 @@
         <main class="app-main"> <!--begin::App Content Header-->
 
             @yield('content')
-@include('sweetalert::alert')
+            @include('sweetalert::alert')
         </main>
         <!--end::App Wrapper--> <!--begin::Script--> <!--begin::Third Party Plugin(OverlayScrollbars)-->
 
@@ -164,9 +168,9 @@
             const statusLabel = document.getElementById('statusLabel');
 
             if (statusCheckbox.checked) {
-                statusLabel.textContent = 'published';
+                statusLabel.textContent = 'On';
             } else {
-                statusLabel.textContent = 'unpublished';
+                statusLabel.textContent = 'Off';
             }
         }
 
@@ -219,6 +223,7 @@
             content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:16px }'
         });
     </script>
+   
 
 
 </body><!--end::Body-->

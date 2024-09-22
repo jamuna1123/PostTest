@@ -6,6 +6,7 @@ use App\Models\User;
 use Elegant\Sanitizer\Sanitizer;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules;
 
 class StoreUser extends FormRequest
 {
@@ -27,6 +28,7 @@ class StoreUser extends FormRequest
 
         // Determine if we are updating an existing user or creating a new one
         $userId = $this->route('user') ? $this->route('user') : null;
+        $isUpdating = $userId !== null;
 
         return [
             'name' => ['required', 'string', 'max:255'],
@@ -35,8 +37,9 @@ class StoreUser extends FormRequest
 
             'address' => ['nullable', 'string'],
             'image' => ['nullable', 'string'],
-            'password' => ['nullable|min:8'], // Password is not required
 
+            // Password is required when creating, but optional on update
+            'password' => [$isUpdating ? 'nullable' : 'required', Rules\Password::defaults()],
         ];
 
     }
