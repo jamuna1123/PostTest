@@ -9,9 +9,9 @@ use Illuminate\Support\Facades\Route;
 
 // Add additional routes as needed
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Route::get('/', function () {
+    return view('welcome');
+});
 
 // Route::get('/dashboard', function () {
 //     return view('dashboard');

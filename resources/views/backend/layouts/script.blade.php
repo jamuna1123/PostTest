@@ -148,13 +148,23 @@
                             icon: 'success',
                             confirmButtonText: 'OK'
                         });
-
+                       
+                   
                         // Hide the modal if needed
                         var modal = bootstrap.Modal.getInstance(document.getElementById(
                             'modal-status-toggle'));
+                           
                         if (modal) {
+                              
                             modal.hide();
                         }
+                    } else {
+                        Swal.fire({
+                            title: 'Error!',
+                            text: 'Failed to update status.',
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        });
                     }
                 })
                 .catch(error => {

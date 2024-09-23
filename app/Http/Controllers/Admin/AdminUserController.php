@@ -17,7 +17,7 @@ class AdminUserController extends Controller
     public function index()
     {
 
-        $users = User::orderBy('id', 'asc')->paginate(5);
+        $users = User::orderBy('id', 'desc')->paginate(5);
 
         return view('admin.user.index', compact('users'));
     }
