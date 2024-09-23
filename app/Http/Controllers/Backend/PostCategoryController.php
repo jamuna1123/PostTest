@@ -97,56 +97,79 @@ class PostCategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(StorePostCategory $request, $id)
-    {
+   public function update(StorePostCategory $request, $id)
+{
+    $postcategory = PostCategory::findOrFail($id);
 
-        $postcategory = PostCategory::findOrFail($id);
+    // Check if there are any changes in the title, description, slug, or status
+    $isDirty = false;
 
+    if ($postcategory->title !== $request->title) {
         $postcategory->title = $request->title;
+        $isDirty = true;
+    }
+    
+    if ($postcategory->description !== $request->description) {
         $postcategory->description = $request->description;
+        $isDirty = true;
+    }
 
+    if ($postcategory->slug !== $request->slug) {
         $postcategory->slug = $request->slug;
+        $isDirty = true;
+    }
 
-        if ($request->input('image')) {
-            // Delete old images
-            if ($postcategory->image) {
-                $oldOriginalImagePath = 'images/original/'.$postcategory->image;
-                $oldResizedImagePath = 'images/resized/'.$postcategory->image;
+    if ($postcategory->status != ($request->has('status') ? 1 : 0)) {
+        $postcategory->status = $request->has('status') ? 1 : 0;
+        $isDirty = true;
+    }
 
-                if (Storage::exists($oldOriginalImagePath)) {
-                    Storage::delete($oldOriginalImagePath);
-                }
-                if (Storage::exists($oldResizedImagePath)) {
-                    Storage::delete($oldResizedImagePath);
-                }
+    // Handle the image update
+    if ($request->input('image')) {
+        // Delete old images if an image already exists
+        if ($postcategory->image) {
+            $oldOriginalImagePath = 'images/original/' . $postcategory->image;
+            $oldResizedImagePath = 'images/resized/' . $postcategory->image;
+
+            if (Storage::exists($oldOriginalImagePath)) {
+                Storage::delete($oldOriginalImagePath);
             }
-
-            $imagePath = $request->input('image');
-            $filename = basename($imagePath);
-
-            // Define paths
-            $originalPath = 'images/original/'.$filename;
-            $resizedPath = 'images/resized/'.$filename;
-
-            // Move the file from 'tmp' to 'images'
-            Storage::disk('public')->move($imagePath, $originalPath);
-
-            // Resize the image using Intervention Image
-            $resizedImage = Image::make(storage_path('app/public/'.$originalPath))->resize(300, 200);
-
-            // Store the resized image
-            Storage::disk('public')->put($resizedPath, (string) $resizedImage->encode());
-
-            $postcategory->image = $originalPath;
+            if (Storage::exists($oldResizedImagePath)) {
+                Storage::delete($oldResizedImagePath);
+            }
         }
 
-        $postcategory->status = $request->has('status') ? 1 : 0;
-        $postcategory->save();
+        $imagePath = $request->input('image');
+        $filename = basename($imagePath);
 
-        Alert::success('Success', 'Post Category update successfully.');
+        // Define paths
+        $originalPath = 'images/original/' . $filename;
+        $resizedPath = 'images/resized/' . $filename;
 
-        return redirect()->route('post-category.show', $postcategory->id);
+        // Move the file from 'tmp' to 'images'
+        Storage::disk('public')->move($imagePath, $originalPath);
+
+        // Resize the image using Intervention Image
+        $resizedImage = Image::make(storage_path('app/public/' . $originalPath))->resize(300, 200);
+
+        // Store the resized image
+        Storage::disk('public')->put($resizedPath, (string) $resizedImage->encode());
+
+        $postcategory->image = $originalPath;
+        $isDirty = true;
     }
+
+    // If changes were made, save the updated post category
+    if ($isDirty) {
+        $postcategory->save();
+        Alert::success('Success', 'Post Category updated successfully.');
+    } else {
+        Alert::info('No Changes', 'No changes detected.');
+    }
+
+    return redirect()->route('post-category.show', $postcategory->id);
+}
+
 
     /**
      * Remove the specified resource from storage.

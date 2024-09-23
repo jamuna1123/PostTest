@@ -1,4 +1,5 @@
 <!-- for delete conformation  -->
+
 <script>
     function handleDelete(id) {
         // Trigger SweetAlert2 for confirmation
@@ -11,11 +12,17 @@
             cancelButtonColor: '#d33',
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
+             
             if (result.isConfirmed) {
                 // Set the form action to the correct delete route
                 var form = document.getElementById('deletePostForm');
+ 
                 // Submit the form
                 form.submit();
+                 // Wait for form submission to be processed and reload the page
+                form.addEventListener('submit', function() {
+                    window.location.reload();
+                });
             }
         });
     }
@@ -111,6 +118,8 @@
                     if (result.isConfirmed) {
                         // Call function to update status
                         updateStatus(selectedCategoryId, selectedStatus);
+                             
+
                     } else {
                         // Revert the toggle if canceled
                         this.checked = !selectedStatus;
@@ -142,14 +151,17 @@
                         label.textContent = status ? 'On' : 'Off';
 
                         // Show success alert using SweetAlert
+                        
                         Swal.fire({
                             title: 'Success!',
                             text: 'Status updated successfully.',
                             icon: 'success',
                             confirmButtonText: 'OK'
-                        });
+                        }).then((result) => {
+                    window.location.reload();
+                });
                        
-                   
+                    
                         // Hide the modal if needed
                         var modal = bootstrap.Modal.getInstance(document.getElementById(
                             'modal-status-toggle'));
@@ -157,6 +169,7 @@
                         if (modal) {
                               
                             modal.hide();
+                             
                         }
                     } else {
                         Swal.fire({
@@ -232,7 +245,9 @@
                             text: 'Status updated successfully.',
                             icon: 'success',
                             confirmButtonText: 'OK'
-                        });
+                        }).then((result) => {
+                    window.location.reload();
+                });
 
                         // Optionally update the label or any other UI element
                         // Hide the modal after update`

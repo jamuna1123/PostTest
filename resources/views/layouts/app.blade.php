@@ -94,7 +94,9 @@
         <main class="app-main"> <!--begin::App Content Header-->
 
             @yield('content')
+            
             @include('sweetalert::alert')
+          
         </main>
         <!--end::App Wrapper--> <!--begin::Script--> <!--begin::Third Party Plugin(OverlayScrollbars)-->
 

@@ -88,58 +88,63 @@ class AdminUserController extends Controller
         return view('admin.user.edit', compact('user'));
     }
 
-    public function update(StoreUser $request, $id)
-    {
+   public function update(StoreUser $request, $id)
+{
+    $user = User::findOrFail($id);
+    $originalData = $user->getAttributes(); // Get the original user data
 
-        $user = User::findOrFail($id);
-        $user->fill($request->validated());
-      
-        // Handle the profile image
-        if ($request->input('image')) {
-            // Delete old images
-            if ($user->image) {
-                $oldOriginalImagePath = 'images/original/'.$user->image;
-                $oldResizedImagePath = 'images/resized/'.$user->image;
+    // Fill the user with validated data
+    $user->fill($request->validated());
 
-                if (Storage::exists($oldOriginalImagePath)) {
-                    Storage::delete($oldOriginalImagePath);
-                }
-                if (Storage::exists($oldResizedImagePath)) {
-                    Storage::delete($oldResizedImagePath);
-                }
+    // Handle the profile image
+    if ($request->input('image')) {
+        // Delete old images
+        if ($user->image) {
+            $oldOriginalImagePath = 'images/original/'.$user->image;
+            $oldResizedImagePath = 'images/resized/'.$user->image;
+
+            if (Storage::exists($oldOriginalImagePath)) {
+                Storage::delete($oldOriginalImagePath);
             }
-
-            if ($request->input('image')) {
-                $imagePath = $request->input('image');
-                $filename = basename($imagePath);
-
-                // Define paths
-                $originalPath = 'images/original/'.$filename;
-                $resizedPath = 'images/resized/'.$filename;
-
-                // Move the file from 'tmp' to 'images'
-                Storage::disk('public')->move($imagePath, $originalPath);
-
-                // Resize the image using Intervention Image
-                $resizedImage = Image::make(storage_path('app/public/'.$originalPath))->resize(300, 200);
-
-                // Store the resized image
-                Storage::disk('public')->put($resizedPath, (string) $resizedImage->encode());
-
-                $user->image = $originalPath;
+            if (Storage::exists($oldResizedImagePath)) {
+                Storage::delete($oldResizedImagePath);
             }
         }
 
-        if ($user->isDirty('email')) {
-            $user->email_verified_at = null;
-        }
+        $imagePath = $request->input('image');
+        $filename = basename($imagePath);
 
-        $user->save();
-        Alert::success('Success', 'User update successfully.');
+        // Define paths
+        $originalPath = 'images/original/'.$filename;
+        $resizedPath = 'images/resized/'.$filename;
 
-        return redirect()->route('users.show', $user->id);
+        // Move the file from 'tmp' to 'images'
+        Storage::disk('public')->move($imagePath, $originalPath);
 
+        // Resize the image using Intervention Image
+        $resizedImage = Image::make(storage_path('app/public/'.$originalPath))->resize(300, 200);
+
+        // Store the resized image
+        Storage::disk('public')->put($resizedPath, (string) $resizedImage->encode());
+
+        $user->image = $originalPath;
     }
+
+    if ($user->isDirty('email')) {
+        $user->email_verified_at = null;
+    }
+
+    // Check if any changes were made
+    if ($user->isDirty() || $user->image !== $originalData['image']) {
+        $user->save();
+        Alert::success('Success', 'User updated successfully.');
+    } else {
+        Alert::info('Info', 'No changes detected.');
+    }
+
+    return redirect()->route('users.show', $user->id);
+}
+
 
     public function show($id)
     {
