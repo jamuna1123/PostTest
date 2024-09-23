@@ -15,18 +15,38 @@
              
             if (result.isConfirmed) {
                 // Set the form action to the correct delete route
-                var form = document.getElementById('deletePostForm');
+                var form = document.getElementById('deletePostForm-' + id);
  
                 // Submit the form
                 form.submit();
-                 // Wait for form submission to be processed and reload the page
-                form.addEventListener('submit', function() {
-                    window.location.reload();
-                });
+                 
             }
         });
     }
 </script>
+
+<script>
+function postcategoryDelete(id) {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Set the form action to the correct delete form
+            var form = document.getElementById('deletePostcategoryForm-' + id);
+
+            // Submit the form
+            form.submit();
+        }
+    });
+}
+</script>
+
 {{-- post-category toggle status update --}}
 
 {{-- <script>

@@ -57,11 +57,12 @@
                                                 <a href="{{ route('post.edit', $posts->id) }}"
                                                     class="btn btn-primary btn-sm"><i class="fas fa-pencil-alt"></i>
                                                 </a>
-                                                <a class="btn btn-danger btn-sm"
+                                                 <a class="btn btn-danger btn-sm"
                                                     onclick="handleDelete({{ $posts->id }})">
                                                     <i class="fas fa-trash"></i>
                                                 </a>
-                                                <form id="deletePostForm" action="{{ route('post.destroy', $posts->id) }}"
+                                                <form id="deletePostForm-{{ $posts->id }}"
+                                                    action="{{ route('post.destroy', $posts->id) }}"
                                                     method="POST" style="display: none;">
                                                     @csrf
                                                     @method('DELETE')

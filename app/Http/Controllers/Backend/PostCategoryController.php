@@ -101,28 +101,23 @@ class PostCategoryController extends Controller
 {
     $postcategory = PostCategory::findOrFail($id);
 
-    // Check if there are any changes in the title, description, slug, or status
-    $isDirty = false;
+  
 
-    if ($postcategory->title !== $request->title) {
+   
         $postcategory->title = $request->title;
-        $isDirty = true;
-    }
+        ;
+  
     
-    if ($postcategory->description !== $request->description) {
         $postcategory->description = $request->description;
-        $isDirty = true;
-    }
 
-    if ($postcategory->slug !== $request->slug) {
+
         $postcategory->slug = $request->slug;
-        $isDirty = true;
-    }
+   
 
-    if ($postcategory->status != ($request->has('status') ? 1 : 0)) {
+
         $postcategory->status = $request->has('status') ? 1 : 0;
-        $isDirty = true;
-    }
+   
+
 
     // Handle the image update
     if ($request->input('image')) {
@@ -156,16 +151,13 @@ class PostCategoryController extends Controller
         Storage::disk('public')->put($resizedPath, (string) $resizedImage->encode());
 
         $postcategory->image = $originalPath;
-        $isDirty = true;
+    
     }
 
-    // If changes were made, save the updated post category
-    if ($isDirty) {
+  
         $postcategory->save();
-        Alert::success('Success', 'Post Category updated successfully.');
-    } else {
-        Alert::info('No Changes', 'No changes detected.');
-    }
+    Alert::success('Success', 'Post Category updated successfully.');
+   
 
     return redirect()->route('post-category.show', $postcategory->id);
 }

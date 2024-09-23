@@ -63,16 +63,14 @@
                                                     class="btn btn-primary btn-sm"><i class="fas fa-pencil-alt"></i>
                                                 </a>
                                                 <a class="btn btn-danger btn-sm"
-                                                    onclick="handleDelete({{ $postCategory->id }})">
+                                                    onclick="postcategoryDelete({{ $postCategory->id }})">
                                                     <i class="fas fa-trash"></i>
                                                 </a>
-                                                <form id="deletePostForm"
+                                                <form id="deletePostcategoryForm-{{ $postCategory->id }}"
                                                     action="{{ route('post-category.destroy', $postCategory->id) }}"
                                                     method="POST" style="display: none;">
                                                     @csrf
                                                     @method('DELETE')
-
-
                                                 </form>
                                             </td>
                                             <td>{{ $postCategory->title }}</td>

@@ -194,11 +194,6 @@
                 @endif
             ],
         });
-        // If validation fails, reload the image in FilePond
-        @if (old('image'))
-            pond.addFile('{{ asset('storage/' . old('image')) }}').then(function(file) {
-                console.log('File added', file);
-            });
-        @endif
+        
     </script>
 @endpush
