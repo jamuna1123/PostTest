@@ -51,12 +51,12 @@
                                 <tr>
                                     <th style="width: 200px">Phone:</th>
 
-                                      <td>{{ $user->phone ? $user->phone : 'N/A' }}</td>
+                                    <td>{{ $user->phone ? $user->phone : 'N/A' }}</td>
                                 </tr>
-                                <tr>
+                                {{-- <tr>
                                     <th style="width: 200px">Address:</th>
                                     <td>{{ $user->address ? $user->address : 'N/A' }}</td>
-                                </tr>
+                                </tr> --}}
 
                                 <tr>
                                     <th style="width: 200px">Created At:</th>
@@ -94,12 +94,11 @@
                             </a>
                             @if (auth()->id() !== $user->id)
                                 <!-- Check if the authenticated user is not the same as the current user -->
-                                <a class="btn btn-danger me-2" onclick="handleDelete({{ $user->id }})"
-                                    data-bs-toggle="modal" data-bs-target="#modal-danger">
+                                <a class="btn btn-danger me-2" onclick="handleDelete({{ $user->id }})">
                                     <i class="fas fa-trash"></i> Delete
                                 </a>
-                                <form id="deletePostForm" action="{{ route('users.destroy', $user->id) }}" method="POST"
-                                    style="display: none;">
+                                <form id="deletePostForm-{{ $user->id }}"
+                                    action="{{ route('users.destroy', $user->id) }}" method="POST" style="display: none;">
                                     @csrf
                                     @method('DELETE')
                                 </form>

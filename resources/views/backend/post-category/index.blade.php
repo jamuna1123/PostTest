@@ -37,17 +37,15 @@
                             </div>
                         </div>
                         <!-- /.card-header -->
-                        <div class="card-body p-0">
-                            <table class="table table-striped">
+                        <div class="card-body p-3">
+                            <table class="table table-striped" id="myTable">
                                 <thead>
                                     <tr>
                                         {{-- <th style="width: 60px">No</th> --}}
                                         <th style="width: 280px">Action</th>
                                         <th>Category Name</th>
                                         <th>Category Image</th>
-
                                         <th>Status</th>
-
 
                                     </tr>
                                 </thead>
@@ -112,14 +110,12 @@
                             </table>
                         </div>
                         <!-- /.card-body -->
-                        <div class="card-footer clearfix">
+                        {{-- <div class="card-footer clearfix">
                             {{ $postCategories->links('pagination::bootstrap-5') }}
-                        </div>
+                        </div> --}}
                     </div> <!-- /.card -->
                 </div> <!-- /.col -->
             </div> <!--end::Row-->
-
-
 
 
             <!-- Toggle Status Modal -->
@@ -142,3 +138,14 @@
                 </div>
             </div>
         @endsection
+        @push('scripts')
+{{-- datatables --}}
+<script>
+ $(document).ready(function () {
+       $('#myTable').DataTable({
+         
+          
+       });
+     });
+</script>
+@endpush

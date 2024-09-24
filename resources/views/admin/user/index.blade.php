@@ -44,7 +44,7 @@
                                         <th>Email</th>
                                         <th>Image</th>
                                         <th>Phone</th>
-                                        <th>Address</th>
+                                 
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -61,17 +61,17 @@
                                                 </a>
                                                 @if (auth()->id() !== $user->id)
                                                     <!-- Check if the authenticated user is not the same as the current user -->
-                                                    <a class="btn btn-danger btn-sm"
-                                                        onclick="handleDelete({{ $user->id }})" data-bs-toggle="modal"
-                                                        data-bs-target="#modal-danger">
-                                                        <i class="fas fa-trash"></i>
-                                                    </a>
-                                                    <form id="deletePostForm"
-                                                        action="{{ route('users.destroy', $user->id) }}" method="POST"
-                                                        style="display: none;">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                    </form>
+                                                   <a class="btn btn-danger btn-sm"
+                                                    onclick="handleDelete({{ $user->id }})">
+                                                    <i class="fas fa-trash"></i>
+                                                </a>
+                                                <form id="deletePostForm-{{ $user->id }}"
+                                                    action="{{ route('users.destroy', $user->id) }}"
+                                                    method="POST" style="display: none;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                </form>
+
                                                 @endif
 
 
@@ -93,7 +93,7 @@
                                             <td>{{ $user->phone ? $user->phone : 'N/A' }}</td>
 
 
-                                            <td>{{ $user->address ? $user->address : 'N/A' }}</td>
+                                            {{-- <td>{{ $user->address ? $user->address : 'N/A' }}</td> --}}
                                         </tr>
                                     @empty
                                         <tr>

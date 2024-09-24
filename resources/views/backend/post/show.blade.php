@@ -21,7 +21,7 @@
         <div class="row mt-4">
             <div class="col-lg-12">
                 <div class="card">
-                      <div class="card-header">
+                    <div class="card-header">
                         <div class="card-title">Post Details</div>
                     </div>
                     <div class="card-body">
@@ -36,7 +36,7 @@
                                     <td>{{ $post->slug }}</td>
                                 </tr>
                                 <tr>
-                                     <th style="width: 200px">Category Name:</th>
+                                    <th style="width: 200px">Category Name:</th>
                                     <td>
                                         @if ($post->postCategory)
                                             {{ $post->postCategory->title }}
@@ -46,7 +46,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                  <th style="width: 200px">Image:</th>
+                                    <th style="width: 200px">Image:</th>
                                     <td>
                                         @if ($post->image)
                                             <a href="{{ asset('storage/' . $post->image) }}" data-fancybox="gallery"
@@ -55,36 +55,36 @@
                                                     alt="{{ $post->title }}" style="height: 50px;">
                                             </a>
                                         @else
-                                        No image available
+                                            No image available
                                         @endif
                                     </td>
                                 </tr>
                                 <tr>
-                                   <th style="width: 200px">Description:</th>
-                                     <td style="max-width: 400px; word-wrap: break-word; white-space: normal;">
-                                          @if ($post->description)
+                                    <th style="width: 200px">Description:</th>
+                                    <td style="max-width: 400px; word-wrap: break-word; white-space: normal;">
+                                        @if ($post->description)
                                             {!! $post->description !!}
-                                              @else
-                                        N/A
+                                        @else
+                                            N/A
                                         @endif
-                                     
+
                                     </td>
 
                                 </tr>
                                 <tr>
-                                   <th style="width: 200px">Publish At:</th>
+                                    <th style="width: 200px">Publish At:</th>
                                     <td>{{ $post->published_at }}</td>
                                 </tr>
                                 <tr>
-                                     <th style="width: 200px">Status:</th>
+                                    <th style="width: 200px">Status:</th>
                                     <td>
                                         <div class="form-check form-switch">
-                                                    <input class="form-check-input statuspost-toggle" type="checkbox" data-id="{{ $post->id }}"
-                                                        {{ $post->status ? 'checked' : '' }}>
-                                                    <label class="form-check-label" for="statusLabel{{ $post->id }}">
-                                                        {{ $post->status ? 'On' : 'Off' }}
-                                                    </label>
-                                                </div>
+                                            <input class="form-check-input statuspost-toggle" type="checkbox"
+                                                data-id="{{ $post->id }}" {{ $post->status ? 'checked' : '' }}>
+                                            <label class="form-check-label" for="statusLabel{{ $post->id }}">
+                                                {{ $post->status ? 'On' : 'Off' }}
+                                            </label>
+                                        </div>
                                     </td>
                                 </tr>
                                 <tr>
@@ -92,16 +92,16 @@
                                     <td>{{ $post->created_at }}</td>
                                 </tr>
                                 <tr>
-                                 <th style="width: 200px">Created By:</th>
+                                    <th style="width: 200px">Created By:</th>
                                     <td>{{ $post->username->name }}</td>
                                 </tr>
                                 @if ($post->updated_at && $post->updated_by)
                                     <tr>
-                                      <th style="width: 200px">Updated At:</th>
+                                        <th style="width: 200px">Updated At:</th>
                                         <td>{{ $post->updated_at }}</td>
                                     </tr>
                                     <tr>
-                                      <th style="width: 200px">Updated By:</th>
+                                        <th style="width: 200px">Updated By:</th>
                                         <td>{{ $post->userupdate->name }}</td>
                                     </tr>
                                 @endif
@@ -121,8 +121,8 @@
                             <a class="btn btn-danger me-2" onclick="handleDelete({{ $post->id }})">
                                 <i class="fas fa-trash"></i> Delete
                             </a>
-                            <form id="deletePostForm" action="{{ route('post.destroy', $post->id) }}" method="POST"
-                                style="display: none;">
+                            <form id="deletePostForm-{{ $post->id }}" action="{{ route('post.destroy', $post->id) }}"
+                                method="POST" style="display: none;">
                                 @csrf
                                 @method('DELETE')
                             </form>
@@ -132,10 +132,9 @@
             </div>
         </div>
     </div>
-
 @endsection
 @push('styles')
- <style>
+    <style>
         /* / Ensure the table header (th) has a fixed width / */
         .fixed-table {
             table-layout: fixed;
@@ -149,7 +148,7 @@
 
         .fixed-table td {
             width: auto;
-            overflow-wrap: break-word; 
+            overflow-wrap: break-word;
             word-wrap: break-word;
         }
     </style>

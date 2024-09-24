@@ -75,7 +75,7 @@ class AdminUserController extends Controller
         // Save the new user
         $user->save();
 
-        Alert::success('Success', 'User created successfully.');
+    session()->flash('success', 'User created successfully.');
 
         return redirect()->route('users.show', $user->id);
     }
@@ -91,7 +91,6 @@ class AdminUserController extends Controller
    public function update(StoreUser $request, $id)
 {
     $user = User::findOrFail($id);
-    $originalData = $user->getAttributes(); // Get the original user data
 
     // Fill the user with validated data
     $user->fill($request->validated());
@@ -135,12 +134,9 @@ class AdminUserController extends Controller
     }
 
     // Check if any changes were made
-    if ($user->isDirty() || $user->image !== $originalData['image']) {
         $user->save();
-        Alert::success('Success', 'User updated successfully.');
-    } else {
-        Alert::info('Info', 'No changes detected.');
-    }
+    session()->flash('success', 'User updated successfully.');
+    
 
     return redirect()->route('users.show', $user->id);
 }
@@ -164,7 +160,7 @@ class AdminUserController extends Controller
             Storage::disk('public')->delete('images/resized/'.$user->image);
         }
         $user->delete();
-        Alert::success('Success', 'User deleted successfully.');
+    session()->flash('success', 'User deleted successfully.');
 
         return redirect()->route('users.index');
 

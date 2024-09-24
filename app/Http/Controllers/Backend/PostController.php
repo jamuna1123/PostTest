@@ -11,7 +11,6 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
-use RealRashid\SweetAlert\Facades\Alert;
 
 class PostController extends Controller
 {
@@ -80,7 +79,7 @@ class PostController extends Controller
         $post->status = $request->has('status') ? 1 : 0;
 
         $post->save();
-        Alert::success('Success', 'Post created successfully.');
+        session()->flash('success', 'Post created successfully.');
 
         return redirect()->route('post.show', $post->id);
 
@@ -126,7 +125,10 @@ class PostController extends Controller
            ? Carbon::parse($request->published_at)
            : $post->published_at;
 
-        $post->slug = $request->slug;
+        // Only update the slug if it is provided in the request
+        if ($request->filled('slug')) {
+            $post->slug = $request->slug;
+        }
 
         if ($request->input('image')) {
             // Delete old images
@@ -164,7 +166,7 @@ class PostController extends Controller
         }
         $post->status = $request->has('status') ? 1 : 0;
         $post->save();
-        Alert::success('Success', 'Post updated successfully.');
+        session()->flash('success', 'Post updated successfully.');
 
         return redirect()->route('post.show', $post->id);
     }
@@ -183,7 +185,7 @@ class PostController extends Controller
         }
 
         $post->delete();
-        Alert::success('Success', 'Post deleted successfully.');
+        session()->flash('success', 'Post deleted successfully.');
 
         return redirect()->route('post.index');
 

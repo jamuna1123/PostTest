@@ -66,17 +66,7 @@
 
 
 
-                                    <!-- Image Input -->
-                                    <div class="mb-3 col-md-6">
-                                        <label for="image" class="form-label"><strong>Profile Image:@if (false)
-                                                    <span class="text-danger">*</span>
-                                                @endif
-                                            </strong></label>
-                                        <input type="file" name="image" id="image" class="form-control">
-                                        @error('image')
-                                            <div class="form-text text-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
+
                                     <div class="mb-3 col-md-6">
                                         <label for="phone" class="form-label">
                                             <strong>Phone:
@@ -92,7 +82,17 @@
                                             <div class="form-text text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
-
+                                    <!-- Image Input -->
+                                    <div class="mb-3 col-md-6">
+                                        <label for="image" class="form-label"><strong>Profile Image:@if (false)
+                                                    <span class="text-danger">*</span>
+                                                @endif
+                                            </strong></label>
+                                        <input type="file" name="image" id="image" class="form-control">
+                                        @error('image')
+                                            <div class="form-text text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
                                     <div class="mb-3 col-md-6">
                                         <label for="address" class="form-label">
                                             <strong>Address:
@@ -194,6 +194,5 @@
                 @endif
             ],
         });
-        
     </script>
 @endpush

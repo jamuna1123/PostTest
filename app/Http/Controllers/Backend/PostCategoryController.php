@@ -10,14 +10,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
-use RealRashid\SweetAlert\Facades\Alert;
 
 class PostCategoryController extends Controller
 {
     public function index(Request $request)
     {
 
-        $postCategories = PostCategory::orderBy('id', 'desc')->paginate(5); // Adjust the number per page as needed
+        $postCategories = PostCategory::all(); // Adjust the number per page as needed
 
         return view('backend.post-category.index', compact('postCategories'));
     }
@@ -74,7 +73,7 @@ class PostCategoryController extends Controller
 
         $postcategory->save();
 
-        Alert::success('Success', 'Post Category created successfully.');
+        session()->flash('success', 'Post Category created successfully.');
 
         return redirect()->route('post-category.show', $postcategory->id);
 
@@ -97,71 +96,61 @@ class PostCategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-   public function update(StorePostCategory $request, $id)
-{
-    $postcategory = PostCategory::findOrFail($id);
+    public function update(StorePostCategory $request, $id)
+    {
+        $postcategory = PostCategory::findOrFail($id);
 
-  
-
-   
         $postcategory->title = $request->title;
-        ;
-  
-    
+
         $postcategory->description = $request->description;
 
-
+       // Only update the slug if it is provided in the request
+    if ($request->filled('slug')) {
         $postcategory->slug = $request->slug;
-   
-
-
-        $postcategory->status = $request->has('status') ? 1 : 0;
-   
-
-
-    // Handle the image update
-    if ($request->input('image')) {
-        // Delete old images if an image already exists
-        if ($postcategory->image) {
-            $oldOriginalImagePath = 'images/original/' . $postcategory->image;
-            $oldResizedImagePath = 'images/resized/' . $postcategory->image;
-
-            if (Storage::exists($oldOriginalImagePath)) {
-                Storage::delete($oldOriginalImagePath);
-            }
-            if (Storage::exists($oldResizedImagePath)) {
-                Storage::delete($oldResizedImagePath);
-            }
-        }
-
-        $imagePath = $request->input('image');
-        $filename = basename($imagePath);
-
-        // Define paths
-        $originalPath = 'images/original/' . $filename;
-        $resizedPath = 'images/resized/' . $filename;
-
-        // Move the file from 'tmp' to 'images'
-        Storage::disk('public')->move($imagePath, $originalPath);
-
-        // Resize the image using Intervention Image
-        $resizedImage = Image::make(storage_path('app/public/' . $originalPath))->resize(300, 200);
-
-        // Store the resized image
-        Storage::disk('public')->put($resizedPath, (string) $resizedImage->encode());
-
-        $postcategory->image = $originalPath;
-    
     }
 
-  
+        $postcategory->status = $request->has('status') ? 1 : 0;
+
+        // Handle the image update
+        if ($request->input('image')) {
+            // Delete old images if an image already exists
+            if ($postcategory->image) {
+                $oldOriginalImagePath = 'images/original/'.$postcategory->image;
+                $oldResizedImagePath = 'images/resized/'.$postcategory->image;
+
+                if (Storage::exists($oldOriginalImagePath)) {
+                    Storage::delete($oldOriginalImagePath);
+                }
+                if (Storage::exists($oldResizedImagePath)) {
+                    Storage::delete($oldResizedImagePath);
+                }
+            }
+
+            $imagePath = $request->input('image');
+            $filename = basename($imagePath);
+
+            // Define paths
+            $originalPath = 'images/original/'.$filename;
+            $resizedPath = 'images/resized/'.$filename;
+
+            // Move the file from 'tmp' to 'images'
+            Storage::disk('public')->move($imagePath, $originalPath);
+
+            // Resize the image using Intervention Image
+            $resizedImage = Image::make(storage_path('app/public/'.$originalPath))->resize(300, 200);
+
+            // Store the resized image
+            Storage::disk('public')->put($resizedPath, (string) $resizedImage->encode());
+
+            $postcategory->image = $originalPath;
+
+        }
+
         $postcategory->save();
-    Alert::success('Success', 'Post Category updated successfully.');
-   
+        session()->flash('success', 'Post Category updated successfully.');
 
-    return redirect()->route('post-category.show', $postcategory->id);
-}
-
+        return redirect()->route('post-category.show', $postcategory->id);
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -175,7 +164,7 @@ class PostCategoryController extends Controller
             Storage::disk('public')->delete('images/resized/'.$postcategory->image);
         }
         $postcategory->delete();
-        Alert::success('Success', 'Post Category deleted successfully.');
+        session()->flash('success', 'Post Category deleted successfully.');
 
         return redirect()->route('post-category.index');
 

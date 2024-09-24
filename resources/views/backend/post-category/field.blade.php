@@ -58,7 +58,7 @@
 <div class="row">
         <!-- Status -->
         <div class="mb-3 col-md-6">
-            <label for="status" class="form-label"><strong>Status: @if (false)
+            <label for="status" class="form-label"><strong>Status: @if (true)
                     <span class="text-danger">*</span>
                 @endif
             </strong></label>

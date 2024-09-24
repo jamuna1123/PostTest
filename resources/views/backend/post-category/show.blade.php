@@ -101,11 +101,12 @@
                             <a href="{{ route('post-category.edit', $postcategory->id) }}" class="btn btn-primary me-2">
                                 <i class="fas fa-edit"></i> Update
                             </a>
-                            <a class="btn btn-danger me-2" onclick="handleDelete({{ $postcategory->id }})">
+                            <a class="btn btn-danger me-2" onclick="postcategoryDelete({{ $postcategory->id }})">
                                 <i class="fas fa-trash"></i> Delete
                             </a>
-                            <form id="deletePostForm" action="{{ route('post-category.destroy', $postcategory->id) }}"
-                                method="POST" style="display: none;">
+                            <form id="deletePostcategoryForm-{{ $postcategory->id }}"
+                                action="{{ route('post-category.destroy', $postcategory->id) }}" method="POST"
+                                style="display: none;">
                                 @csrf
                                 @method('DELETE')
                             </form>

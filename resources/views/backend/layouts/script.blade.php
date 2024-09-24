@@ -23,7 +23,25 @@
             }
         });
     }
+
+    // Show success message only once
+@if (session('success'))
+    Swal.fire({
+        title: 'Success!',
+        text: '{{ session('success') }}',
+        icon: 'success',
+        timer: 3000, // Close automatically after 3 seconds
+        showConfirmButton: 'Ok'
+    }).then(() => {
+        // Clear the session flash message
+        @php
+            session()->forget('success');
+        @endphp
+    });
+@endif
 </script>
+
+
 
 <script>
 function postcategoryDelete(id) {
@@ -37,15 +55,29 @@ function postcategoryDelete(id) {
         confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
         if (result.isConfirmed) {
-            // Set the form action to the correct delete form
             var form = document.getElementById('deletePostcategoryForm-' + id);
-
-            // Submit the form
             form.submit();
         }
     });
 }
+
+// Show success message only once
+@if (session('success'))
+    Swal.fire({
+        title: 'Success!',
+        text: '{{ session('success') }}',
+        icon: 'success',
+        timer: 3000, // Close automatically after 3 seconds
+        showConfirmButton: 'Ok'
+    }).then(() => {
+        // Clear the session flash message
+        @php
+            session()->forget('success');
+        @endphp
+    });
+@endif
 </script>
+
 
 {{-- post-category toggle status update --}}
 
@@ -285,10 +317,9 @@ function postcategoryDelete(id) {
     });
 </script>
 
-
-
 <script>
     Fancybox.bind("[data-fancybox]", {
         // Custom options here
     });
 </script>
+

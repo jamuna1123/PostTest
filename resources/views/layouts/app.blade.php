@@ -8,6 +8,10 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="title" content="AdminLTE v4 | Dashboard">
     <meta name="author" content="ColorlibHQ">
+    <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+
     <meta name="description"
         content="AdminLTE is a Free Bootstrap 5 Admin Dashboard, 30 example pages using Vanilla JS.">
     <meta name="keywords"
@@ -37,7 +41,14 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/css/jsvectormap.min.css"
         integrity="sha256-+uGLJmmTKOqBr+2E6KDYs/NRsHxSkONXFHUL0fy2O/4=" crossorigin="anonymous">
 
-  
+     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+   {{-- datatables css --}}
+      <link rel="stylesheet" href="{{ asset('Backend/plugins/datatables/datatables.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('Backend/plugins/datatables/datatables.css') }}">
+ 
+
+    <script src="{{ asset('Backend/plugins/datatables/datatables.js')  }}"></script>
+    <script src="{{ asset('Backend/plugins/datatables/datatables.min.js')  }}"></script>
 
 
     {{-- use toggle --}}
@@ -94,9 +105,12 @@
         <main class="app-main"> <!--begin::App Content Header-->
 
             @yield('content')
-            
-            @include('sweetalert::alert')
-          
+            <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+
+            {{-- @include('sweetalert::alert') --}}
+
         </main>
         <!--end::App Wrapper--> <!--begin::Script--> <!--begin::Third Party Plugin(OverlayScrollbars)-->
 
@@ -225,7 +239,7 @@
             content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:16px }'
         });
     </script>
-   
+
 
 
 </body><!--end::Body-->

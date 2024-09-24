@@ -16,12 +16,15 @@ class Post extends Model
 
     protected $fillable = ['title', 'slug', 'image', 'description', 'post_category_id', 'status', 'user_id', 'published_at'];
 
-    public function getSlugOptions(): SlugOptions
+      public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
             ->generateSlugsFrom('title')
-            ->saveSlugsTo('slug');
+            ->saveSlugsTo('slug')
+            // Prevent slug from being updated when the title is updated
+            ->doNotGenerateSlugsOnUpdate();
     }
+
 
     public function postCategory()
     {
