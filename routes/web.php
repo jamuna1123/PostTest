@@ -44,6 +44,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('/users', AdminUserController::class);
 
     Route::get('/admin/users/export-pdf', [AdminUserController::class, 'exportPDF'])->name('users.export.pdf');
+// Other routes...
+
+    Route::patch('/user/update-status/{id}', [AdminUserController::class, 'updateStatus'])->name('user.update-status');
 
 });
 

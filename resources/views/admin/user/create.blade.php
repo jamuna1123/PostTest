@@ -62,12 +62,15 @@
                                         @enderror
                                     </div>
 
-                                      <!-- Password Field -->
+                                    <!-- Password Field -->
                                     <div class="mb-3 col-md-6">
                                         <label for="password" class="form-label"><strong>Password: @if (true)
                                                     <span class="text-danger">*</span>
-                                                @endif</strong></label>
-                                        <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" id="password" placeholder="Password">
+                                                @endif
+                                            </strong></label>
+                                        <input type="password" name="password"
+                                            class="form-control @error('password') is-invalid @enderror" id="password"
+                                            placeholder="Password">
                                         @error('password')
                                             <div class="form-text text-danger">{{ $message }}</div>
                                         @enderror
@@ -120,9 +123,17 @@
                                             <div class="form-text text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
-
-
-
+                                    <!-- Status Toggle Switch -->
+                                    <div class="mb-3 col-md-6">
+                                        <label for="status" class="form-label"><strong>Status:</strong></label>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="statususer" name="status"
+                                                value="1" {{ old('status', 1) ? 'checked' : '' }}>
+                                            <label class="form-check-label" for="status" id="statusLabeluser">
+                                                {{ old('status', 1) ? 'Active' : 'Inactive' }}
+                                            </label>
+                                        </div>
+                                    </div>
                                 </div>
 
                             </div>
@@ -161,39 +172,44 @@
 
 @endsection
 @push('scripts')
-   <script>
-    FilePond.registerPlugin(FilePondPluginImagePreview);
-    FilePond.registerPlugin(FilePondPluginFileValidateType);
+    <script>
+        FilePond.registerPlugin(FilePondPluginImagePreview);
+        FilePond.registerPlugin(FilePondPluginFileValidateType);
 
-    const pond = FilePond.create(document.querySelector('#image'), {
-        acceptedFileTypes: ['image/*'],
-        server: {
-            process: {
-                url: '{{ route('upload') }}',
-                headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+        const pond = FilePond.create(document.querySelector('#image'), {
+            acceptedFileTypes: ['image/*'],
+            server: {
+                process: {
+                    url: '{{ route('upload') }}',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    onload: (response) => {
+                        const data = JSON.parse(response);
+                        // Store the uploaded image path in a hidden input
+                        document.getElementById('image').value = data.path;
+                        return data.path;
+                    }
                 },
-                onload: (response) => {
-                    const data = JSON.parse(response);
-                    // Store the uploaded image path in a hidden input
-                    document.getElementById('image').value = data.path;
-                    return data.path;
-                }
-            },
-            revert: {
-                url: '{{ route('revert') }}',
-                headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                revert: {
+                    url: '{{ route('revert') }}',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    }
                 }
             }
-        }
-    });
+        });
 
-    // If validation fails, reload the image in FilePond
-    @if (old('image'))
-    pond.addFile('{{ asset('storage/' . old('image')) }}').then(function(file) {
-        console.log('File added', file);
-    });
-    @endif
+        // If validation fails, reload the image in FilePond
+        @if (old('image'))
+            pond.addFile('{{ asset('storage/' . old('image')) }}').then(function(file) {
+                console.log('File added', file);
+            });
+        @endif
+
+
+
+         
 </script>
 @endpush
+  

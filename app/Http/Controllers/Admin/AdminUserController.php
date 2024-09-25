@@ -42,6 +42,8 @@ class AdminUserController extends Controller
         if ($request->filled('password')) {
             $user->password = Hash::make($request->input('password'));
         }
+
+        $user->status = $request->has('status') ? 1 : 0;
         // Set created_at and updated_at with Nepal timezone
         $currentTime = Carbon::now();
         $user->created_at = $currentTime;
@@ -165,4 +167,17 @@ class AdminUserController extends Controller
         return redirect()->route('users.index');
 
     }
+
+   
+
+public function updateStatus(Request $request, $id)
+    {
+          $user = User::findOrFail($request->id);
+    $user->status = $request->status;
+    $user->save();
+
+        return response()->json(['success' => true]);
+
+    }
+
 }

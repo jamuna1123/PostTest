@@ -109,7 +109,19 @@
                                         @enderror
                                     </div>
 
-
+<!-- Status Toggle -->
+                                    <div class="mb-3 col-md-6">
+                                        <label for="status" class="form-label">
+                                            <strong>Status:</strong>
+                                        </label>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="statususer" name="status"
+                                                value="1" {{ old('status', $user->status) ? 'checked' : '' }}>
+                                            <label class="form-check-label" for="status" id="statusLabeluser">
+                                                {{ $user->status ? 'Active' : 'Inactive' }}
+                                            </label>
+                                        </div>
+                                    </div>
                                 </div>
 
                             </div>
@@ -194,5 +206,7 @@
                 @endif
             ],
         });
+     
+
     </script>
 @endpush

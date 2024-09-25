@@ -44,7 +44,7 @@
                                         <th>Email</th>
                                         <th>Image</th>
                                         <th>Phone</th>
-                                 
+                                 <th> Status </th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -91,7 +91,15 @@
                                                 @endif
                                             </td>
                                             <td>{{ $user->phone ? $user->phone : 'N/A' }}</td>
-
+  <td>
+                                                 <div class="form-check form-switch">
+                                                    <input class="form-check-input statususer-toggle" type="checkbox" data-id="{{ $user->id }}"
+                                                        {{ $user->status ? 'checked' : '' }}>
+                                                    <label class="form-check-label" for="statusLabel{{ $user->id }}">
+                                                        {{ $user->status ? 'Active' : 'Inactive' }}
+                                                    </label>
+                                                </div>
+                                            </td>
 
                                             {{-- <td>{{ $user->address ? $user->address : 'N/A' }}</td> --}}
                                         </tr>
@@ -117,3 +125,81 @@
             </div> <!-- /.col -->
         </div> <!--end::Row-->
     @endsection
+@push('scripts')
+    <script>
+   document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.statususer-toggle').forEach(toggle => {
+        toggle.addEventListener('click', function(e) {
+            e.preventDefault();
+
+            let selectedUserId = this.getAttribute('data-id');
+            let selectedStatus = this.checked;
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "Do you want to update the status?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, update it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    updateStatus(selectedUserId, selectedStatus);
+                } else {
+                    // Revert the toggle if canceled
+                    this.checked = !selectedStatus;
+                }
+            });
+        });
+    });
+
+    // Update status using AJAX and show SweetAlert on success
+    function updateStatus(id, status) {
+        fetch(`/user/update-status/${id}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            body: JSON.stringify({ status: status })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                Swal.fire({
+                    title: 'Success!',
+                    text: 'Status updated successfully.',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                }).then(() => {
+                    // Optionally, reload the page or update the UI
+                    window.location.reload();
+                });
+            } else {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Failed to update status.',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+                // Revert the checkbox status if update failed
+                document.querySelector(`input[data-id="${id}"]`).checked = !status;
+            }
+        })
+        .catch(error => {
+            console.error('Error updating status:', error);
+            Swal.fire({
+                title: 'Error!',
+                text: 'Something went wrong.',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+            // Revert the checkbox status if AJAX call fails
+            document.querySelector(`input[data-id="${id}"]`).checked = !status;
+        });
+    }
+});
+
+</script>
+@endpush

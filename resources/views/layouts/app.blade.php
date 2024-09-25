@@ -194,7 +194,19 @@
             toggleStatusLabel();
         });
     </script>
+<script>
+     // Status Toggle Functionality
+    const statusCheckbox = document.getElementById('statususer');
+    const statusLabel = document.getElementById('statusLabeluser');
 
+    statusCheckbox.addEventListener('change', function() {
+        if (statusCheckbox.checked) {
+            statusLabel.textContent = 'Active';
+        } else {
+            statusLabel.textContent = 'Inactive';
+        }
+    });
+</script>
     @include('backend.layouts.script')
     {{-- tinymce image upload --}}
     <script>
