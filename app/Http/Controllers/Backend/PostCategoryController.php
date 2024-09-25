@@ -10,15 +10,21 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
+use App\DataTables\PostCategoryDataTable;
 
 class PostCategoryController extends Controller
 {
-    public function index(Request $request)
+    // public function index(Request $request)
+    // {
+
+    //     $postCategories = PostCategory::all(); // Adjust the number per page as needed
+
+    //     return view('backend.post-category.index', compact('postCategories'));
+    // }
+
+     public function index(PostCategoryDataTable $dataTable)
     {
-
-        $postCategories = PostCategory::all(); // Adjust the number per page as needed
-
-        return view('backend.post-category.index', compact('postCategories'));
+        return $dataTable->render('backend.post-category.index');
     }
 
     /**

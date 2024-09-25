@@ -43,12 +43,12 @@
 
      <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
    {{-- datatables css --}}
-      <link rel="stylesheet" href="{{ asset('Backend/plugins/datatables/datatables.min.css') }}">
+      {{-- <link rel="stylesheet" href="{{ asset('Backend/plugins/datatables/datatables.min.css') }}">
     <link rel="stylesheet" href="{{ asset('Backend/plugins/datatables/datatables.css') }}">
  
 
     <script src="{{ asset('Backend/plugins/datatables/datatables.js')  }}"></script>
-    <script src="{{ asset('Backend/plugins/datatables/datatables.min.js')  }}"></script>
+    <script src="{{ asset('Backend/plugins/datatables/datatables.min.js')  }}"></script> --}}
 
 
     {{-- use toggle --}}
@@ -89,6 +89,8 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('Backend/plugins/fontawesome-free/css/all.min.css') }}">
 
+<!-- Vite JS and CSS -->
+    @vite(['resources/js/app.js'])
     @stack('styles')
 
 </head> <!--end::Head--> <!--begin::Body-->
@@ -105,20 +107,17 @@
         <main class="app-main"> <!--begin::App Content Header-->
 
             @yield('content')
-            <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-
-
-            {{-- @include('sweetalert::alert') --}}
+             {{-- @include('sweetalert::alert') --}}
 
         </main>
+
+    @stack('scripts')
         <!--end::App Wrapper--> <!--begin::Script--> <!--begin::Third Party Plugin(OverlayScrollbars)-->
 
         {{-- @include('admin.layouts.footer') --}}
     </div>
 
 
-    @stack('scripts')
     <script src="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.3.0/browser/overlayscrollbars.browser.es6.min.js"
         integrity="sha256-H2VM7BKda+v2Z4+DRy69uknwxjyDRhszjXFhsL4gD3w=" crossorigin="anonymous"></script>
     <!--end::Third Party Plugin(OverlayScrollbars)--><!--begin::Required Plugin(popperjs for Bootstrap 5)-->
