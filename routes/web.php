@@ -31,7 +31,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('/post-category', PostCategoryController::class);
     Route::post('upload', [PostCategoryController::class, 'upload'])->name('upload');
     Route::delete('revert', [PostCategoryController::class, 'revert'])->name('revert');
-    Route::get('/load/{filename}', [PostCatgeoryController::class, 'load'])->name('load');
+    Route::get('/load/{filename}', [PostCategoryController::class, 'load'])->name('load');
     Route::get('/fetch/{filename}', [PostCategoryController::class, 'fetch'])->name('fetch');
     Route::patch('/post-category/update-status/{id}', [PostCategoryController::class, 'updateStatus'])->name('post-category.update-status');
     // post
@@ -44,9 +44,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('/users', AdminUserController::class);
 
     Route::get('/admin/users/export-pdf', [AdminUserController::class, 'exportPDF'])->name('users.export.pdf');
-// Other routes...
+    // Other routes...
 
-    Route::patch('/user/update-status/{id}', [AdminUserController::class, 'updateStatus'])->name('user.update-status');
+Route::patch('/users/update-status/{id}', [AdminUserController::class, 'updateStatus'])->name('user.update-status');
 
 });
 

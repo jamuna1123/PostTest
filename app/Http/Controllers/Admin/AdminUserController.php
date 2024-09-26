@@ -10,14 +10,13 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
-use RealRashid\SweetAlert\Facades\Alert;
 
 class AdminUserController extends Controller
 {
     public function index()
     {
 
-        $users = User::orderBy('id', 'desc')->paginate(5);
+        $users = User::paginate(5);
 
         return view('admin.user.index', compact('users'));
     }
@@ -27,8 +26,7 @@ class AdminUserController extends Controller
      */
     public function create()
     {
-
-        $user = User::all();
+        $user = new User; // Create an empty User instance
 
         return view('admin.user.create', compact('user'));
     }
@@ -37,18 +35,25 @@ class AdminUserController extends Controller
     {
         // Create a new user instance
         $user = new User;
-        $user->fill($request->validated());
-        // Hash the password
+        $user->name = $request->name; // Ensure phone is numeric and 10 digits
+
+        // Handle each field individually
+        $user->email = strtolower($request->email); // Ensure email is lowercase
+        $user->phone = $request->phone; // Ensure phone is numeric and 10 digits
+        $user->address = $request->address; // Address is nullable
+        $user->status = $request->has('status') ? 1 : 0;
+
+        // Hash the password if present
         if ($request->filled('password')) {
-            $user->password = Hash::make($request->input('password'));
+            $user->password = Hash::make($request->password);
         }
 
-        $user->status = $request->has('status') ? 1 : 0;
         // Set created_at and updated_at with Nepal timezone
         $currentTime = Carbon::now();
         $user->created_at = $currentTime;
         $user->updated_at = null;
 
+        // Handle image upload and resizing
         if ($request->input('image')) {
             $imagePath = $request->input('image');
             $filename = basename($imagePath);
@@ -69,7 +74,7 @@ class AdminUserController extends Controller
             $user->image = $originalPath;
         }
 
-        // Set email_verified_at to null if email is changed
+        // Set email_verified_at to null if the email is changed
         if ($user->isDirty('email')) {
             $user->email_verified_at = null;
         }
@@ -77,7 +82,7 @@ class AdminUserController extends Controller
         // Save the new user
         $user->save();
 
-    session()->flash('success', 'User created successfully.');
+        session()->flash('success', 'User created successfully.');
 
         return redirect()->route('users.show', $user->id);
     }
@@ -90,59 +95,61 @@ class AdminUserController extends Controller
         return view('admin.user.edit', compact('user'));
     }
 
-   public function update(StoreUser $request, $id)
-{
-    $user = User::findOrFail($id);
+    public function update(StoreUser $request, $id)
+    {
+        $user = User::findOrFail($id);
+        $user->name = $request->name; // Ensure phone is numeric and 10 digits
 
-    // Fill the user with validated data
-    $user->fill($request->validated());
+        // Handle each field individually
+        $user->email = strtolower($request->email); // Ensure email is lowercase
+        $user->phone = $request->phone; // Ensure phone is numeric and 10 digits
+        $user->address = $request->address; // Address is nullable
+        $user->status = $request->has('status') ? 1 : 0;
 
-    // Handle the profile image
-    if ($request->input('image')) {
-        // Delete old images
-        if ($user->image) {
-            $oldOriginalImagePath = 'images/original/'.$user->image;
-            $oldResizedImagePath = 'images/resized/'.$user->image;
+        // Handle the profile image
+        if ($request->input('image')) {
+            // Delete old images
+            if ($user->image) {
+                $oldOriginalImagePath = 'images/original/'.$user->image;
+                $oldResizedImagePath = 'images/resized/'.$user->image;
 
-            if (Storage::exists($oldOriginalImagePath)) {
-                Storage::delete($oldOriginalImagePath);
+                if (Storage::exists($oldOriginalImagePath)) {
+                    Storage::delete($oldOriginalImagePath);
+                }
+                if (Storage::exists($oldResizedImagePath)) {
+                    Storage::delete($oldResizedImagePath);
+                }
             }
-            if (Storage::exists($oldResizedImagePath)) {
-                Storage::delete($oldResizedImagePath);
-            }
+
+            $imagePath = $request->input('image');
+            $filename = basename($imagePath);
+
+            // Define paths
+            $originalPath = 'images/original/'.$filename;
+            $resizedPath = 'images/resized/'.$filename;
+
+            // Move the file from 'tmp' to 'images'
+            Storage::disk('public')->move($imagePath, $originalPath);
+
+            // Resize the image using Intervention Image
+            $resizedImage = Image::make(storage_path('app/public/'.$originalPath))->resize(300, 200);
+
+            // Store the resized image
+            Storage::disk('public')->put($resizedPath, (string) $resizedImage->encode());
+
+            $user->image = $originalPath;
         }
 
-        $imagePath = $request->input('image');
-        $filename = basename($imagePath);
+        // Set email_verified_at to null if the email is changed
+        if ($user->isDirty('email')) {
+            $user->email_verified_at = null;
+        }
 
-        // Define paths
-        $originalPath = 'images/original/'.$filename;
-        $resizedPath = 'images/resized/'.$filename;
-
-        // Move the file from 'tmp' to 'images'
-        Storage::disk('public')->move($imagePath, $originalPath);
-
-        // Resize the image using Intervention Image
-        $resizedImage = Image::make(storage_path('app/public/'.$originalPath))->resize(300, 200);
-
-        // Store the resized image
-        Storage::disk('public')->put($resizedPath, (string) $resizedImage->encode());
-
-        $user->image = $originalPath;
-    }
-
-    if ($user->isDirty('email')) {
-        $user->email_verified_at = null;
-    }
-
-    // Check if any changes were made
         $user->save();
-    session()->flash('success', 'User updated successfully.');
-    
+        session()->flash('success', 'User updated successfully.');
 
-    return redirect()->route('users.show', $user->id);
-}
-
+        return redirect()->route('users.show', $user->id);
+    }
 
     public function show($id)
     {
@@ -162,22 +169,19 @@ class AdminUserController extends Controller
             Storage::disk('public')->delete('images/resized/'.$user->image);
         }
         $user->delete();
-    session()->flash('success', 'User deleted successfully.');
+        session()->flash('success', 'User deleted successfully.');
 
         return redirect()->route('users.index');
 
     }
 
-   
+   public function updateStatus(Request $request, $id)
+{
+    $user = User::findOrFail($id); // Fetch the user by ID
+    $user->status = $request->status; // Update the status
+    $user->save(); // Save the user
 
-public function updateStatus(Request $request, $id)
-    {
-          $user = User::findOrFail($request->id);
-    $user->status = $request->status;
-    $user->save();
-
-        return response()->json(['success' => true]);
-
-    }
+    return response()->json(['success' => true]); // Return a success response
+}
 
 }

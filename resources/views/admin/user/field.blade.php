@@ -1,11 +1,10 @@
 <div class="card-body">
     <div class="row">
+        <!-- Name Input -->
         <div class="mb-3 col-md-6">
             <label for="name" class="form-label">
                 <strong>Name:
-                    @if (true)
-                        <span class="text-danger">*</span>
-                    @endif
+                    <span class="text-danger">*</span>
                 </strong>
             </label>
             <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" id="name"
@@ -15,12 +14,11 @@
             @enderror
         </div>
 
+        <!-- Email Input -->
         <div class="mb-3 col-md-6">
             <label for="email" class="form-label">
                 <strong>Email:
-                    @if (true)
-                        <span class="text-danger">*</span>
-                    @endif
+                    <span class="text-danger">*</span>
                 </strong>
             </label>
             <input type="text" name="email" class="form-control @error('email') is-invalid @enderror" id="email"
@@ -29,13 +27,26 @@
                 <div class="form-text text-danger">{{ $message }}</div>
             @enderror
         </div>
-
+<!-- Password Input (only on create page) -->
+        @if (!isset($user) || !$user->exists)
+        <div class="mb-3 col-md-6">
+            <label for="password" class="form-label">
+                <strong>Password:
+                    <span class="text-danger">*</span>
+                </strong>
+            </label>
+            <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" id="password"
+                   placeholder="Password">
+            @error('password')
+            <div class="form-text text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+        @endif
+        <!-- Phone Input -->
         <div class="mb-3 col-md-6">
             <label for="phone" class="form-label">
                 <strong>Phone:
-                    @if (true)
-                        <span class="text-danger">*</span>
-                    @endif
+                    <span class="text-danger">*</span>
                 </strong>
             </label>
             <input type="text" name="phone" class="form-control @error('phone') is-invalid @enderror" id="phone"
@@ -45,13 +56,11 @@
             @enderror
         </div>
 
-        <!-- Address Input (Newly Added) -->
+        <!-- Address Input -->
         <div class="mb-3 col-md-6">
             <label for="address" class="form-label">
                 <strong>Address:
-                    @if (true)
-                        <span class="text-danger">*</span>
-                    @endif
+                    <span class="text-danger">*</span>
                 </strong>
             </label>
             <input type="text" name="address" class="form-control @error('address') is-invalid @enderror" id="address"
@@ -63,19 +72,39 @@
 
         <!-- Image Input -->
         <div class="mb-3 col-md-6">
-            <label for="image" class="form-label"><strong>Image:
-                    @if (false)
-                        <span class="text-danger">*</span>
-                    @endif
-                </strong></label>
+            <label for="image" class="form-label"><strong>Image:</strong></label>
             <input type="hidden" name="image" id="image" class="form-control">
             @error('image')
                 <div class="form-text text-danger">{{ $message }}</div>
             @enderror
         </div>
+
+ <!-- Status -->
+        <div class="mb-3 col-md-6">
+            <label for="status" class="form-label"><strong>Status: @if (true)
+                    <span class="text-danger">*</span>
+                @endif
+            </strong></label>
+            <div class="form-check form-switch">
+                <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" role="switch"
+                    id="statususer" name="status" value="1"
+                    {{ (isset($user) && $user->status) || old('status') ? 'checked' : '' }}
+                    onchange="toggleStatusLabel()">
+                <label class="form-check-label" for="status" id="statusLabeluser">
+                    {{ (isset($user) && $user->status) || old('status') ? 'Active' : 'Inactive' }}
+                </label>
+            </div>
+               
+
+            @error('status')
+                <div class="form-text text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+
     </div>
 </div>
 
+<!-- Email Verification -->
 @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && !$user->hasVerifiedEmail())
     <div class="mb-3">
         <p class="text-sm mt-2 text-gray-800">

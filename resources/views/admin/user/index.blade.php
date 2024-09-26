@@ -42,9 +42,10 @@
 
                                         <th>Name</th>
                                         <th>Email</th>
-                                        <th>Image</th>
                                         <th>Phone</th>
-                                 <th> Status </th>
+
+                                        <th>Image</th>
+                                        <th> Status </th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -61,17 +62,16 @@
                                                 </a>
                                                 @if (auth()->id() !== $user->id)
                                                     <!-- Check if the authenticated user is not the same as the current user -->
-                                                   <a class="btn btn-danger btn-sm"
-                                                    onclick="handleDelete({{ $user->id }})">
-                                                    <i class="fas fa-trash"></i>
-                                                </a>
-                                                <form id="deletePostForm-{{ $user->id }}"
-                                                    action="{{ route('users.destroy', $user->id) }}"
-                                                    method="POST" style="display: none;">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                </form>
-
+                                                    <a class="btn btn-danger btn-sm"
+                                                        onclick="handleDelete({{ $user->id }})">
+                                                        <i class="fas fa-trash"></i>
+                                                    </a>
+                                                    <form id="deletePostForm-{{ $user->id }}"
+                                                        action="{{ route('users.destroy', $user->id) }}" method="POST"
+                                                        style="display: none;">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                    </form>
                                                 @endif
 
 
@@ -79,6 +79,8 @@
                                             </td>
                                             <td>{{ $user->name }}</td>
                                             <td>{{ $user->email }}</td>
+                                            <td>{{ $user->phone ? $user->phone : 'N/A' }}</td>
+
                                             <td>
                                                 @if ($user->image)
                                                     <a href="{{ asset('storage/' . $user->image) }}" data-fancybox="gallery"
@@ -90,16 +92,16 @@
                                                     <a>No image available</a>
                                                 @endif
                                             </td>
-                                            <td>{{ $user->phone ? $user->phone : 'N/A' }}</td>
-  <td>
+                                             <td>
                                                  <div class="form-check form-switch">
                                                     <input class="form-check-input statususer-toggle" type="checkbox" data-id="{{ $user->id }}"
                                                         {{ $user->status ? 'checked' : '' }}>
-                                                    <label class="form-check-label" for="statusLabel{{ $user->id }}">
+                                                    <label class="form-check-label" for="statusLabeluser{{ $user->id }}">
                                                         {{ $user->status ? 'Active' : 'Inactive' }}
                                                     </label>
                                                 </div>
                                             </td>
+
 
                                             {{-- <td>{{ $user->address ? $user->address : 'N/A' }}</td> --}}
                                         </tr>
@@ -125,14 +127,15 @@
             </div> <!-- /.col -->
         </div> <!--end::Row-->
     @endsection
-@push('scripts')
-    <script>
-   document.addEventListener('DOMContentLoaded', function() {
+    @push('scripts')
+
+   <script>
+  document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.statususer-toggle').forEach(toggle => {
         toggle.addEventListener('click', function(e) {
             e.preventDefault();
 
-            let selectedUserId = this.getAttribute('data-id');
+            let selectedUserId = this.getAttribute('data-id'); 
             let selectedStatus = this.checked;
 
             Swal.fire({
@@ -145,36 +148,37 @@
                 confirmButtonText: 'Yes, update it!'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    updateStatus(selectedUserId, selectedStatus);
+                    updateStatus(selectedUserId, selectedStatus); 
                 } else {
-                    // Revert the toggle if canceled
-                    this.checked = !selectedStatus;
+                    this.checked = !selectedStatus; 
                 }
             });
         });
     });
 
-    // Update status using AJAX and show SweetAlert on success
+    // Update status using AJAX and handle success or error
     function updateStatus(id, status) {
-        fetch(`/user/update-status/${id}`, {
+        fetch(`{{ url('users/update-status') }}/${id}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                'X-CSRF-TOKEN': '{{ csrf_token() }}' 
             },
-            body: JSON.stringify({ status: status })
+            body: JSON.stringify({ status: status }) 
         })
         .then(response => response.json())
         .then(data => {
             if (data.success) {
+                let label = document.querySelector(`label[for="statusLabeluser${id}"]`);
+                label.textContent = status ? 'Active' : 'Inactive'; 
+
                 Swal.fire({
                     title: 'Success!',
                     text: 'Status updated successfully.',
                     icon: 'success',
                     confirmButtonText: 'OK'
                 }).then(() => {
-                    // Optionally, reload the page or update the UI
-                    window.location.reload();
+                    window.location.reload(); 
                 });
             } else {
                 Swal.fire({
@@ -183,23 +187,20 @@
                     icon: 'error',
                     confirmButtonText: 'OK'
                 });
-                // Revert the checkbox status if update failed
-                document.querySelector(`input[data-id="${id}"]`).checked = !status;
             }
         })
         .catch(error => {
             console.error('Error updating status:', error);
             Swal.fire({
                 title: 'Error!',
-                text: 'Something went wrong.',
+                text: 'Something went wrong. Please try again.',
                 icon: 'error',
                 confirmButtonText: 'OK'
             });
-            // Revert the checkbox status if AJAX call fails
-            document.querySelector(`input[data-id="${id}"]`).checked = !status;
         });
     }
 });
 
+
 </script>
-@endpush
+    @endpush

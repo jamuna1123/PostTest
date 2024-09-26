@@ -41,16 +41,7 @@
     </div>    
 @endsection
 
-@push('styles')
-    <style>
-      
-        table.dataTable {
-            width: 100% !important;
-            margin-bottom: 20px;
-        }
 
-    </style>
-@endpush
 
 @push('scripts')
     {{ $dataTable->scripts(attributes: ['type' => 'module']) }}

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\DataTables\PostCategoryDataTable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePostCategory;
 use App\Models\PostCategory;
@@ -9,8 +10,8 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
-use App\DataTables\PostCategoryDataTable;
 
 class PostCategoryController extends Controller
 {
@@ -22,7 +23,7 @@ class PostCategoryController extends Controller
     //     return view('backend.post-category.index', compact('postCategories'));
     // }
 
-     public function index(PostCategoryDataTable $dataTable)
+    public function index(PostCategoryDataTable $dataTable)
     {
         return $dataTable->render('backend.post-category.index');
     }
@@ -110,10 +111,12 @@ class PostCategoryController extends Controller
 
         $postcategory->description = $request->description;
 
-       // Only update the slug if it is provided in the request
-    if ($request->filled('slug')) {
-        $postcategory->slug = $request->slug;
-    }
+        // Check if slug is empty and auto-generate from title
+        if (empty($request->slug)) {
+            $postcategory->slug = Str::slug($postcategory->title);
+        } else {
+            $postcategory->slug = $request->slug;
+        }
 
         $postcategory->status = $request->has('status') ? 1 : 0;
 

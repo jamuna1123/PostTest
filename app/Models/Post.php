@@ -16,7 +16,7 @@ class Post extends Model
 
     protected $fillable = ['title', 'slug', 'image', 'description', 'post_category_id', 'status', 'user_id', 'published_at'];
 
-      public function getSlugOptions(): SlugOptions
+    public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
             ->generateSlugsFrom('title')
@@ -25,11 +25,16 @@ class Post extends Model
             ->doNotGenerateSlugsOnUpdate();
     }
 
+    // public function postCategory()
+    // {
+    //     return $this->belongsTo(PostCategory::class)->withTrashed();
+    // }
 
-    public function postCategory()
-    {
-        return $this->belongsTo(PostCategory::class)->withTrashed();
-    }
+    public function category()
+{
+    return $this->belongsTo(PostCategory::class, 'post_category_id')->withTrashed();
+}
+
 
     public function username()
     {

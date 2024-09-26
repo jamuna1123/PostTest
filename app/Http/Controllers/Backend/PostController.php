@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\DataTables\PostDataTable;
 use App\Http\Requests\StorePost;
 use App\Models\Post;
 use App\Models\PostCategory;
@@ -11,15 +12,19 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
-
+use Illuminate\Support\Str;
 class PostController extends Controller
 {
-    public function index(Request $request)
+    // public function index(Request $request)
+    // {
+
+    //     $post = Post::orderBy('id', 'desc')->paginate(5);
+
+    //     return view('backend.post.index', compact('post'));
+    // }
+ public function index(PostDataTable $dataTable)
     {
-
-        $post = Post::orderBy('id', 'desc')->paginate(5);
-
-        return view('backend.post.index', compact('post'));
+        return $dataTable->render('backend.post.index');
     }
 
     /**
@@ -125,8 +130,10 @@ class PostController extends Controller
            ? Carbon::parse($request->published_at)
            : $post->published_at;
 
-        // Only update the slug if it is provided in the request
-        if ($request->filled('slug')) {
+        // Check if slug is empty and auto-generate from title
+        if (empty($request->slug)) {
+            $post->slug = Str::slug($post->title);
+        } else {
             $post->slug = $request->slug;
         }
 

@@ -35,7 +35,7 @@ class StoreUser extends FormRequest
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)->ignore($userId)],
             // 'phone' => ['required', 'string', 'max:10', Rule::unique(User::class)->ignore($userId)], // Unique phone number
             'phone' => ['required', 'numeric', 'digits:10'], // Ensuring phone is numeric and exactly 10 digits
-            'address' => ['nullable', 'string', 'max:500'], // Limiting the address to 500 characters
+            'address' => ['required', 'string', 'max:500'], // Limiting the address to 500 characters
             'status' => ['boolean'],
             'image' => ['nullable', 'string'],
 

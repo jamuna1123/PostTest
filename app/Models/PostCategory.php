@@ -17,7 +17,7 @@ class PostCategory extends Model
     /**
      * Get the options for generating the slug.
      */
-     public function getSlugOptions(): SlugOptions
+    public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
             ->generateSlugsFrom('title')
@@ -25,7 +25,6 @@ class PostCategory extends Model
             // Prevent slug from being updated when the title is updated
             ->doNotGenerateSlugsOnUpdate();
     }
-
 
     public function parentCategory()
     {
