@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\DataTables\UserDataTable;
 use App\Http\Requests\StoreUser;
 use App\Models\User;
 use Carbon\Carbon;
@@ -13,12 +14,17 @@ use Intervention\Image\Facades\Image;
 
 class AdminUserController extends Controller
 {
-    public function index()
+    // public function index()
+    // {
+
+    //     $users = User::paginate(5);
+
+    //     return view('admin.user.index', compact('users'));
+    // }
+
+     public function index(UserDataTable $dataTable)
     {
-
-        $users = User::paginate(5);
-
-        return view('admin.user.index', compact('users'));
+        return $dataTable->render('admin.user.index');
     }
 
     /**
@@ -175,13 +181,16 @@ class AdminUserController extends Controller
 
     }
 
-   public function updateStatus(Request $request, $id)
+public function updateStatususer(Request $request, $id)
 {
+   
+
     $user = User::findOrFail($id); // Fetch the user by ID
     $user->status = $request->status; // Update the status
     $user->save(); // Save the user
 
     return response()->json(['success' => true]); // Return a success response
 }
+
 
 }

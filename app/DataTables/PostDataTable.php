@@ -32,10 +32,10 @@ class PostDataTable extends DataTable
                         </a>';
 
                 // Delete Button
-                $deleteBtn = '<a href="javascript:void(0);" onclick="postcategoryDelete('.$row->id.')" class="btn btn-danger btn-sm">
+                $deleteBtn = '<a href="javascript:void(0);" onclick="handleDelete('.$row->id.')" class="btn btn-danger btn-sm">
                             <i class="fas fa-trash"></i>
                         </a>
-                        <form id="deletePostcategoryForm-'.$row->id.'" action="'.route('post.destroy', $row->id).'" method="POST" style="display: none;">
+                        <form id="deletePostForm-'.$row->id.'" action="'.route('post.destroy', $row->id).'" method="POST" style="display: none;">
                             '.csrf_field().method_field('DELETE').'
                         </form>';
 

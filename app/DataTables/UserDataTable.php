@@ -8,8 +8,6 @@ use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
-use Yajra\DataTables\Html\Editor\Editor;
-use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
 class UserDataTable extends DataTable
@@ -17,12 +15,58 @@ class UserDataTable extends DataTable
     /**
      * Build the DataTable class.
      *
-     * @param QueryBuilder $query Results from query() method.
+     * @param  QueryBuilder  $query  Results from query() method.
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', 'user.action')
+            ->addColumn('action', function ($row) {
+                // Edit Button
+                $editBtn = '<a href="'.route('users.edit', $row->id).'" class="btn btn-primary btn-sm">
+                            <i class="fas fa-pencil-alt"></i>
+                        </a>';
+
+                // View Button
+                $viewBtn = '<a href="'.route('users.show', $row->id).'" class="btn btn-success btn-sm">
+                            <i class="fas fa-eye"></i>
+                        </a>';
+
+                // Delete Button (only visible if authenticated user is not the current user)
+                $deleteBtn = '';
+                if (auth()->check() && auth()->id() !== $row->id) {
+                    $deleteBtn = '<a href="javascript:void(0);" onclick="handleDelete('.$row->id.')" class="btn btn-danger btn-sm">
+                    <i class="fas fa-trash"></i>
+                  </a>
+                  <form id="deletePostForm-'.$row->id.'" action="'.route('users.destroy', $row->id).'" method="POST" style="display: none;">
+                    '.csrf_field().method_field('DELETE').'
+                  </form>';
+                }
+
+                // Combine all buttons
+                return $viewBtn.' '.$editBtn.' '.$deleteBtn;
+            })
+            ->addColumn('image', function ($row) {
+                // Display image with a small thumbnail
+                if ($row->image) {
+                    return '<a href="'.asset('storage/'.$row->image).'" data-fancybox="gallery" data-caption="'.$row->title.'">
+                            <img src="'.asset('storage/images/resized/'.basename($row->image)).'" alt="'.$row->title.'" style="height: 50px;">
+                        </a>';
+                }
+
+                return 'No image available';
+            })
+            ->addColumn('status', function ($row) {
+                $checked = $row->status ? 'checked' : '';
+
+                return '<div class="form-check form-switch">
+                <input class="form-check-input user-status-toggle" type="checkbox" data-id="'.$row->id.'" '.$checked.'>
+                <label class="form-check-label" for="statusLabel'.$row->id.'">'.
+                              ($row->status ? 'Active' : 'Inactive').
+                              '</label>
+            </div>';
+            })
+
+            ->rawColumns(['action', 'status', 'image']) // Mark columns as raw HTML
             ->setRowId('id');
     }
 
@@ -40,20 +84,13 @@ class UserDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('user-table')
-                    ->columns($this->getColumns())
-                    ->minifiedAjax()
-                    //->dom('Bfrtip')
-                    ->orderBy(1)
-                    ->selectStyleSingle()
-                    ->buttons([
-                        Button::make('excel'),
-                        Button::make('csv'),
-                        Button::make('pdf'),
-                        Button::make('print'),
-                        Button::make('reset'),
-                        Button::make('reload')
-                    ]);
+            ->setTableId('user-table')
+            ->columns($this->getColumns())
+            ->minifiedAjax()
+            //->dom('Bfrtip')
+            ->orderBy(1)
+            ->selectStyleSingle();
+        // The buttons have been removed
     }
 
     /**
@@ -63,14 +100,20 @@ class UserDataTable extends DataTable
     {
         return [
             Column::computed('action')
-                  ->exportable(false)
-                  ->printable(false)
-                  ->width(60)
-                  ->addClass('text-center'),
-            Column::make('id'),
-            Column::make('add your columns'),
-            Column::make('created_at'),
-            Column::make('updated_at'),
+                ->exportable(false)
+                ->printable(false)
+                ->width(150)
+                ->addClass('text-center'),
+
+            Column::make('name'),
+            // Instead of category.title, use the manually added category_title
+            Column::make('email'),
+            Column::make('image'),
+            Column::make('phone'),
+            Column::make('status')
+                ->exportable(false)
+                ->printable(false),
+
         ];
     }
 
@@ -79,6 +122,6 @@ class UserDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'User_' . date('YmdHis');
+        return 'User_'.date('YmdHis');
     }
 }

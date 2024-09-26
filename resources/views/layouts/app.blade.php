@@ -42,13 +42,7 @@
         integrity="sha256-+uGLJmmTKOqBr+2E6KDYs/NRsHxSkONXFHUL0fy2O/4=" crossorigin="anonymous">
 
      <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-   {{-- datatables css --}}
-      {{-- <link rel="stylesheet" href="{{ asset('Backend/plugins/datatables/datatables.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('Backend/plugins/datatables/datatables.css') }}">
- 
 
-    <script src="{{ asset('Backend/plugins/datatables/datatables.js')  }}"></script>
-    <script src="{{ asset('Backend/plugins/datatables/datatables.min.js')  }}"></script> --}}
 
 
     {{-- use toggle --}}
@@ -58,23 +52,13 @@
     <link rel="stylesheet" href="{{ asset('Backend/plugins/filepond/dist/filepond.css') }}">
     <link rel="stylesheet"
         href="{{ asset('Backend/plugins/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css') }}">
-    {{-- <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" /> --}}
-    {{-- <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet" /> --}}
-    {{-- filepond js --}}
+ 
     <script
         src="{{ asset('Backend/plugins/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js') }}">
     </script>
     <script src="{{ asset('Backend/plugins/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js') }}">
     </script>
     <script src="{{ asset('Backend/plugins/filepond/dist/filepond.js') }}"></script>
-
-    {{-- <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
-<script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
-<script src="https://unpkg.com/filepond@^4/dist/filepond.js"></script> --}}
-    {{-- tinymce --}}
-
-    {{-- <script src="https://cdn.tiny.cloud/1/lz3stx6dwxywl56d146m3msq6l66bfvqz2iyl49ikdndki4k/tinymce/6/tinymce.min.js"
-        referrerpolicy="origin"></script> --}}
     <script src="{{ asset('Backend/plugins/tinymce/js/tinymce/tinymce.min.js') }}"></script>
 
 
@@ -194,21 +178,26 @@
             toggleStatusLabel();
         });
     </script>
-<script>
-     // Status Toggle Functionality
-    const statusCheckbox = document.getElementById('statususer');
-    const statusLabel = document.getElementById('statusLabeluser');
+ <script>
+        function toggleStatusLabeluser() {
+            const statusCheckbox = document.getElementById('statususer');
+            const statusLabel = document.getElementById('statusLabel');
 
-    statusCheckbox.addEventListener('change', function() {
-        if (statusCheckbox.checked) {
-            statusLabel.textContent = 'Active';
-        } else {
-            statusLabel.textContent = 'Inactive';
+            if (statusCheckbox.checked) {
+                statusLabel.textContent = 'Active';
+            } else {
+                statusLabel.textContent = 'Inactive';
+            }
         }
-    });
-</script>
+
+        // Initialize the label text based on the checkbox's initial state
+        document.addEventListener('DOMContentLoaded', (event) => {
+            toggleStatusLabeluser();
+        });
+    </script>
+
     @include('backend.layouts.script')
-    {{-- tinymce image upload --}}
+    // {{-- tinymce image upload --}}
     <script>
         tinymce.init({
             selector: '#description',

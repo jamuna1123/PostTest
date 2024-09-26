@@ -80,6 +80,7 @@
         </div>
 
  <!-- Status -->
+ <div class="row">
         <div class="mb-3 col-md-6">
             <label for="status" class="form-label"><strong>Status: @if (true)
                     <span class="text-danger">*</span>
@@ -89,8 +90,8 @@
                 <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" role="switch"
                     id="statususer" name="status" value="1"
                     {{ (isset($user) && $user->status) || old('status') ? 'checked' : '' }}
-                    onchange="toggleStatusLabel()">
-                <label class="form-check-label" for="status" id="statusLabeluser">
+                    onchange="toggleStatusLabeluser()">
+                <label class="form-check-label" for="status" id="statusLabel">
                     {{ (isset($user) && $user->status) || old('status') ? 'Active' : 'Inactive' }}
                 </label>
             </div>
@@ -100,7 +101,7 @@
                 <div class="form-text text-danger">{{ $message }}</div>
             @enderror
         </div>
-
+ </div>
     </div>
 </div>
 
