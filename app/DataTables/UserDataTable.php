@@ -87,7 +87,7 @@ class UserDataTable extends DataTable
             ->setTableId('user-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
-            //->dom('Bfrtip')
+            ->dom('lfrtip')
             ->orderBy(1)
             ->selectStyleSingle();
         // The buttons have been removed

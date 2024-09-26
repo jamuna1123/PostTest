@@ -86,7 +86,7 @@ class PostCategoryDataTable extends DataTable
             ->setTableId('postcategory-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
-                    //->dom('Bfrtip')
+            ->dom('lfrtip')
             ->orderBy(1)
             ->selectStyleSingle();
         // ->buttons([
