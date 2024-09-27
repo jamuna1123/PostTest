@@ -34,7 +34,14 @@ class StoreUser extends FormRequest
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)->ignore($userId)],
             // 'phone' => ['required', 'string', 'max:10', Rule::unique(User::class)->ignore($userId)], // Unique phone number
-            'phone' => ['required', 'numeric', 'digits:10'], // Ensuring phone is numeric and exactly 10 digits
+            // Phone validation to allow +977, digits, and optional hyphens
+           // Phone validation to allow +977 or 10 digits without the country code
+            'phone' => [
+                'required',
+                'string', 
+                'regex:/^(\+977-?\d{2}-?\d{8}|\d{10})$/',  // Allow +977 or just 10 digits
+                // Unique phone number
+            ],
             'address' => ['required', 'string', 'max:255'], // Limiting the address to 500 characters
             'status' => 'boolean',
             'image' => ['nullable', 'string'],
@@ -50,8 +57,15 @@ class StoreUser extends FormRequest
         // Define sanitization rules
         $sanitizer = new Sanitizer($this->all(), [
             'name' => 'trim|escape',
+            'phone' => 'trim',  // Remove any unwanted characters and keep only digits
         ]);
+  // Sanitize input
+        $sanitizedData = $sanitizer->sanitize();
 
+        // Check if the phone starts with +977 and remove it before storing
+        if (str_starts_with($sanitizedData['phone'], '977')) {
+            $sanitizedData['phone'] = substr($sanitizedData['phone'], 3);  // Remove '977' prefix
+        }
         // Replace request data with sanitized data
         $this->merge($sanitizer->sanitize());
     }
