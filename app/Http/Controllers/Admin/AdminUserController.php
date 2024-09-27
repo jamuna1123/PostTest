@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use App\DataTables\UserDataTable;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUser;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -22,7 +23,7 @@ class AdminUserController extends Controller
     //     return view('admin.user.index', compact('users'));
     // }
 
-     public function index(UserDataTable $dataTable)
+    public function index(UserDataTable $dataTable)
     {
         return $dataTable->render('admin.user.index');
     }
@@ -181,16 +182,22 @@ class AdminUserController extends Controller
 
     }
 
-public function updateStatususer(Request $request, $id)
-{
-   
+    // public function updateStatususer(Request $request, $id)
+    // {
 
-    $user = User::findOrFail($id); // Fetch the user by ID
-    $user->status = $request->status; // Update the status
-    $user->save(); // Save the user
+    //     $user = User::findOrFail($id); // Fetch the user by ID
+    //     $user->status = $request->status; // Update the status
+    //     $user->save(); // Save the user
 
-    return response()->json(['success' => true]); // Return a success response
-}
+    //     return response()->json(['success' => true]); // Return a success response
+    // }
 
+    public function updateStatus(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+        $user->status = $request->status;
+        $user->save();
 
+        return response()->json(['success' => true]);
+    }
 }

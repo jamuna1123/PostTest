@@ -5,9 +5,9 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>AdminLTE v4 | Dashboard</title><!--begin::Primary Meta Tags-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="title" content="AdminLTE v4 | Dashboard">
     <meta name="author" content="ColorlibHQ">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
@@ -46,8 +46,8 @@
 
 
     {{-- use toggle --}}
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    {{-- <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script> --}}
 
     {{-- filepond css --}}
     <link rel="stylesheet" href="{{ asset('Backend/plugins/filepond/dist/filepond.css') }}">
@@ -74,11 +74,12 @@
     <link rel="stylesheet" href="{{ asset('Backend/plugins/fontawesome-free/css/all.min.css') }}">
 
 
-    {{-- Status- toggle --}}
-    <script src="{{ asset('js/status-toggle.js') }}"></script>
+
 
     @vite(['resources/js/app.js'])
 
+    {{-- Status- toggle --}}
+    <script src="{{ asset('js/status-toggle.js') }}"></script>
 
     <!-- Vite JS and CSS -->
     @stack('styles')

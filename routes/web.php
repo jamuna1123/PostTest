@@ -32,14 +32,12 @@ Route::middleware('auth')->group(function () {
     // post
     Route::patch('/post/update-status/{id}', [PostController::class, 'updateStatus'])->name('post.update-status');
     Route::resource('/post', PostController::class);
-   
+
+    Route::patch('/users/update-status/{id}', [AdminUserController::class, 'updateStatus'])->name('user.update-status');
     Route::resource('/users', AdminUserController::class);
-// Route::patch('/user/update-status-user/{id}', [AdminUserController::class, 'updateStatususer'])->name('user.update-status-user');
-    Route::patch('/user/update-status/{id}', [AdminUserController::class, 'updateStatus'])->name('user.update-status');
+    // Route::patch('/user/update-status-user/{id}', [AdminUserController::class, 'updateStatususer'])->name('user.update-status-user');
 
     // Other routes...
-
-   
 
 });
 

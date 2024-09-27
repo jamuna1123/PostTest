@@ -146,7 +146,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Setup status toggles for this module
-            setupStatusToggles('.status-toggle', '/user/update-status');
+            setupStatusToggles('.status-toggle', '/users/update-status');
         });
     </script>
 

@@ -55,15 +55,17 @@ class UserDataTable extends DataTable
 
                 return 'No image available';
             })
+          // Assuming this is inside the DataTables column definitions
             ->addColumn('status', function ($row) {
                 $checked = $row->status ? 'checked' : '';
 
-                return '<div class="form-check form-switch">
-                <input class="form-check-input status-toggle" type="checkbox" data-id="'.$row->id.'" '.$checked.'>
-                <label class="form-check-label" for="statusLabel'.$row->id.'">'.
-                              ($row->status ? 'On' : 'Off').
-                              '</label>
-            </div>';
+                return '
+    <div class="form-check form-switch">
+        <input class="form-check-input status-toggle" type="checkbox" data-id="'.$row->id.'" '.$checked.'>
+        <label class="form-check-label" for="statusLabel'.$row->id.'">'.
+                    ($row->status ? 'On' : 'Off').
+                    '</label>
+    </div>';
             })
 
             ->rawColumns(['action', 'status', 'image']) // Mark columns as raw HTML

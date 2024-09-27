@@ -94,7 +94,7 @@
                             {{ (isset($user) && $user->status) || old('status') ? 'checked' : '' }}
                             onchange="toggleStatusLabel()">
                         <label class="form-check-label" for="status" id="statusLabel">
-                            {{ (isset($user) && $user->status) || old('status') ? 'Active' : 'Inactive' }}
+                            {{ (isset($user) && $user->status) || old('status') ? 'On' : 'Off' }}
                         </label>
                     </div>
 

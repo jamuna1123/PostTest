@@ -36,7 +36,7 @@
                             </div>
                         </div> <!-- /.card-header -->
                         <div class="card-body p-3">
-                            {{ $dataTable->table(['class' => 'table table-striped table-bordered']) }}
+                            {!! $dataTable->table() !!}
 
                             <!-- /.card-body -->
                         </div> <!-- /.card -->
@@ -47,16 +47,16 @@
     @endsection
 
     @push('scripts')
-        {{ $dataTable->scripts(attributes: ['type' => 'module']) }}
+        {!! $dataTable->scripts() !!}
 
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 // Setup status toggles for this module
-                setupStatusToggles('.status-toggle', '/user/update-status');
+                setupStatusToggles('.status-toggle', '/users/update-status');
 
                 // Re-initialize the status toggle after DataTable is drawn
                 $(document).on('draw.dt', function() {
-                    setupStatusToggles('.status-toggle', '/user/update-status');
+                    setupStatusToggles('.status-toggle', '/users/update-status');
                 });
             });
         </script>
