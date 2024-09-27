@@ -31,10 +31,9 @@ class Post extends Model
     // }
 
     public function category()
-{
-    return $this->belongsTo(PostCategory::class, 'post_category_id')->withTrashed();
-}
-
+    {
+        return $this->belongsTo(PostCategory::class, 'post_category_id')->withTrashed();
+    }
 
     public function username()
     {

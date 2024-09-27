@@ -35,10 +35,10 @@ class StoreUser extends FormRequest
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)->ignore($userId)],
             // 'phone' => ['required', 'string', 'max:10', Rule::unique(User::class)->ignore($userId)], // Unique phone number
             // Phone validation to allow +977, digits, and optional hyphens
-           // Phone validation to allow +977 or 10 digits without the country code
+            // Phone validation to allow +977 or 10 digits without the country code
             'phone' => [
                 'required',
-                'string', 
+                'string',
                 'regex:/^(\+977-?\d{2}-?\d{8}|\d{10})$/',  // Allow +977 or just 10 digits
                 // Unique phone number
             ],
@@ -59,7 +59,7 @@ class StoreUser extends FormRequest
             'name' => 'trim|escape',
             'phone' => 'trim',  // Remove any unwanted characters and keep only digits
         ]);
-  // Sanitize input
+        // Sanitize input
         $sanitizedData = $sanitizer->sanitize();
 
         // Check if the phone starts with +977 and remove it before storing

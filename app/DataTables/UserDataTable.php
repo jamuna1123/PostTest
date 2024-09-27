@@ -56,22 +56,26 @@ class UserDataTable extends DataTable
                 return 'No image available';
             })
           // Assuming this is inside the DataTables column definitions
-           ->addColumn('status', function ($row) {
-    // If the authenticated user is the same as the current row, display status as plain text
-    if (auth()->check() && auth()->id() === $row->id) {
-        return '<p>' . ($row->status ? 'On' : 'Off') . '</p>';
-    }
+            ->addColumn('status', function ($row) {
+                // If the authenticated user is the same as the current row, display status as plain text
+                // If the authenticated user is the same as the current row, display status as a button
+                // If the authenticated user is the same as the current row, display status as a button
+                if (auth()->check() && auth()->id() === $row->id) {
+                    return '<button class="btn btn-sm '.($row->status ? 'btn-success' : 'btn-danger').'">'
+                            .($row->status ? 'On' : 'Off').
+                           '</button>';
+                }
 
-    // Otherwise, display the toggle switch
-    $checked = $row->status ? 'checked' : '';
+                // Otherwise, display the toggle switch
+                $checked = $row->status ? 'checked' : '';
 
-    return '<div class="form-check form-switch">
+                return '<div class="form-check form-switch">
         <input class="form-check-input status-toggle" type="checkbox" data-id="'.$row->id.'" '.$checked.'>
         <label class="form-check-label" for="statusLabel'.$row->id.'">'.
-        ($row->status ? 'On' : 'Off') .
-        '</label>
+                    ($row->status ? 'On' : 'Off').
+                    '</label>
     </div>';
-})
+            })
 
             ->rawColumns(['action', 'status', 'image']) // Mark columns as raw HTML
             ->setRowId('id');

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Http\Controllers\Controller;
 use App\DataTables\PostDataTable;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePost;
 use App\Models\Post;
 use App\Models\PostCategory;
@@ -11,8 +11,9 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Intervention\Image\Facades\Image;
 use Illuminate\Support\Str;
+use Intervention\Image\Facades\Image;
+
 class PostController extends Controller
 {
     // public function index(Request $request)
@@ -22,7 +23,7 @@ class PostController extends Controller
 
     //     return view('backend.post.index', compact('post'));
     // }
- public function index(PostDataTable $dataTable)
+    public function index(PostDataTable $dataTable)
     {
         return $dataTable->render('backend.post.index');
     }

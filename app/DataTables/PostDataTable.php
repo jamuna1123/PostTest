@@ -95,7 +95,7 @@ class PostDataTable extends DataTable
             ->dom('lfrtip')
             ->orderBy(1)
             ->selectStyleSingle();
-          
+
     }
 
     /**

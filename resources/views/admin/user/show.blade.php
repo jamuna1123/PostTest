@@ -58,23 +58,25 @@
                                     <td>{{ $user->address ? $user->address : 'N/A' }}</td>
                                 </tr> --}}
                                 <tr>
-    <th style="width: 200px">Status:</th>
-    <td>
-        @if (auth()->check() && auth()->id() === $user->id)
-            <!-- Show plain text for the authenticated user -->
-            <p>{{ $user->status ? 'On' : 'Off' }}</p>
-        @else
-            <!-- Show toggle switch for other users -->
-            <div class="form-check form-switch">
-                <input class="form-check-input status-toggle" type="checkbox" data-id="{{ $user->id }}" 
-                    {{ $user->status ? 'checked' : '' }}>
-                <label class="form-check-label" for="statusLabel{{ $user->id }}">
-                    {{ $user->status ? 'On' : 'Off' }}
-                </label>
-            </div>
-        @endif
-    </td>
-</tr>
+                                    <th style="width: 200px">Status:</th>
+                                    <td>
+                                        @if (auth()->check() && auth()->id() === $user->id)
+                                            <!-- Show a button based on the user's status for the authenticated user -->
+                                            <button class="btn btn-sm {{ $user->status ? 'btn-success' : 'btn-danger' }}">
+                                                {{ $user->status ? 'On' : 'Off' }}
+                                            </button>
+                                        @else
+                                            <!-- Show toggle switch for other users -->
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input status-toggle" type="checkbox"
+                                                    data-id="{{ $user->id }}" {{ $user->status ? 'checked' : '' }}>
+                                                <label class="form-check-label" for="statusLabel{{ $user->id }}">
+                                                    {{ $user->status ? 'On' : 'Off' }}
+                                                </label>
+                                            </div>
+                                        @endif
+                                    </td>
+                                </tr>
 
                                 <tr>
                                     <th style="width: 200px">Created At:</th>
@@ -155,5 +157,4 @@
             setupStatusToggles('.status-toggle', '/users/update-status');
         });
     </script>
-
 @endpush

@@ -73,9 +73,6 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('Backend/plugins/fontawesome-free/css/all.min.css') }}">
 
-
-
-
     @vite(['resources/js/app.js'])
 
     {{-- Status- toggle --}}
