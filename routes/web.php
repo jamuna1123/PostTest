@@ -21,12 +21,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    // Route::post('upload', [ProfileController::class, 'upload'])->name('upload');
-    // Route::delete('revert', [ProfileController::class, 'revert'])->name('revert');
-    // Route::get('/load/{filename}', [ProfileController::class, 'load'])->name('load');
-    // Route::get('/fetch/{filename}', [ProfileController::class, 'fetch'])->name('fetch');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-
     // Post Category
     Route::resource('/post-category', PostCategoryController::class);
     Route::post('upload', [PostCategoryController::class, 'upload'])->name('upload');
@@ -37,17 +32,14 @@ Route::middleware('auth')->group(function () {
     // post
     Route::patch('/post/update-status/{id}', [PostController::class, 'updateStatus'])->name('post.update-status');
     Route::resource('/post', PostController::class);
-    // Route::post('/post/upload', [PostController::class, 'upload'])->name('upload');
-    // Route::delete('/post/revert', [PostController::class, 'revert'])->name('revert');
-    // Route::get('/post/load/{filename}', [PostController::class, 'load'])->name('load');
-    // Route::get('/post/fetch/{filename}', [PostController::class, 'fetch'])->name('fetch');
+   
     Route::resource('/users', AdminUserController::class);
+// Route::patch('/user/update-status-user/{id}', [AdminUserController::class, 'updateStatususer'])->name('user.update-status-user');
+    Route::patch('/user/update-status/{id}', [AdminUserController::class, 'updateStatus'])->name('user.update-status');
 
-    Route::get('/admin/users/export-pdf', [AdminUserController::class, 'exportPDF'])->name('users.export.pdf');
     // Other routes...
 
-// Route::patch('/user/update-status-user/{id}', [AdminUserController::class, 'updateStatususer'])->name('user.update-status-user');
-Route::post('users/{id}/status', [AdminUserController::class, 'updateStatus'])->name('users.updateStatus');
+   
 
 });
 

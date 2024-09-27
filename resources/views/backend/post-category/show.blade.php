@@ -136,4 +136,15 @@
             word-wrap: break-word;
         }
     </style>
+
+
+@endpush
+@push('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Setup status toggles for this module
+            setupStatusToggles('.status-toggle', '/post-category/update-status');
+        });
+    </script>
+
 @endpush

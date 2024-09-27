@@ -79,7 +79,7 @@
                                     <th style="width: 200px">Status:</th>
                                     <td>
                                         <div class="form-check form-switch">
-                                            <input class="form-check-input statuspost-toggle" type="checkbox"
+                                            <input class="form-check-input status-toggle" type="checkbox"
                                                 data-id="{{ $post->id }}" {{ $post->status ? 'checked' : '' }}>
                                             <label class="form-check-label" for="statusLabel{{ $post->id }}">
                                                 {{ $post->status ? 'On' : 'Off' }}
@@ -152,4 +152,13 @@
             word-wrap: break-word;
         }
     </style>
+@endpush
+@push('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Setup status toggles for this module
+            setupStatusToggles('.status-toggle', '/post/update-status');
+        });
+    </script>
+
 @endpush

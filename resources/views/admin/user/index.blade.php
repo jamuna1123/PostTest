@@ -19,6 +19,7 @@
         </div> <!--end::Container-->
     </div> <!--end::App Content Header--> <!--begin::App Content-->
     <div class="app-content">
+
         <!--begin::Container-->
         <div class="container-fluid">
             <div class="row">
@@ -35,7 +36,7 @@
                             </div>
                         </div> <!-- /.card-header -->
                         <div class="card-body p-3">
-                        {{ $dataTable->table(['class' => 'table table-striped table-bordered']) }}
+                            {{ $dataTable->table(['class' => 'table table-striped table-bordered']) }}
 
                             <!-- /.card-body -->
                         </div> <!-- /.card -->
@@ -44,8 +45,19 @@
             </div> <!-- /.col -->
         </div> <!--end::Row-->
     @endsection
-   
-@push('scripts')
-    {{ $dataTable->scripts(attributes: ['type' => 'module']) }}
 
-@endpush
+    @push('scripts')
+        {{ $dataTable->scripts(attributes: ['type' => 'module']) }}
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                // Setup status toggles for this module
+                setupStatusToggles('.status-toggle', '/user/update-status');
+
+                // Re-initialize the status toggle after DataTable is drawn
+                $(document).on('draw.dt', function() {
+                    setupStatusToggles('.status-toggle', '/user/update-status');
+                });
+            });
+        </script>
+    @endpush

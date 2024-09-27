@@ -59,9 +59,9 @@ class UserDataTable extends DataTable
                 $checked = $row->status ? 'checked' : '';
 
                 return '<div class="form-check form-switch">
-                <input class="form-check-input user-status-toggle" type="checkbox" data-id="'.$row->id.'" '.$checked.'>
+                <input class="form-check-input status-toggle" type="checkbox" data-id="'.$row->id.'" '.$checked.'>
                 <label class="form-check-label" for="statusLabel'.$row->id.'">'.
-                              ($row->status ? 'Active' : 'Inactive').
+                              ($row->status ? 'On' : 'Off').
                               '</label>
             </div>';
             })

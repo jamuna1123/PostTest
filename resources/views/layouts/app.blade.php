@@ -41,18 +41,19 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/css/jsvectormap.min.css"
         integrity="sha256-+uGLJmmTKOqBr+2E6KDYs/NRsHxSkONXFHUL0fy2O/4=" crossorigin="anonymous">
 
-     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 
 
     {{-- use toggle --}}
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
     {{-- filepond css --}}
     <link rel="stylesheet" href="{{ asset('Backend/plugins/filepond/dist/filepond.css') }}">
     <link rel="stylesheet"
         href="{{ asset('Backend/plugins/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css') }}">
- 
+
     <script
         src="{{ asset('Backend/plugins/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js') }}">
     </script>
@@ -60,7 +61,6 @@
     </script>
     <script src="{{ asset('Backend/plugins/filepond/dist/filepond.js') }}"></script>
     <script src="{{ asset('Backend/plugins/tinymce/js/tinymce/tinymce.min.js') }}"></script>
-
 
     {{-- sweetalert  --}}
     <link rel="stylesheet" href="{{ asset('Backend/plugins/sweetalert2/sweetalert2.css') }}">
@@ -73,8 +73,14 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('Backend/plugins/fontawesome-free/css/all.min.css') }}">
 
-<!-- Vite JS and CSS -->
+
+    {{-- Status- toggle --}}
+    <script src="{{ asset('js/status-toggle.js') }}"></script>
+
     @vite(['resources/js/app.js'])
+
+
+    <!-- Vite JS and CSS -->
     @stack('styles')
 
 </head> <!--end::Head--> <!--begin::Body-->
@@ -91,11 +97,11 @@
         <main class="app-main"> <!--begin::App Content Header-->
 
             @yield('content')
-             {{-- @include('sweetalert::alert') --}}
+            {{-- @include('sweetalert::alert') --}}
 
         </main>
 
-    @stack('scripts')
+        @stack('scripts')
         <!--end::App Wrapper--> <!--begin::Script--> <!--begin::Third Party Plugin(OverlayScrollbars)-->
 
         {{-- @include('admin.layouts.footer') --}}
@@ -178,23 +184,7 @@
             toggleStatusLabel();
         });
     </script>
- <script>
-        function toggleStatusLabeluser() {
-            const statusCheckbox = document.getElementById('statususer');
-            const statusLabel = document.getElementById('statusLabel');
 
-            if (statusCheckbox.checked) {
-                statusLabel.textContent = 'Active';
-            } else {
-                statusLabel.textContent = 'Inactive';
-            }
-        }
-
-        // Initialize the label text based on the checkbox's initial state
-        document.addEventListener('DOMContentLoaded', (event) => {
-            toggleStatusLabeluser();
-        });
-    </script>
 
     @include('backend.layouts.script')
     // {{-- tinymce image upload --}}

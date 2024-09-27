@@ -57,7 +57,19 @@
                                     <th style="width: 200px">Address:</th>
                                     <td>{{ $user->address ? $user->address : 'N/A' }}</td>
                                 </tr> --}}
-
+                                <tr>
+                                    <th style="width: 200px">Status:</th>
+                                    <td>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input status-toggle" type="checkbox"
+                                                data-id="{{ $user->id }}"
+                                                {{ $user->status ? 'checked' : '' }}>
+                                            <label class="form-check-label" for="statusLabel{{ $user->id }}">
+                                                {{ $user->status ? 'On' : 'Off' }}
+                                            </label>
+                                        </div>
+                                    </td>
+                                </tr>
                                 <tr>
                                     <th style="width: 200px">Created At:</th>
                                     <td>{{ $user->created_at }}</td>
@@ -129,4 +141,13 @@
             word-wrap: break-word;
         }
     </style>
+@endpush
+@push('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Setup status toggles for this module
+            setupStatusToggles('.status-toggle', '/user/update-status');
+        });
+    </script>
+
 @endpush

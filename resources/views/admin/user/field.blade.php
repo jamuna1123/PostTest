@@ -21,26 +21,26 @@
                     <span class="text-danger">*</span>
                 </strong>
             </label>
-            <input type="text" name="email" class="form-control @error('email') is-invalid @enderror" id="email"
-                placeholder="Email" value="{{ old('email', $user->email ?? '') }}">
+            <input type="text" name="email" class="form-control @error('email') is-invalid @enderror"
+                id="email" placeholder="Email" value="{{ old('email', $user->email ?? '') }}">
             @error('email')
                 <div class="form-text text-danger">{{ $message }}</div>
             @enderror
         </div>
-<!-- Password Input (only on create page) -->
+        <!-- Password Input (only on create page) -->
         @if (!isset($user) || !$user->exists)
-        <div class="mb-3 col-md-6">
-            <label for="password" class="form-label">
-                <strong>Password:
-                    <span class="text-danger">*</span>
-                </strong>
-            </label>
-            <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" id="password"
-                   placeholder="Password">
-            @error('password')
-            <div class="form-text text-danger">{{ $message }}</div>
-            @enderror
-        </div>
+            <div class="mb-3 col-md-6">
+                <label for="password" class="form-label">
+                    <strong>Password:
+                        <span class="text-danger">*</span>
+                    </strong>
+                </label>
+                <input type="password" name="password" class="form-control @error('password') is-invalid @enderror"
+                    id="password" placeholder="Password">
+                @error('password')
+                    <div class="form-text text-danger">{{ $message }}</div>
+                @enderror
+            </div>
         @endif
         <!-- Phone Input -->
         <div class="mb-3 col-md-6">
@@ -49,8 +49,8 @@
                     <span class="text-danger">*</span>
                 </strong>
             </label>
-            <input type="text" name="phone" class="form-control @error('phone') is-invalid @enderror" id="phone"
-                placeholder="Phone" value="{{ old('phone', $user->phone ?? '') }}">
+            <input type="text" name="phone" class="form-control @error('phone') is-invalid @enderror"
+                id="phone" placeholder="Phone" value="{{ old('phone', $user->phone ?? '') }}">
             @error('phone')
                 <div class="form-text text-danger">{{ $message }}</div>
             @enderror
@@ -63,8 +63,8 @@
                     <span class="text-danger">*</span>
                 </strong>
             </label>
-            <input type="text" name="address" class="form-control @error('address') is-invalid @enderror" id="address"
-                placeholder="Address" value="{{ old('address', $user->address ?? '') }}">
+            <input type="text" name="address" class="form-control @error('address') is-invalid @enderror"
+                id="address" placeholder="Address" value="{{ old('address', $user->address ?? '') }}">
             @error('address')
                 <div class="form-text text-danger">{{ $message }}</div>
             @enderror
@@ -79,29 +79,32 @@
             @enderror
         </div>
 
- <!-- Status -->
- <div class="row">
-        <div class="mb-3 col-md-6">
-            <label for="status" class="form-label"><strong>Status: @if (true)
-                    <span class="text-danger">*</span>
-                @endif
-            </strong></label>
-            <div class="form-check form-switch">
-                <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" role="switch"
-                    id="statususer" name="status" value="1"
-                    {{ (isset($user) && $user->status) || old('status') ? 'checked' : '' }}
-                    onchange="toggleStatusLabeluser()">
-                <label class="form-check-label" for="status" id="statusLabel">
-                    {{ (isset($user) && $user->status) || old('status') ? 'Active' : 'Inactive' }}
-                </label>
-            </div>
-               
+        <!-- Status -->
+        @if (auth()->check() && auth()->id() !== $user->id)
 
-            @error('status')
-                <div class="form-text text-danger">{{ $message }}</div>
-            @enderror
-        </div>
- </div>
+            <div class="row">
+                <div class="mb-3 col-md-6">
+                    <label for="status" class="form-label"><strong>Status: @if (true)
+                                <span class="text-danger">*</span>
+                            @endif
+                        </strong></label>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox"
+                            role="switch" id="status" name="status" value="1"
+                            {{ (isset($user) && $user->status) || old('status') ? 'checked' : '' }}
+                            onchange="toggleStatusLabel()">
+                        <label class="form-check-label" for="status" id="statusLabel">
+                            {{ (isset($user) && $user->status) || old('status') ? 'Active' : 'Inactive' }}
+                        </label>
+                    </div>
+
+
+                    @error('status')
+                        <div class="form-text text-danger">{{ $message }}</div>
+                    @enderror
+                </div>
+            </div>
+        @endif
     </div>
 </div>
 
