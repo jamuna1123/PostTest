@@ -69,7 +69,7 @@ class PostDataTable extends DataTable
             ->addColumn('category_title', function ($row) {
                 return $row->category ? $row->category->title : 'No category';
             })
-            ->rawColumns(['action', 'status', 'image']) // Mark columns as raw HTML
+            ->rawColumns(['action', 'status', 'image', 'post_title', 'category_title']) // Mark columns as raw HTML
             ->setRowId('id');
     }
 
@@ -108,21 +108,19 @@ class PostDataTable extends DataTable
                 ->printable(false)
                 ->width(150),
 
-            Column::make('post_title')
-                ->title('Post Title'), // Give it a user-friendly name in the table header
+            Column::make('title'),
+             
 
-            // Instead of category.title, use the manually added category_title
             Column::make('category_title')
-                ->title('Category'), // Give it a user-friendly name in the table header
+                ->title('Category'),
 
             Column::make('image')
-              ->width(150),
+                ->width(150),
 
             Column::make('status')
                 ->exportable(false)
                 ->printable(false)
                 ->width(50),
-
         ];
     }
 

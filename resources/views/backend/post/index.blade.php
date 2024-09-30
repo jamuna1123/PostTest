@@ -4,14 +4,14 @@
     <div class="app-content-header"> <!--begin::Container-->
         <div class="container-fluid"> <!--begin::Row-->
             <div class="row">
-                <div class="col-sm-6">
+                {{-- <div class="col-sm-6">
                     <h3 class="mb-0">Post</h3>
-                </div>
+                </div> --}}
                 <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-end">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <ol class="breadcrumb">
+                        {{-- <li class="breadcrumb-item"><a href="#">{{ Breadcrumbs::render('home') }}</a></li> --}}
                         <li class="breadcrumb-item active" aria-current="page">
-                            Post
+                           {{ Breadcrumbs::render('post.index') }}
                         </li>
                     </ol>
                 </div>
@@ -36,8 +36,7 @@
                         </div> <!-- /.card-header -->
                         <div class="card-body p-3">
 
-                            {{ $dataTable->table(['class' => 'table table-striped table-bordered']) }}
-
+                            {!! $dataTable->table() !!}
 
                             <!-- /.card-body -->
                         </div> <!-- /.card -->
@@ -50,19 +49,19 @@
 
 
 
-@push('scripts')
-    {{ $dataTable->scripts(attributes: ['type' => 'module']) }}
+    @push('scripts')
+        {!! $dataTable->scripts() !!}
 
 
-     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Setup status toggles for this module
-            setupStatusToggles('.status-toggle', '/post/update-status');
-
-            // Re-initialize the status toggle after DataTable is drawn
-            $(document).on('draw.dt', function() {
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                // Setup status toggles for this module
                 setupStatusToggles('.status-toggle', '/post/update-status');
+
+                // Re-initialize the status toggle after DataTable is drawn
+                $(document).on('draw.dt', function() {
+                    setupStatusToggles('.status-toggle', '/post/update-status');
+                });
             });
-        });
-    </script>
-@endpush
+        </script>
+    @endpush

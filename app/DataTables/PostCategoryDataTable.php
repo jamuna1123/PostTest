@@ -64,7 +64,7 @@ class PostCategoryDataTable extends DataTable
             ->addColumn('category_name', function ($row) {
                 return $row->title;
             })
-            ->rawColumns(['action', 'status', 'category_image']) // Mark columns as raw HTML
+            ->rawColumns(['action', 'status', 'category_image','category_name']) // Mark columns as raw HTML
             ->setRowId('id');
     }
 
@@ -103,26 +103,28 @@ class PostCategoryDataTable extends DataTable
     /**
      * Get the dataTable columns definition.
      */
-    public function getColumns(): array
-    {
-        return [
-            Column::computed('action')
-                ->exportable(false)
-                ->printable(false)
-                ->width(150),
+ public function getColumns(): array
+{
+    return [
+        Column::computed('action')
+            ->exportable(false)
+            ->printable(false)
+            ->width(150),
 
-            Column::make('category_name')
-                ->title('Category Name'), // Give it a user-friendly name in the table header
+        Column::make('title') // Use the actual database field 'title' here
+            ->title('Category Name')
+            ->searchable(true),  // Ensure this column is searchable
 
-            Column::make('category_image')
-                ->image('Category Image'), // Give it a user-friendly name in the table header
-            Column::make('status')
-                ->exportable(false)
-                ->printable(false)
-                ->width(50),
+        Column::make('category_image')
+            ->title('Category Image'),
 
-        ];
-    }
+        Column::make('status')
+            ->exportable(false)
+            ->printable(false)
+            ->width(50),
+    ];
+}
+
 
     /**
      * Get the filename for export.

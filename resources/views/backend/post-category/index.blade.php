@@ -4,14 +4,15 @@
     <div class="app-content-header">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-sm-6">
+                {{-- <div class="col-sm-6">
                     <h3 class="mb-0">Post Category</h3>
-                </div>
+                </div> --}}
                 <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-end">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <ol class="breadcrumb">
+                        {{-- <li class="breadcrumb-item"><a href="#">{{ Breadcrumbs::render('home') }}</a></li> --}}
                         <li class="breadcrumb-item active" aria-current="page">
-                            Post Category
+                           {{ Breadcrumbs::render('post-category.index') }}
+
                         </li>
                     </ol>
                 </div>
@@ -32,21 +33,20 @@
                             </div>
                         </div>
                         <div class="card-body p-3">
-                            {{ $dataTable->table(['class' => 'table table-striped table-bordered']) }}
+                            {!! $dataTable->table() !!}
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>    
+    </div>
 @endsection
 
 
 
 @push('scripts')
-    {{ $dataTable->scripts(attributes: ['type' => 'module']) }}
-
-        <script>
+    {!! $dataTable->scripts() !!}
+    <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Setup status toggles for this module
             setupStatusToggles('.status-toggle', '/post-category/update-status');

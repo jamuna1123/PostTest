@@ -36,7 +36,7 @@
     <div class="row">
 
 
-      
+
 
         <!-- Post Category Field -->
         <div class="mb-3 col-md-6">
@@ -47,14 +47,15 @@
                     @endif
                 </strong>
             </label>
-            <select class="form-select @error('post_category_id') is-invalid @enderror" name="post_category_id" id="post_category_id">
+            <select class="form-select @error('post_category_id') is-invalid @enderror" name="post_category_id"
+                id="post_category_id">
                 <option value="">Select Post Category</option>
-               @foreach ($categories as $category)
-            <option value="{{ $category->id }}" 
-                {{ old('post_category_id', $post->post_category_id) == $category->id ? 'selected' : '' }}>
-                {{ $category->title }}
-            </option>
-        @endforeach
+                @foreach ($categories as $category)
+                    <option value="{{ $category->id }}"
+                        {{ old('post_category_id', $post->post_category_id) == $category->id ? 'selected' : '' }}>
+                        {{ $category->title }}
+                    </option>
+                @endforeach
             </select>
             @error('post_category_id')
                 <div class="form-text text-danger">{{ $message }}</div>
@@ -68,7 +69,7 @@
                     @endif
                 </strong></label>
             <input type="hidden" name="image" id="image" class="form-control">
-            
+
             @error('image')
                 <div class="form-text text-danger">{{ $message }}</div>
             @enderror
@@ -104,7 +105,7 @@
                     @endif
                 </strong>
             </label>
-            <input type="datetime-local" name="published_at" id="published_at"
+            <input type="datetime-local" name="published_at" id="published_at" onclick="this.showPicker()"
                 class="form-control @error('published_at') is-invalid @enderror"
                 value="{{ old('published_at', isset($post->published_at) ? $post->published_at->format('Y-m-d\TH:i') : '') }}">
             @error('published_at')
@@ -113,24 +114,25 @@
         </div>
     </div>
 
-        <!-- Status Field -->
-        <div class="mb-3 col-md-6">
-            <label for="status" class="form-label">
-                <strong>Status:@if (true)
-                        <span class="text-danger">*</span>
-                    @endif</strong>
+    <!-- Status Field -->
+    <div class="mb-3 col-md-6">
+        <label for="status" class="form-label">
+            <strong>Status:@if (true)
+                    <span class="text-danger">*</span>
+                @endif
+            </strong>
+        </label>
+        <div class="form-check form-switch">
+            <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" role="switch"
+                id="status" name="status" value="1"
+                {{ (isset($post) && $post->status) || old('status') ? 'checked' : '' }} onchange="toggleStatusLabel()">
+            <label class="form-check-label" for="status" id="statusLabel">
+                {{ (isset($post) && $post->status) || old('status') ? 'Active' : 'Inactive' }}
             </label>
-            <div class="form-check form-switch">
-                <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" role="switch"
-                    id="status" name="status" value="1"
-                    {{ (isset($post) && $post->status) || old('status') ? 'checked' : '' }} onchange="toggleStatusLabel()">
-                <label class="form-check-label" for="status" id="statusLabel">
-                    {{ (isset($post) && $post->status) || old('status') ? 'Active' : 'Inactive' }}
-                </label>
-            </div>
-            @error('status')
-                <div class="form-text text-danger">{{ $message }}</div>
-            @enderror
         </div>
-    
+        @error('status')
+            <div class="form-text text-danger">{{ $message }}</div>
+        @enderror
+    </div>
+
 </div>

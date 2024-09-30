@@ -22,6 +22,9 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    Route::get('/home', [DashboardController::class, 'home'])->name('home');
+
     // Post Category
     Route::resource('/post-category', PostCategoryController::class);
     Route::post('upload', [PostCategoryController::class, 'upload'])->name('upload');
