@@ -58,7 +58,6 @@ class PostCategoryDataTable extends DataTable
                 return '<div class="form-check form-switch">
                 <input class="form-check-input status-toggle" type="checkbox" data-id="'.$row->id.'" '.$checked.'>
                 <label class="form-check-label" for="statusLabel'.$row->id.'">'.
-                              ($row->status ? 'On' : 'Off').
                               '</label>
             </div>';
             })

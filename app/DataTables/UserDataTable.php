@@ -58,8 +58,6 @@ class UserDataTable extends DataTable
           // Assuming this is inside the DataTables column definitions
             ->addColumn('status', function ($row) {
                 // If the authenticated user is the same as the current row, display status as plain text
-                // If the authenticated user is the same as the current row, display status as a button
-                // If the authenticated user is the same as the current row, display status as a button
                 if (auth()->check() && auth()->id() === $row->id) {
                     return '<button class="btn btn-sm '.($row->status ? 'btn-success' : 'btn-danger').'">'
                             .($row->status ? 'On' : 'Off').
@@ -72,7 +70,6 @@ class UserDataTable extends DataTable
                 return '<div class="form-check form-switch">
         <input class="form-check-input status-toggle" type="checkbox" data-id="'.$row->id.'" '.$checked.'>
         <label class="form-check-label" for="statusLabel'.$row->id.'">'.
-                    ($row->status ? 'On' : 'Off').
                     '</label>
     </div>';
             })

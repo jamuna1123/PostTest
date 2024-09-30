@@ -111,7 +111,12 @@ class AdminUserController extends Controller
         $user->email = strtolower($request->email); // Ensure email is lowercase
         $user->phone = $request->phone; // Ensure phone is numeric and 10 digits
         $user->address = $request->address; // Address is nullable
-        $user->status = $request->has('status') ? 1 : 0;
+        // Set status to 1 by default if auth id is 1, otherwise take from request
+        if (auth()->check() && auth()->id() === $user->id) {
+            $user->status = 1;
+        } else {
+            $user->status = $request->has('status') ? 1 : 0;
+        }
 
         // Handle the profile image
         if ($request->input('image')) {

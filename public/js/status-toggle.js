@@ -62,9 +62,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     // Manually update the toggle status
                     document.querySelector(`input[data-id="${id}"]`).checked =
                         status;
-                    // Update the label text
-                    let label = document.querySelector(`label[for="statusLabel${id}"]`);
-                    label.textContent = status ? 'On' : 'Off';
+                    // // Update the label text
+                    // let label = document.querySelector(`label[for="statusLabel${id}"]`);
+                    // label.textContent = status ? 'On' : 'Off';
 
                     // Show SweetAlert success message
                     Swal.fire({
@@ -72,7 +72,9 @@ document.addEventListener("DOMContentLoaded", function () {
                         text: "Status updated successfully.",
                         icon: "success",
                         confirmButtonText: "OK",
-                    });
+                    })
+
+                   
                 } else {
                     Swal.fire({
                         title: "Error!",

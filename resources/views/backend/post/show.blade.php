@@ -38,8 +38,8 @@
                                 <tr>
                                     <th style="width: 200px">Category Name:</th>
                                     <td>
-                                        @if ($post->postCategory)
-                                            {{ $post->postCategory->title }}
+                                        @if ($post->category)
+                                            {{ $post->category->title }}
                                         @else
                                             None
                                         @endif
