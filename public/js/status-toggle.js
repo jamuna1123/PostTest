@@ -99,3 +99,4 @@ document.addEventListener("DOMContentLoaded", function () {
     // Export the setup function to make it reusable
     window.setupStatusToggles = setupStatusToggles;
 });
+

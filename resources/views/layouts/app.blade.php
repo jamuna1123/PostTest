@@ -73,12 +73,13 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('Backend/plugins/fontawesome-free/css/all.min.css') }}">
 
-    @vite(['resources/js/app.js'])
+    
 
     {{-- Status- toggle --}}
     <script src="{{ asset('js/status-toggle.js') }}"></script>
 
     <!-- Vite JS and CSS -->
+    @vite(['resources/js/app.js'])
     @stack('styles')
 
 </head> <!--end::Head--> <!--begin::Body-->
@@ -183,7 +184,23 @@
         });
     </script>
 
+ <script>
+        function toggleStatusLabeluser() {
+            const statusCheckbox = document.getElementById('statususer');
+            const statusLabel = document.getElementById('statusLabeluser');
 
+            if (statusCheckbox.checked) {
+                statusLabel.textContent = 'Active';
+            } else {
+                statusLabel.textContent = 'Inactive';
+            }
+        }
+
+        // Initialize the label text based on the checkbox's initial state
+        document.addEventListener('DOMContentLoaded', (event) => {
+            toggleStatusLabel();
+        });
+    </script>
     @include('backend.layouts.script')
     // {{-- tinymce image upload --}}
     <script>

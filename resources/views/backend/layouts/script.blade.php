@@ -24,7 +24,11 @@
         });
     }
 
-    // Show success message only once
+   
+</script>
+
+<script>
+ // Show success message only once
 @if (session('success'))
     Swal.fire({
         title: 'Success!',
@@ -34,15 +38,10 @@
         showConfirmButton: 'Ok'
     }).then(() => {
         // Clear the session flash message
-        @php
-            session()->forget('success');
-        @endphp
+       window.location.reload();
     });
 @endif
 </script>
-
-
-
 <script>
 function postcategoryDelete(id) {
     Swal.fire({
@@ -61,21 +60,7 @@ function postcategoryDelete(id) {
     });
 }
 
-// Show success message only once
-@if (session('success'))
-    Swal.fire({
-        title: 'Success!',
-        text: '{{ session('success') }}',
-        icon: 'success',
-        timer: 3000, // Close automatically after 3 seconds
-        showConfirmButton: 'Ok'
-    }).then(() => {
-        // Clear the session flash message
-        @php
-            session()->forget('success');
-        @endphp
-    });
-@endif
+
 </script>
 
 

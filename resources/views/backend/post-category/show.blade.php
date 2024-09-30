@@ -52,7 +52,7 @@
                                     <th style="width: 200px">Description:</th>
                                     <td style="max-width: 400px; word-wrap: break-word; white-space: normal;">
                                         @if ($postcategory->description)
-                                            {!! $postcategory->description !!}
+                                            {!! nl2br(e($postcategory->description)) !!}
                                         @else
                                             N/A
                                         @endif
@@ -66,7 +66,7 @@
                                                 data-id="{{ $postcategory->id }}"
                                                 {{ $postcategory->status ? 'checked' : '' }}>
                                             <label class="form-check-label" for="statusLabel{{ $postcategory->id }}">
-                                                {{ $postcategory->status ? 'On' : 'Off' }}
+                                                {{-- {{ $postcategory->status ? 'On' : 'Off' }} --}}
                                             </label>
                                         </div>
                                     </td>

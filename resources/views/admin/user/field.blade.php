@@ -90,11 +90,11 @@
                         </strong></label>
                     <div class="form-check form-switch">
                         <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox"
-                            role="switch" id="status" name="status" value="1"
+                            role="switch" id="statususer" name="status" value="1"
                             {{ (isset($user) && $user->status) || old('status') ? 'checked' : '' }}
-                            onchange="toggleStatusLabel()">
-                        <label class="form-check-label" for="status" id="statusLabel">
-                            {{ (isset($user) && $user->status) || old('status') ? 'On' : 'Off' }}
+                            onchange="toggleStatusLabeluser()">
+                        <label class="form-check-label" for="status" id="statusLabeluser">
+                            {{ (isset($user) && $user->status) || old('status') ? 'Active' : 'Inactive' }}
                         </label>
                     </div>
 

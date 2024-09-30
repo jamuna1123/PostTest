@@ -82,7 +82,7 @@
                                             <input class="form-check-input status-toggle" type="checkbox"
                                                 data-id="{{ $post->id }}" {{ $post->status ? 'checked' : '' }}>
                                             <label class="form-check-label" for="statusLabel{{ $post->id }}">
-                                                {{ $post->status ? 'On' : 'Off' }}
+                                                {{-- {{ $post->status ? 'On' : 'Off' }} --}}
                                             </label>
                                         </div>
                                     </td>

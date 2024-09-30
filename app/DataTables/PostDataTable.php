@@ -106,8 +106,7 @@ class PostDataTable extends DataTable
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
-                ->width(150)
-                ->addClass('text-center'),
+                ->width(150),
 
             Column::make('post_title')
                 ->title('Post Title'), // Give it a user-friendly name in the table header
@@ -116,11 +115,13 @@ class PostDataTable extends DataTable
             Column::make('category_title')
                 ->title('Category'), // Give it a user-friendly name in the table header
 
-            Column::make('image'),
+            Column::make('image')
+              ->width(150),
 
             Column::make('status')
                 ->exportable(false)
-                ->printable(false),
+                ->printable(false)
+                ->width(50),
 
         ];
     }

@@ -109,8 +109,7 @@ class PostCategoryDataTable extends DataTable
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
-                ->width(150)
-                ->addClass('text-center'),
+                ->width(150),
 
             Column::make('category_name')
                 ->title('Category Name'), // Give it a user-friendly name in the table header
@@ -119,7 +118,8 @@ class PostCategoryDataTable extends DataTable
                 ->image('Category Image'), // Give it a user-friendly name in the table header
             Column::make('status')
                 ->exportable(false)
-                ->printable(false),
+                ->printable(false)
+                ->width(50),
 
         ];
     }

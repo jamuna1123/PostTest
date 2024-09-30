@@ -63,7 +63,7 @@
                                         @if (auth()->check() && auth()->id() === $user->id)
                                             <!-- Show a button based on the user's status for the authenticated user -->
                                             <button class="btn btn-sm {{ $user->status ? 'btn-success' : 'btn-danger' }}">
-                                                {{ $user->status ? 'On' : 'Off' }}
+                                                {{ $user->status ? 'Active' : 'Inactive' }}
                                             </button>
                                         @else
                                             <!-- Show toggle switch for other users -->
@@ -71,7 +71,7 @@
                                                 <input class="form-check-input status-toggle" type="checkbox"
                                                     data-id="{{ $user->id }}" {{ $user->status ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="statusLabel{{ $user->id }}">
-                                                    {{ $user->status ? 'On' : 'Off' }}
+                                                    {{-- {{ $user->status ? 'Active' : 'Inactive' }} --}}
                                                 </label>
                                             </div>
                                         @endif

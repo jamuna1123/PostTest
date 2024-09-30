@@ -60,7 +60,7 @@ class UserDataTable extends DataTable
                 // If the authenticated user is the same as the current row, display status as plain text
                 if (auth()->check() && auth()->id() === $row->id) {
                     return '<button class="btn btn-sm '.($row->status ? 'btn-success' : 'btn-danger').'">'
-                            .($row->status ? 'On' : 'Off').
+                            .($row->status ? 'Active' : 'Inactive').
                            '</button>';
                 }
 
@@ -110,17 +110,21 @@ class UserDataTable extends DataTable
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
-                ->width(150)
-                ->addClass('text-center'),
+                ->width(130),
 
-            Column::make('name'),
+            Column::make('name')
+                ->width(150),
             // Instead of category.title, use the manually added category_title
-            Column::make('email'),
-            Column::make('image'),
-            Column::make('phone'),
+            Column::make('email')
+                ->width(200),
+            Column::make('image')
+                ->width(150),
+            Column::make('phone')
+                ->width(130),
             Column::make('status')
                 ->exportable(false)
-                ->printable(false),
+                ->printable(false)
+                ->width(50),
 
         ];
     }
