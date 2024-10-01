@@ -46,12 +46,12 @@
                             <!--end::Body-->
                             <!--begin::Footer-->
                             <div class="card-footer">
-                                 
+
                                 <button type="submit" class="btn btn-primary"><i class="fas fa-edit"></i>
                                     Update</button>
-                                      <a href="{{ route('post-category.index') }}" class="btn btn-warning text-white">
-                             <i class="fas fa-times-circle"></i>    Cancel</a>
-                             
+                                <a href="{{ route('post-category.index') }}" class="btn btn-warning text-white">
+                                    <i class="fas fa-times-circle"></i> Cancel</a>
+
                             </div>
                             <!--end::Footer-->
                         </form>
@@ -66,13 +66,10 @@
         <!--end::Container-->
     </div>
     <!--end::App Content-->
-
-
-
 @endsection
 
 @push('scripts')
-  <script>
+    <script>
         FilePond.registerPlugin(FilePondPluginImagePreview);
         FilePond.registerPlugin(FilePondPluginFileValidateType);
 
@@ -119,11 +116,5 @@
                 @endif
             ],
         });
-
-        
     </script>
-
-
-
-
-    @endpush
+@endpush

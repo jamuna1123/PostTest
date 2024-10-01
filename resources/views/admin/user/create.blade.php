@@ -29,10 +29,10 @@
                         <form action="{{ route('users.store') }}" method="Post" enctype="multipart/form-data">
                             @csrf
 
-                                @include('admin.user.field')
+                            @include('admin.user.field')
 
-                            
-                            
+
+
 
                             <div class="card-footer">
 
@@ -48,7 +48,6 @@
             </div>
         </div>
     </div>
-
 @endsection
 @push('scripts')
     <script>
@@ -85,10 +84,5 @@
                 console.log('File added', file);
             });
         @endif
-
-
-
-         
-</script>
+    </script>
 @endpush
-  

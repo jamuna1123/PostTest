@@ -106,7 +106,7 @@ class PostController extends Controller
         $deletedCategory = PostCategory::withTrashed()->find($post->post_category_id);
 
         // If the category is soft-deleted, add it to the categories list
-        if ($deletedCategory && $deletedCategory->trashed()|| $deletedCategory->status == 0) {
+        if ($deletedCategory && $deletedCategory->trashed() || $deletedCategory->status == 0) {
             $categories->push($deletedCategory);
         }
 

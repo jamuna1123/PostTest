@@ -9,9 +9,9 @@
                 </div> --}}
                 <div class="col-sm-6">
                     <ol class="breadcrumb">
-                        
+
                         <li class="breadcrumb-item active" aria-current="page">
-                         {{ Breadcrumbs::render('post.edit', $post) }}
+                            {{ Breadcrumbs::render('post.edit', $post) }}
 
                         </li>
                     </ol>
@@ -36,8 +36,7 @@
                         </div>
                         <!--end::Header-->
                         <!--begin::Form-->
-                        <form action="{{ route('post.update', $post->id) }}" method="POST"
-                            enctype="multipart/form-data">
+                        <form action="{{ route('post.update', $post->id) }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
                             <!--begin::Body-->
@@ -46,11 +45,11 @@
                             <!--end::Body-->
                             <!--begin::Footer-->
                             <div class="card-footer">
-                                   <button type="submit" class="btn btn-primary"><i class="fas fa-edit"></i>
+                                <button type="submit" class="btn btn-primary"><i class="fas fa-edit"></i>
                                     Update</button>
-                                      <a href="{{ route('post.index') }}" class="btn btn-warning text-white">
-                             <i class="fas fa-times-circle"></i>  Cancel</a>
-                              
+                                <a href="{{ route('post.index') }}" class="btn btn-warning text-white">
+                                    <i class="fas fa-times-circle"></i> Cancel</a>
+
                             </div>
                             <!--end::Footer-->
                         </form>
@@ -65,12 +64,9 @@
         <!--end::Container-->
     </div>
     <!--end::App Content-->
-
-
-
 @endsection
 @push('scripts')
- <script>
+    <script>
         FilePond.registerPlugin(FilePondPluginImagePreview);
         FilePond.registerPlugin(FilePondPluginFileValidateType);
 
@@ -94,8 +90,8 @@
                     onload: (response) => {
                         const data = JSON.parse(response);
                         // Store the uploaded image path in a hidden input
-                    document.getElementById('image').value = data.path;
-                    return data.path;
+                        document.getElementById('image').value = data.path;
+                        return data.path;
                     }
                 },
                 revert: {
@@ -117,7 +113,5 @@
                 @endif
             ],
         });
-
-       
     </script>
-   @endpush 
+@endpush

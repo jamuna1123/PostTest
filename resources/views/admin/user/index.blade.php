@@ -11,7 +11,7 @@
                     <ol class="breadcrumb">
                         {{-- <li class="breadcrumb-item"><a href="#">{{ Breadcrumbs::render('home') }}</a></li> --}}
                         <li class="breadcrumb-item active" aria-current="page">
-                               {{ Breadcrumbs::render('users.index') }}
+                            {{ Breadcrumbs::render('users.index') }}
                         </li>
                     </ol>
                 </div>

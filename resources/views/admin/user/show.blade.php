@@ -10,14 +10,15 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb">
                         {{-- <li class="breadcrumb-item"><a href="#">Home</a></li> --}}
-                        <li class="breadcrumb-item active" aria-current="page"> {{ Breadcrumbs::render('users.show', $user) }}</li>
+                        <li class="breadcrumb-item active" aria-current="page"> {{ Breadcrumbs::render('users.show', $user) }}
+                        </li>
                     </ol>
                 </div>
             </div>
         </div>
     </div>
     <div class="container">
-        <div class="row mt-4">
+        <div class="row">
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header">

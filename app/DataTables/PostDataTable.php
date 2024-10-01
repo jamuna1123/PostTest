@@ -109,7 +109,6 @@ class PostDataTable extends DataTable
                 ->width(150),
 
             Column::make('title'),
-             
 
             Column::make('category_title')
                 ->title('Category'),

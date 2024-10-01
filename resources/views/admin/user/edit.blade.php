@@ -30,7 +30,7 @@
                             @csrf
                             @method('PUT')
 
-                             @include('admin.user.field')
+                            @include('admin.user.field')
 
 
                             <div class="card-footer">
@@ -46,7 +46,6 @@
             </div>
         </div>
     </div>
-
 @endsection
 @push('scripts')
     <script>
@@ -96,7 +95,5 @@
                 @endif
             ],
         });
-     
-
     </script>
 @endpush

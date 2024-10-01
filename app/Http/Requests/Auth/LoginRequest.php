@@ -44,7 +44,7 @@ class LoginRequest extends FormRequest
         $user = \App\Models\User::where('email', $this->email)->first();
 
         // Check if the user exists and their status is active (1 = active, 0 = inactive)
-        if (!$user || $user->status !== 1) {
+        if (! $user || $user->status !== 1) {
             throw ValidationException::withMessages([
                 'email' => trans('auth.failed'), // Create a new message for inactive users
             ]);
