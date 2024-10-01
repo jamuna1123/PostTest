@@ -79,7 +79,7 @@ class PostDataTable extends DataTable
     public function query(Post $model): QueryBuilder
     {
         // Join the post_categories table to get the category name
-        return $model->newQuery()->with('category');
+        return $model->newQuery()->orderBy('created_at', 'desc')->with('category');
     }
 
     /**
@@ -105,19 +105,17 @@ class PostDataTable extends DataTable
         return [
             Column::computed('action')
                 ->exportable(false)
-                ->printable(false)
-                ->width(150),
+                ->printable(false),
 
             Column::make('title')
                 ->title('Post Title'),
             Column::make('category.title')
                 ->title('Category'),
 
-            Column::make('image')
-                ->width(150),
+            Column::make('image'),
 
-            Column::make('status')
-                ->width(50),
+            Column::make('status'),
+
         ];
     }
 

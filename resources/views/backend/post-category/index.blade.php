@@ -32,8 +32,10 @@
                                 </a>
                             </div>
                         </div>
+                           <div class="container">
                         <div class="card-body p-3">
                             {!! $dataTable->table() !!}
+                        </div>
                         </div>
                     </div>
                 </div>

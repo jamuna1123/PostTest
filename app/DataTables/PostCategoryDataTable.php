@@ -71,7 +71,7 @@ class PostCategoryDataTable extends DataTable
      */
     public function query(PostCategory $model): QueryBuilder
     {
-        return $model->newQuery();
+        return $model->newQuery()->orderBy('created_at', 'desc');
     }
 
     /**
@@ -106,8 +106,7 @@ class PostCategoryDataTable extends DataTable
         return [
             Column::computed('action')
                 ->exportable(false)
-                ->printable(false)
-                ->width(150),
+                ->printable(false),
 
             Column::make('title') // Use the actual database field 'title' here
                 ->title('Category Name'),
@@ -117,8 +116,7 @@ class PostCategoryDataTable extends DataTable
 
             Column::make('status')
                 ->exportable(false)
-                ->printable(false)
-                ->width(50),
+                ->printable(false),
         ];
     }
 

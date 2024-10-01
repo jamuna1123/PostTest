@@ -35,15 +35,19 @@
                         <span class="text-danger">*</span>
                     </strong>
                 </label>
-                <input type="password" name="password" class="form-control @error('password') is-invalid @enderror"
-                    id="password" placeholder="Password">
+             <div class="position-relative">
+    <input type="password" name="password" class="form-control @error('password') is-invalid @enderror"
+        id="password" placeholder="Password" oninput="toggleIconVisibility()">
+    <i class="fa fa-eye-slash position-absolute" id="togglePassword"
+        style="right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer; display: none;"></i>
+</div>
                 @error('password')
                     <div class="form-text text-danger">{{ $message }}</div>
                 @enderror
             </div>
         @endif
 
-          <!-- Image Input -->
+        <!-- Image Input -->
         <div class="mb-3 col-md-6">
             <label for="image" class="form-label"><strong>Image:</strong></label>
             <input type="hidden" name="image" id="image" class="form-control">
@@ -79,7 +83,7 @@
             @enderror
         </div>
 
-      
+
 
         <!-- Status -->
         @if (auth()->check() && auth()->id() !== $user->id)

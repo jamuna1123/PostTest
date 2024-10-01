@@ -18,6 +18,7 @@ Breadcrumbs::for('users.index', function (BreadcrumbTrail $trail) {
 Breadcrumbs::for('users.create', function (BreadcrumbTrail $trail) {
     $trail->parent('users.index');
     $trail->push('Create', route('users.create'));
+
 });
 
 Breadcrumbs::for('users.edit', function (BreadcrumbTrail $trail, $user) {

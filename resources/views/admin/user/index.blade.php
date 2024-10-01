@@ -35,15 +35,17 @@
                                 </a>
                             </div>
                         </div> <!-- /.card-header -->
+                        <div class="container">
                         <div class="card-body p-3">
                             {!! $dataTable->table() !!}
-
+                        </div>
                             <!-- /.card-body -->
                         </div> <!-- /.card -->
                     </div>
                 </div>
             </div> <!-- /.col -->
         </div> <!--end::Row-->
+    </div>
     @endsection
 
     @push('scripts')

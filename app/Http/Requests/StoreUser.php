@@ -32,8 +32,7 @@ class StoreUser extends FormRequest
 
         return [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)->ignore($userId)],
-            // 'phone' => ['required', 'string', 'max:10', Rule::unique(User::class)->ignore($userId)], // Unique phone number
+            'email' => ['required', 'string', 'lowercase', 'email:rfc,dns',  'max:255', Rule::unique(User::class)->ignore($userId)],            // 'phone' => ['required', 'string', 'max:10', Rule::unique(User::class)->ignore($userId)], // Unique phone number
             // Phone validation to allow +977, digits, and optional hyphens
             // Phone validation to allow +977 or 10 digits without the country code
             'phone' => [
@@ -52,12 +51,21 @@ class StoreUser extends FormRequest
 
     }
 
+    public function messages(): array
+    {
+        return [
+            'phone.regex' => 'The phone number must be a valid number (+977 or 10 digits).',
+
+        ];
+    }
+
     protected function prepareForValidation()
     {
         // Define sanitization rules
         $sanitizer = new Sanitizer($this->all(), [
             'name' => 'trim|escape',
             'phone' => 'trim',  // Remove any unwanted characters and keep only digits
+
         ]);
         // Sanitize input
         $sanitizedData = $sanitizer->sanitize();

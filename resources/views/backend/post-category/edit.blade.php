@@ -22,7 +22,7 @@
     <div class="app-content"> <!--begin::Container-->
         <div class="container-fluid">
             <!--begin::Row-->
-            <div class="row g-4">
+            <div class="row">
                 <!--begin::Col-->
                 <div class="col-12"></div>
                 <!--end::Col-->

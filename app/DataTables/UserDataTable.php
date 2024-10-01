@@ -85,7 +85,7 @@ class UserDataTable extends DataTable
      */
     public function query(User $model): QueryBuilder
     {
-        return $model->newQuery();
+        return $model->newQuery()->orderBy('created_at', 'desc');
     }
 
     /**
@@ -111,22 +111,17 @@ class UserDataTable extends DataTable
         return [
             Column::computed('action')
                 ->exportable(false)
-                ->printable(false)
-                ->width(130),
+                ->printable(false),
 
-            Column::make('name')
-                ->width(150),
+            Column::make('name'),
+
             // Instead of category.title, use the manually added category_title
-            Column::make('email')
-                ->width(200),
-            Column::make('image')
-                ->width(150),
-            Column::make('phone')
-                ->width(130),
+            Column::make('email'),
+            Column::make('image'),
+            Column::make('phone'),
             Column::make('status')
                 ->exportable(false)
-                ->printable(false)
-                ->width(50),
+                ->printable(false),
 
         ];
     }

@@ -85,4 +85,27 @@
             });
         @endif
     </script>
+
+<script>
+    const passwordField = document.getElementById('password');
+    const togglePasswordIcon = document.getElementById('togglePassword');
+
+    function toggleIconVisibility() {
+        if (passwordField.value.length > 0) {
+            togglePasswordIcon.style.display = 'block'; // Show the eye icon when there's input
+        } else {
+            togglePasswordIcon.style.display = 'none'; // Hide the eye icon when the field is empty
+        }
+    }
+
+    // Toggle password visibility when the icon is clicked
+    togglePasswordIcon.addEventListener('click', function () {
+        const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordField.setAttribute('type', type);
+        this.classList.toggle('fa-eye');
+        this.classList.toggle('fa-eye-slash');
+    });
+</script>
 @endpush
+
+
