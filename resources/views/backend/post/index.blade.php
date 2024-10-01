@@ -23,22 +23,22 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
+                    <div class="container">
+                        <!-- Second Card: Striped Full Width Table -->
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                {{-- <h3 class="card-title">Post List</h3> --}}
+                                <div class="d-grid gap-2 d-md-flex  mb-1">
+                                    <a class="btn btn-success" href="{{ route('post.create') }}" id="createNewProduct">
+                                        <i class="fa fa-plus"></i> Create
+                                    </a>
+                                </div>
+                            </div> <!-- /.card-header -->
 
-                    <!-- Second Card: Striped Full Width Table -->
-                    <div class="card mb-4">
-                        <div class="card-header">
-                            {{-- <h3 class="card-title">Post List</h3> --}}
-                            <div class="d-grid gap-2 d-md-flex  mb-1">
-                                <a class="btn btn-success" href="{{ route('post.create') }}" id="createNewProduct">
-                                    <i class="fa fa-plus"></i> Create
-                                </a>
+                            <div class="card-body p-3">
+
+                                {!! $dataTable->table() !!}
                             </div>
-                        </div> <!-- /.card-header -->
-                           <div class="container">
-                        <div class="card-body p-3">
-
-                            {!! $dataTable->table() !!}
-                        </div>
                             <!-- /.card-body -->
                         </div> <!-- /.card -->
                     </div>

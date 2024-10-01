@@ -24,7 +24,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-
+   <div class="container">
                     <!-- Second Card: Striped Full Width Table -->
                     <div class="card mb-4">
                         <div class="card-header">
@@ -35,7 +35,7 @@
                                 </a>
                             </div>
                         </div> <!-- /.card-header -->
-                        <div class="container">
+                     
                         <div class="card-body p-3">
                             {!! $dataTable->table() !!}
                         </div>
