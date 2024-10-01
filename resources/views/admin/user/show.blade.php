@@ -63,9 +63,12 @@
                                     <td>
                                         @if (auth()->check() && auth()->id() === $user->id)
                                             <!-- Show a button based on the user's status for the authenticated user -->
-                                            <button class="btn btn-sm {{ $user->status ? 'btn-success' : 'btn-danger' }}">
+                                            <span
+                                                style="color: #fff;
+             background-color: {{ $user->status ? '#28a745' : '#dc3545' }};"
+                                                class="badge {{ $user->status ? 'badge-success' : 'badge-danger' }}">
                                                 {{ $user->status ? 'Active' : 'Inactive' }}
-                                            </button>
+                                            </span>
                                         @else
                                             <!-- Show toggle switch for other users -->
                                             <div class="form-check form-switch">

@@ -64,10 +64,6 @@ function postcategoryDelete(id) {
 </script>
 
 
-
-
-
-
 <script>
     Fancybox.bind("[data-fancybox]", {
         // Custom options here

@@ -59,9 +59,10 @@ class UserDataTable extends DataTable
             ->addColumn('status', function ($row) {
                 // If the authenticated user is the same as the current row, display status as plain text
                 if (auth()->check() && auth()->id() === $row->id) {
-                    return '<button class="btn btn-sm '.($row->status ? 'btn-success' : 'btn-danger').'">'
-                            .($row->status ? 'Active' : 'Inactive').
-                           '</button>';
+                    return '<span style="color: #fff; background-color: '.($row->status ? '#28a745' : '#dc3545').'" class="badge '.($row->status ? 'badge-success' : 'badge-danger').'">'
+        .($row->status ? 'Active' : 'Inactive').
+       '</span>';
+
                 }
 
                 // Otherwise, display the toggle switch
@@ -72,6 +73,7 @@ class UserDataTable extends DataTable
         <label class="form-check-label" for="statusLabel'.$row->id.'">'.
                     '</label>
     </div>';
+
             })
 
             ->rawColumns(['action', 'status', 'image']) // Mark columns as raw HTML

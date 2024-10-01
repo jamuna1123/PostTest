@@ -61,10 +61,8 @@ class PostCategoryDataTable extends DataTable
                               '</label>
             </div>';
             })
-            ->addColumn('category_name', function ($row) {
-                return $row->title;
-            })
-            ->rawColumns(['action', 'status', 'category_image', 'category_name']) // Mark columns as raw HTML
+
+            ->rawColumns(['action', 'status', 'category_image']) // Mark columns as raw HTML
             ->setRowId('id');
     }
 
@@ -112,8 +110,7 @@ class PostCategoryDataTable extends DataTable
                 ->width(150),
 
             Column::make('title') // Use the actual database field 'title' here
-                ->title('Category Name')
-                ->searchable(true),  // Ensure this column is searchable
+                ->title('Category Name'),
 
             Column::make('category_image')
                 ->title('Category Image'),

@@ -44,11 +44,6 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 
-
-    {{-- use toggle --}}
-    {{-- <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script> --}}
-
     {{-- filepond css --}}
     <link rel="stylesheet" href="{{ asset('Backend/plugins/filepond/dist/filepond.css') }}">
     <link rel="stylesheet"
@@ -73,7 +68,7 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('Backend/plugins/fontawesome-free/css/all.min.css') }}">
 
-    
+
 
     {{-- Status- toggle --}}
     <script src="{{ asset('js/status-toggle.js') }}"></script>
@@ -103,7 +98,7 @@
         @stack('scripts')
         <!--end::App Wrapper--> <!--begin::Script--> <!--begin::Third Party Plugin(OverlayScrollbars)-->
 
-        {{-- @include('admin.layouts.footer') --}}
+        {{-- @include('backend.layouts.footer') --}}
     </div>
 
 
@@ -184,7 +179,7 @@
         });
     </script>
 
- <script>
+    <script>
         function toggleStatusLabeluser() {
             const statusCheckbox = document.getElementById('statususer');
             const statusLabel = document.getElementById('statusLabeluser');
@@ -202,7 +197,7 @@
         });
     </script>
     @include('backend.layouts.script')
-    // {{-- tinymce image upload --}}
+    {{-- tinymce image upload --}}
     <script>
         tinymce.init({
             selector: '#description',
