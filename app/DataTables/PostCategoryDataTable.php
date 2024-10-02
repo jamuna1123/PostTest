@@ -84,8 +84,7 @@ class PostCategoryDataTable extends DataTable
             ->columns($this->getColumns())
             ->minifiedAjax()
             ->dom('lfrtip')
-            ->orderBy(1)
-            ->selectStyleSingle();
+            ->orderBy(1);
         // ->buttons([
         //     Button::make('excel'),
         //     Button::make('csv'),
@@ -106,7 +105,8 @@ class PostCategoryDataTable extends DataTable
         return [
             Column::computed('action')
                 ->exportable(false)
-                ->printable(false),
+                ->printable(false)
+                 ->width(130),
 
             Column::make('title') // Use the actual database field 'title' here
                 ->title('Category Name'),

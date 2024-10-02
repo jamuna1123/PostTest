@@ -34,7 +34,7 @@
 
         <!-- Image -->
         <div class="mb-3 col-md-6">
-            <label for="image" class="form-label"><strong>Image: @if (false)
+            <label for="image" class="form-label"><strong>Category Image: @if (false)
                         <span class="text-danger">*</span>
                     @endif
                 </strong></label>

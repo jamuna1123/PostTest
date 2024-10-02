@@ -35,12 +35,12 @@
                         <span class="text-danger">*</span>
                     </strong>
                 </label>
-             <div class="position-relative">
-    <input type="password" name="password" class="form-control @error('password') is-invalid @enderror"
-        id="password" placeholder="Password" oninput="toggleIconVisibility()">
-    <i class="fa fa-eye-slash position-absolute" id="togglePassword"
-        style="right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer; display: none;"></i>
-</div>
+                <div class="position-relative">
+                    <input type="password" name="password" class="form-control @error('password') is-invalid @enderror"
+                        id="password" placeholder="Password" oninput="toggleIconVisibility()">
+                    <i class="fa fa-eye-slash position-absolute" id="togglePassword"
+                        style="right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer; display: none;"></i>
+                </div>
                 @error('password')
                     <div class="form-text text-danger">{{ $message }}</div>
                 @enderror

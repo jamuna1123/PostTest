@@ -23,8 +23,9 @@ Breadcrumbs::for('users.create', function (BreadcrumbTrail $trail) {
 
 Breadcrumbs::for('users.edit', function (BreadcrumbTrail $trail, $user) {
     $trail->parent('users.index');
-    $trail->push('Edit '.$user->name, route('users.edit', $user->id));
+    $trail->push('Edit' . ($user->name ? ' / ' . $user->name : ''), route('users.edit', $user->id));
 });
+
 
 // Home > Post (Post index)
 Breadcrumbs::for('users.show', function (BreadcrumbTrail $trail, $user) {
@@ -47,7 +48,7 @@ Breadcrumbs::for('post-category.create', function (BreadcrumbTrail $trail) {
 // Home > Post Category > [Category Title] > Edit (Edit Post Category)
 Breadcrumbs::for('post-category.edit', function (BreadcrumbTrail $trail, $postcategory) {
     $trail->parent('post-category.index');
-    $trail->push('Edit '.$postcategory->title, route('post-category.edit', $postcategory->id));
+    $trail->push('Edit '. ($postcategory->title ? ' / ' . $postcategory->title : ''), route('post-category.edit', $postcategory->id));
 });
 // Home > Post > [Post Title] (Single Post)
 Breadcrumbs::for('post-category.show', function (BreadcrumbTrail $trail, $postCategory) {
@@ -68,7 +69,7 @@ Breadcrumbs::for('post.create', function (BreadcrumbTrail $trail) {
 // Home > Post > [Post Title] > Edit (Edit Post)
 Breadcrumbs::for('post.edit', function (BreadcrumbTrail $trail, $post) {
     $trail->parent('post.index');
-    $trail->push('Edit '.$post->title, route('post.edit', $post));
+    $trail->push('Edit '. ($post->title ? ' / ' . $post->title : ''), route('post.edit', $post));
 });
 // Home > Post > [Post Title] (Single Post)
 Breadcrumbs::for('post.show', function (BreadcrumbTrail $trail, $post) {

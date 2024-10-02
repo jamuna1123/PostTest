@@ -3,7 +3,7 @@
         <!-- Title Field -->
         <div class="mb-3 col-md-6">
             <label for="title" class="form-label">
-                <strong>Title:
+                <strong>Post Title:
                     @if (true)
                         <span class="text-danger">*</span>
                     @endif

@@ -98,8 +98,7 @@ class UserDataTable extends DataTable
             ->columns($this->getColumns())
             ->minifiedAjax()
             ->dom('lfrtip')
-            ->orderBy(1)
-            ->selectStyleSingle();
+            ->orderBy(1);
         // The buttons have been removed
     }
 
@@ -111,7 +110,8 @@ class UserDataTable extends DataTable
         return [
             Column::computed('action')
                 ->exportable(false)
-                ->printable(false),
+                ->printable(false)
+                ->width(130),
 
             Column::make('name'),
 

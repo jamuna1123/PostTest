@@ -37,7 +37,7 @@
                                     <td>{{ $postcategory->slug }}</td>
                                 </tr>
                                 <tr>
-                                    <th style="width: 200px">Image:</th>
+                                    <th style="width: 200px">Category Image:</th>
                                     <td>
                                         @if ($postcategory->image)
                                             <a href="{{ asset('storage/' . $postcategory->image) }}" data-fancybox="gallery"

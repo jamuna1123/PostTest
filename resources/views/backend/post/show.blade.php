@@ -37,7 +37,7 @@
                                     <td>{{ $post->slug }}</td>
                                 </tr>
                                 <tr>
-                                    <th style="width: 200px">Category Name:</th>
+                                    <th style="width: 200px">Category:</th>
                                     <td>
                                         @if ($post->category)
                                             {{ $post->category->title }}
