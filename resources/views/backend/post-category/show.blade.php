@@ -29,15 +29,15 @@
                         <table class="table table-striped table-fixed">
                             <tbody>
                                 <tr>
-                                    <th style="width: 200px">Category Name:</th>
+                                    <th style="width: 170px">Category Name:</th>
                                     <td>{{ $postcategory->title }}</td>
                                 </tr>
                                 <tr>
-                                    <th style="width: 200px">Slug:</th>
+                                    <th style="width: 170px">Slug:</th>
                                     <td>{{ $postcategory->slug }}</td>
                                 </tr>
                                 <tr>
-                                    <th style="width: 200px">Category Image:</th>
+                                    <th style="width: 170px">Category Image:</th>
                                     <td>
                                         @if ($postcategory->image)
                                             <a href="{{ asset('storage/' . $postcategory->image) }}" data-fancybox="gallery"
@@ -51,7 +51,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th style="width: 200px">Description:</th>
+                                    <th style="width: 170px">Description:</th>
                                     <td style="max-width: 400px; word-wrap: break-word; white-space: normal;">
                                         @if ($postcategory->description)
                                             {!! nl2br(e($postcategory->description)) !!}
@@ -61,33 +61,33 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th style="width: 200px">Status:</th>
+                                    <th style="width: 170px">Status:</th>
                                     <td>
                                         <div class="form-check form-switch">
                                             <input class="form-check-input status-toggle" type="checkbox"
                                                 data-id="{{ $postcategory->id }}"
                                                 {{ $postcategory->status ? 'checked' : '' }}>
                                             <label class="form-check-label" for="statusLabel{{ $postcategory->id }}">
-                                                {{-- {{ $postcategory->status ? 'On' : 'Off' }} --}}
+                                               
                                             </label>
                                         </div>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th style="width: 200px">Created At:</th>
+                                    <th style="width: 170px">Created At:</th>
                                     <td>{{ $postcategory->created_at }}</td>
                                 </tr>
                                 <tr>
-                                    <th style="width: 200px">Created By:</th>
+                                    <th style="width: 170px">Created By:</th>
                                     <td>{{ $postcategory->username->name }}</td>
                                 </tr>
                                 @if ($postcategory->updated_at && $postcategory->updated_by)
                                     <tr>
-                                        <th style="width: 200px">Updated At:</th>
+                                        <th style="width: 170px">Updated At:</th>
                                         <td>{{ $postcategory->updated_at }}</td>
                                     </tr>
                                     <tr>
-                                        <th style="width: 200px">Updated By:</th>
+                                        <th style="width: 170px">Updated By:</th>
                                         <td>{{ $postcategory->userupdate->name }}</td>
                                     </tr>
                                 @endif

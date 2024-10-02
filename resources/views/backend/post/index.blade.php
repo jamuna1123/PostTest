@@ -23,7 +23,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="container">
+               
                         <!-- Second Card: Striped Full Width Table -->
                         <div class="card mb-4">
                             <div class="card-header">
@@ -37,11 +37,13 @@
 
                             <div class="card-body p-3">
 
-                                {!! $dataTable->table() !!}
+                                <div class="table-responsive">
+                                    {!! $dataTable->table(['class' => 'table table-striped table-bordered dt-responsive nowrap', 'width' => '100%']) !!}
+                                </div>
                             </div>
                             <!-- /.card-body -->
                         </div> <!-- /.card -->
-                    </div>
+                  
                 </div>
             </div> <!-- /.col -->
         </div> <!--end::Row-->

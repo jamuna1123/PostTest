@@ -28,15 +28,15 @@
                         <table class="table table-striped table-fixed">
                             <tbody>
                                 <tr>
-                                    <th style="width: 200px">Name:</th>
+                                    <th style="width: 170px">Name:</th>
                                     <td>{{ $user->name }}</td>
                                 </tr>
                                 <tr>
-                                    <th style="width: 200px">Email:</th>
+                                    <th style="width: 170px">Email:</th>
                                     <td>{{ $user->email }}</td>
                                 </tr>
                                 <tr>
-                                    <th style="width: 200px">Image:</th>
+                                    <th style="width: 170px">Image:</th>
                                     <td>
                                         @if ($user->image)
                                             <a href="{{ asset('storage/' . $user->image) }}" data-fancybox="gallery"
@@ -50,16 +50,16 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th style="width: 200px">Phone:</th>
+                                    <th style="width: 170px">Phone:</th>
 
                                     <td>{{ $user->phone ? $user->phone : 'N/A' }}</td>
                                 </tr>
                                 {{-- <tr>
-                                    <th style="width: 200px">Address:</th>
+                                    <th style="width: 170px">Address:</th>
                                     <td>{{ $user->address ? $user->address : 'N/A' }}</td>
                                 </tr> --}}
                                 <tr>
-                                    <th style="width: 200px">Status:</th>
+                                    <th style="width: 170px">Status:</th>
                                     <td>
                                         @if (auth()->check() && auth()->id() === $user->id)
                                             <!-- Show a button based on the user's status for the authenticated user -->
@@ -71,33 +71,38 @@
                                             </span>
                                         @else
                                             <!-- Show toggle switch for other users -->
-                                            <div class="form-check form-switch">
+                                            {{-- <div class="form-check form-switch">
                                                 <input class="form-check-input status-toggle" type="checkbox"
                                                     data-id="{{ $user->id }}" {{ $user->status ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="statusLabel{{ $user->id }}">
-                                                    {{-- {{ $user->status ? 'Active' : 'Inactive' }} --}}
                                                 </label>
+                                            </div> --}}
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input status-toggle" type="checkbox"
+                                                    data-id="{{ $user->id }}" {{ $user->status ? 'checked' : '' }}>
+                                                <label class="form-check-label"
+                                                    id="statusLabel{{ $user->id }}"></label>
                                             </div>
                                         @endif
                                     </td>
                                 </tr>
 
                                 <tr>
-                                    <th style="width: 200px">Created At:</th>
+                                    <th style="width: 170px">Created At:</th>
                                     <td>{{ $user->created_at }}</td>
                                 </tr>
                                 <tr>
-                                    <th style="width: 200px">Created By:</th>
+                                    <th style="width: 170px">Created By:</th>
                                     <td>{{ $user->username ? $user->username->name : 'N/A' }}</td> {{-- Check if 'created_by' exists --}}
                                 </tr>
                                 {{-- Only show Updated At and Updated By if the record has been updated --}}
                                 @if ($user->updated_at && $user->updated_by)
                                     <tr>
-                                        <th style="width: 200px">Updated At:</th>
+                                        <th style="width: 170px">Updated At:</th>
                                         <td>{{ $user->updated_at }}</td>
                                     </tr>
                                     <tr>
-                                        <th style="width: 200px">Updated By:</th>
+                                        <th style="width: 170px">Updated By:</th>
                                         <td>{{ $user->userupdate->name }}</td> {{-- Assuming the relation is updatedBy --}}
                                     </tr>
                                 @endif

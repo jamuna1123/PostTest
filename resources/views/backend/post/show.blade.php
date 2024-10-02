@@ -29,15 +29,15 @@
                         <table class="table table-striped table-fixed">
                             <tbody>
                                 <tr>
-                                    <th style="width: 200px">Post Title:</th>
+                                    <th style="width: 170px">Post Title:</th>
                                     <td>{{ $post->title }}</td>
                                 </tr>
                                 <tr>
-                                    <th style="width: 200px">Slug:</th>
+                                    <th style="width: 170px">Slug:</th>
                                     <td>{{ $post->slug }}</td>
                                 </tr>
                                 <tr>
-                                    <th style="width: 200px">Category:</th>
+                                    <th style="width: 170px">Category:</th>
                                     <td>
                                         @if ($post->category)
                                             {{ $post->category->title }}
@@ -47,7 +47,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th style="width: 200px">Image:</th>
+                                    <th style="width: 170px">Image:</th>
                                     <td>
                                         @if ($post->image)
                                             <a href="{{ asset('storage/' . $post->image) }}" data-fancybox="gallery"
@@ -61,7 +61,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th style="width: 200px">Description:</th>
+                                    <th style="width: 170px">Description:</th>
                                     <td style="max-width: 400px; word-wrap: break-word; white-space: normal;">
                                         @if ($post->description)
                                             {!! $post->description !!}
@@ -73,11 +73,11 @@
 
                                 </tr>
                                 <tr>
-                                    <th style="width: 200px">Publish At:</th>
+                                    <th style="width: 170px">Publish At:</th>
                                     <td>{{ $post->published_at }}</td>
                                 </tr>
                                 <tr>
-                                    <th style="width: 200px">Status:</th>
+                                    <th style="width: 170px">Status:</th>
                                     <td>
                                         <div class="form-check form-switch">
                                             <input class="form-check-input status-toggle" type="checkbox"
@@ -89,20 +89,20 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th style="width: 200px">Created At:</th>
+                                    <th style="width: 170px">Created At:</th>
                                     <td>{{ $post->created_at }}</td>
                                 </tr>
                                 <tr>
-                                    <th style="width: 200px">Created By:</th>
+                                    <th style="width: 170px">Created By:</th>
                                     <td>{{ $post->username->name }}</td>
                                 </tr>
                                 @if ($post->updated_at && $post->updated_by)
                                     <tr>
-                                        <th style="width: 200px">Updated At:</th>
+                                        <th style="width: 170px">Updated At:</th>
                                         <td>{{ $post->updated_at }}</td>
                                     </tr>
                                     <tr>
-                                        <th style="width: 200px">Updated By:</th>
+                                        <th style="width: 170px">Updated By:</th>
                                         <td>{{ $post->userupdate->name }}</td>
                                     </tr>
                                 @endif

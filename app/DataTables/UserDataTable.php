@@ -110,9 +110,7 @@ class UserDataTable extends DataTable
         return [
             Column::computed('action')
                 ->exportable(false)
-                ->printable(false)
-                ->width(130),
-
+                ->printable(false),
             Column::make('name'),
 
             // Instead of category.title, use the manually added category_title
