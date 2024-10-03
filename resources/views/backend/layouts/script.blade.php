@@ -70,3 +70,12 @@ function postcategoryDelete(id) {
     });
 </script>
 
+
+
+
+{{-- // Handle 'select all' checkbox --}}
+<script>
+$('#select-all').click(function() {
+    $('input[name="selected_rows[]"]').prop('checked', this.checked);
+});
+</script>

@@ -34,12 +34,14 @@
                         <!-- Card: Striped Full Width Table -->
                         <div class="card mb-4">
                             <div class="card-header">
-                                <div class="d-grid gap-2 d-md-flex mb-1">
+                                {{-- <h3 class="card-title">Post List</h3> --}}
+                                <div class="d-grid gap-2 d-md-flex  mb-1">
                                     <a class="btn btn-success" href="{{ route('users.create') }}" id="createNewProduct">
                                         <i class="fa fa-plus"></i> Create
                                     </a>
                                 </div>
-                            </div>
+                            </div> <!-- /.card-header -->
+
                             <!-- /.card-header -->
 
                             <div class="card-body p-3">
@@ -73,5 +75,9 @@
                 setupStatusToggles('.status-toggle', '/users/update-status');
             });
         });
+
+
+       
+
     </script>
 @endpush

@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
-
+use DB;
 class PostCategoryController extends Controller
 {
     // public function index(Request $request)
@@ -232,4 +232,23 @@ class PostCategoryController extends Controller
     {
         return response()->json(['filename' => $filename, 'url' => Storage::url('images/'.$filename)]);
     }
+
+
+    public function bulkUpdateStatus(Request $request)
+{
+    $ids = $request->ids;
+    PostCategory::whereIn('id', $ids)->update(['status' => DB::raw('NOT status')]);
+
+    return response()->json(['success' => 'Status updated successfully!']);
+}
+
+public function bulkDelete(Request $request)
+{
+    $ids = $request->ids;
+    PostCategory::whereIn('id', $ids)->delete();
+
+    return response()->json(['success' => 'Selected rows deleted successfully!']);
+}
+
+
 }

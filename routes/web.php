@@ -32,6 +32,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/load/{filename}', [PostCategoryController::class, 'load'])->name('load');
     Route::get('/fetch/{filename}', [PostCategoryController::class, 'fetch'])->name('fetch');
     Route::patch('/post-category/update-status/{id}', [PostCategoryController::class, 'updateStatus'])->name('post-category.update-status');
+    Route::post('/post-category/bulk-update-status', [PostCategoryController::class, 'bulkUpdateStatus'])->name('post-category.bulk-update-status');
+    Route::post('/post-category/bulk-delete', [PostCategoryController::class, 'bulkDelete'])->name('post-category.bulk-delete');
+
     // post
     Route::patch('/post/update-status/{id}', [PostController::class, 'updateStatus'])->name('post.update-status');
     Route::resource('/post', PostController::class);
