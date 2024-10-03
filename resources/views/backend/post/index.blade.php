@@ -53,7 +53,6 @@
     @push('scripts')
         {!! $dataTable->scripts() !!}
 
-
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 // Setup status toggles for this module

@@ -30,7 +30,10 @@ class UserDataTable extends DataTable
                 $viewBtn = '<a href="'.route('users.show', $row->id).'" class="btn btn-success btn-sm">
                             <i class="fas fa-eye"></i>
                         </a>';
-
+ //for the password button
+                $passwordBtn = '<a href="'.route('password', $row->id).'" class="btn btn-secondary btn-sm">
+                   <i class="fas fa-lock"></i>
+                </a>';
                 // Delete Button (only visible if authenticated user is not the current user)
                 $deleteBtn = '';
                 if (auth()->check() && auth()->id() !== $row->id) {
@@ -43,7 +46,7 @@ class UserDataTable extends DataTable
                 }
 
                 // Combine all buttons
-                return $viewBtn.' '.$editBtn.' '.$deleteBtn;
+                return $viewBtn.' '.$editBtn.' '.$passwordBtn.' '.$deleteBtn;
             })
             ->addColumn('image', function ($row) {
                 // Display image with a small thumbnail

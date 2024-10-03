@@ -42,7 +42,8 @@ Route::middleware('auth')->group(function () {
     Route::patch('/users/update-status/{id}', [AdminUserController::class, 'updateStatus'])->name('user.update-status');
     Route::resource('/users', AdminUserController::class);
     // Route::patch('/user/update-status-user/{id}', [AdminUserController::class, 'updateStatususer'])->name('user.update-status-user');
-
+   Route::get('/user/password/{id}', [AdminUserController::class, 'password'])->name('password');
+    Route::put('/user/password/change/{id}', [AdminUserController::class, 'updatepassword'])->name('user.password.change');
     // Other routes...
 
 });

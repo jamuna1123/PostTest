@@ -72,7 +72,6 @@ function postcategoryDelete(id) {
 
 
 
-
 {{-- // Handle 'select all' checkbox --}}
 <script>
 $('#select-all').click(function() {

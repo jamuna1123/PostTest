@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\DataTables\UserDataTable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUser;
+use App\Http\Requests\RequestUserPassword;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -204,5 +205,50 @@ class AdminUserController extends Controller
         $user->save();
 
         return response()->json(['success' => true]);
+    }
+
+
+    public function password(string $id)
+    {
+        $user = user::find($id);
+
+        return view('admin.user.change-password', compact('user'));
+    }
+
+   public function updatePassword(RequestUserPassword $request, string $id)
+    {
+
+        $user = user::findorfail($id);
+        if ($request->current_password && $request->new_password) {
+            if (Hash::check($request->current_password, $user->password)) {
+                if (Hash::check($request->new_password, $user->password)) {
+
+                    return redirect()->route('password', $user->id)->with('error', 'The new password is same as old password');
+
+                }
+
+                $user->password = Hash::make($request->new_password);
+                $user->save();
+
+                return redirect()->route('users.show', $user->id)->with('success', 'password updated successfully');
+            } else {
+
+                return redirect()->route('password', $user->id)->with('error', 'current password not match');
+            }
+
+        } elseif ($request->confirm_password && $request->new_password) {
+            if ($request->new_password == $request->confirm_password) {
+                $user->password = Hash::make($request->new_password);
+
+                $user->save();
+
+                return redirect()->route('users.show', $user->id)->with('success', 'password updated successfully');
+            } else {
+
+                return redirect()->route('password', $user->id)->with('error', 'password not match');
+            }
+
+        }
+
     }
 }

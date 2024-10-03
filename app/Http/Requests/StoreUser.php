@@ -44,7 +44,7 @@ class StoreUser extends FormRequest
             'address' => ['required', 'string', 'max:255'], // Limiting the address to 500 characters
             'status' => 'boolean',
             'image' => ['nullable', 'string'],
-
+ 
             // Password is required when creating, but optional on update
             'password' => [$isUpdating ? 'nullable' : 'required', Rules\Password::defaults()],
         ];
@@ -58,6 +58,8 @@ class StoreUser extends FormRequest
 
         ];
     }
+
+    
 
     protected function prepareForValidation()
     {

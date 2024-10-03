@@ -32,12 +32,13 @@
                                     <i class="fa fa-plus"></i> Create
                                 </a>
                                 <div class="d-flex">
-                                    <select id="bulkAction" class="form-select me-2" style="width: auto;">
-                                        <option value="" selected disabled>Bulk Action</option>
+                                    <select id="bulkAction" class="form-control form-select me-2" style="width: auto;">
+                                        <option value="" selected disabled>Select Any</option>
                                         <option value="toggle-status">Toggle Status</option>
                                         <option value="delete">Delete</option>
                                     </select>
-                                    <button class="btn btn-secondary" id="applyBulkAction">Apply</button>
+                                    <button class="btn btn-secondary" id="applyBulkAction"> <i class="fas fa-check"></i>
+                                        Apply</button>
                                 </div>
                             </div>
 
@@ -123,49 +124,50 @@
                 });
             }
 
-           // Delete Selected Rows
-function deleteSelectedRows(ids) {
-    Swal.fire({
-        title: 'Are you sure?',
-        text: 'You won\'t be able to revert this!',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            $.ajax({
-                url: '/post-category/bulk-delete',
-                method: 'POST',
-                data: {
-                    _token: '{{ csrf_token() }}',
-                    ids: ids
-                },
-                success: function(response) {
-                    Swal.fire({
-                        title: 'Deleted!',
-                        text: 'Rows deleted successfully!',
-                        icon: 'success',
-                        confirmButtonText: 'OK'
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            window.location.reload();
-                        }
-                    });
-                },
-                error: function(error) {
-                    Swal.fire({
-                        title: 'Error!',
-                        text: 'An error occurred while deleting rows.',
-                        icon: 'error',
-                        confirmButtonText: 'OK'
-                    });
-                }
-            });
-        }
-    });
-}
+            // Delete Selected Rows
+            function deleteSelectedRows(ids) {
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: 'You won\'t be able to revert this!',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: '/post-category/bulk-delete',
+                            method: 'POST',
+                            data: {
+                                
+                                _token: '{{ csrf_token() }}',
+                                ids: ids
+                            },
+                            success: function(response) {
+                                Swal.fire({
+                                    title: 'Deleted!',
+                                    text: 'Rows deleted successfully!',
+                                    icon: 'success',
+                                    confirmButtonText: 'OK'
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        window.location.reload();
+                                    }
+                                });
+                            },
+                            error: function(error) {
+                                Swal.fire({
+                                    title: 'Error!',
+                                    text: 'An error occurred while deleting rows.',
+                                    icon: 'error',
+                                    confirmButtonText: 'OK'
+                                });
+                            }
+                        });
+                    }
+                });
+            }
 
         });
     </script>

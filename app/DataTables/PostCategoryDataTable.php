@@ -20,11 +20,9 @@ class PostCategoryDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-          ->addColumn('checkbox', function ($row) {
-            return '<input type="checkbox" name="selected_rows[]" value="'.$row->id.'">';
-        })
+
             ->addColumn('action', function ($row) {
-                
+
                 // Edit Button
                 $editBtn = '<a href="'.route('post-category.edit', $row->id).'" class="btn btn-primary btn-sm">
                             <i class="fas fa-pencil-alt"></i>
@@ -46,6 +44,9 @@ class PostCategoryDataTable extends DataTable
                 // Combine all buttons
                 return $viewBtn.' '.$editBtn.' '.$deleteBtn;
             })
+            ->addColumn('checkbox', function ($row) {
+                return '<input type="checkbox" name="selected_rows[]" value="'.$row->id.'">';
+            })
             ->addColumn('category_image', function ($row) {
                 // Display image with a small thumbnail
                 if ($row->image) {
@@ -66,7 +67,7 @@ class PostCategoryDataTable extends DataTable
             </div>';
             })
 
-            ->rawColumns(['checkbox','action', 'status', 'category_image']) // Mark columns as raw HTML
+            ->rawColumns(['checkbox', 'action', 'status', 'category_image']) // Mark columns as raw HTML
             ->setRowId('id');
     }
 
@@ -89,7 +90,7 @@ class PostCategoryDataTable extends DataTable
             ->minifiedAjax()
             ->dom('lfrtip')
             ->orderBy(1);
-        
+
     }
 
     /**
@@ -98,18 +99,18 @@ class PostCategoryDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-             Column::make('checkbox')
-            ->exportable(false)
-            ->printable(false)
-            ->orderable(false)
-            ->searchable(false)
-            ->title('<input type="checkbox" id="select-all">')
-            ->width(30),
+
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
-                 ->width(130),
-
+                ->width(130),
+            Column::make('checkbox')
+                ->exportable(false)
+                ->printable(false)
+                ->orderable(false)
+                ->searchable(false)
+                ->title('<input type="checkbox" id="select-all">')
+                ->width(30),
             Column::make('title') // Use the actual database field 'title' here
                 ->title('Category Name'),
 

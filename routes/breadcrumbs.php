@@ -32,7 +32,11 @@ Breadcrumbs::for('users.show', function (BreadcrumbTrail $trail, $user) {
     $trail->parent('users.index');
     $trail->push($user->name, route('users.show', $user->id));
 });
+Breadcrumbs::for('users.update', function (BreadcrumbTrail $trail, $user) {
+    $trail->parent('users.index');
 
+    $trail->push('Update/'.$user->name, route('users.update', $user));
+});
 // Home > Post Category(Post Category index)
 Breadcrumbs::for('post-category.index', function (BreadcrumbTrail $trail) {
     $trail->parent('home');
