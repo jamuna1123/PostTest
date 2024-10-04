@@ -32,6 +32,16 @@
                                     <a class="btn btn-success" href="{{ route('post.create') }}" id="createNewProduct">
                                         <i class="fa fa-plus"></i> Create
                                     </a>
+
+                                    <div class="d-flex">
+                                    <select id="bulkActionPost" class="form-control form-select me-2" style="width: auto;">
+                                        <option value="" selected disabled>Select Any</option>
+                                        <option value="toggle-status">Toggle Status</option>
+                                        <option value="delete">Delete</option>
+                                    </select>
+                                    <button class="btn btn-secondary" id="applyPostBulkAction" data-bulk-action-url="{{ route('post.bulk-update-status') }}" data-delete-url="{{ route('post.bulk-delete') }}"> <i class="fas fa-check"></i>
+                                        Apply</button>
+                                </div>
                                 </div>
                             </div> <!-- /.card-header -->
 

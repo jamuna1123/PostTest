@@ -42,6 +42,9 @@ class PostDataTable extends DataTable
                 // Combine all buttons
                 return $viewBtn.' '.$editBtn.' '.$deleteBtn;
             })
+            ->addColumn('checkbox', function ($row) {
+                return '<input type="checkbox" name="selected_rows[]" value="'.$row->id.'">';
+            })
             ->addColumn('image', function ($row) {
                 // Display image with a small thumbnail
                 if ($row->image) {
@@ -69,7 +72,7 @@ class PostDataTable extends DataTable
     //         ->addColumn('category_title', function ($row) {
     //             return $row->category ? $row->category->title : 'No category';
     //         })
-            ->rawColumns(['action', 'status', 'image', 'post_title']) // Mark columns as raw HTML
+            ->rawColumns(['checkbox', 'action', 'status', 'image', 'post_title']) // Mark columns as raw HTML
             ->setRowId('id');
     }
 
@@ -105,8 +108,14 @@ class PostDataTable extends DataTable
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
-                 ->width(130),
-
+                ->width(130),
+            Column::make('checkbox')
+                ->exportable(false)
+                ->printable(false)
+                ->orderable(false)
+                ->searchable(false)
+                ->title('<input type="checkbox" id="select-all">')
+                ->width(30),
             Column::make('title')
                 ->title('Post Title'),
             Column::make('category.title')

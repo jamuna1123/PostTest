@@ -30,7 +30,7 @@ class UserDataTable extends DataTable
                 $viewBtn = '<a href="'.route('users.show', $row->id).'" class="btn btn-success btn-sm">
                             <i class="fas fa-eye"></i>
                         </a>';
- //for the password button
+                //for the password button
                 $passwordBtn = '<a href="'.route('password', $row->id).'" class="btn btn-secondary btn-sm">
                    <i class="fas fa-lock"></i>
                 </a>';
@@ -47,6 +47,9 @@ class UserDataTable extends DataTable
 
                 // Combine all buttons
                 return $viewBtn.' '.$editBtn.' '.$passwordBtn.' '.$deleteBtn;
+            })
+            ->addColumn('checkbox', function ($row) {
+                return '<input type="checkbox" name="selected_rows[]" value="'.$row->id.'">';
             })
             ->addColumn('image', function ($row) {
                 // Display image with a small thumbnail
@@ -79,7 +82,7 @@ class UserDataTable extends DataTable
 
             })
 
-            ->rawColumns(['action', 'status', 'image']) // Mark columns as raw HTML
+            ->rawColumns(['checkbox', 'action', 'status', 'image']) // Mark columns as raw HTML
             ->setRowId('id');
     }
 
@@ -114,6 +117,13 @@ class UserDataTable extends DataTable
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false),
+            Column::make('checkbox')
+                ->exportable(false)
+                ->printable(false)
+                ->orderable(false)
+                ->searchable(false)
+                ->title('<input type="checkbox" id="select-all">')
+                ->width(30),
             Column::make('name'),
 
             // Instead of category.title, use the manually added category_title

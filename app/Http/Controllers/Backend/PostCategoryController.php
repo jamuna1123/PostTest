@@ -7,12 +7,13 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePostCategory;
 use App\Models\PostCategory;
 use Carbon\Carbon;
+use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
-use DB;
+
 class PostCategoryController extends Controller
 {
     // public function index(Request $request)
@@ -233,22 +234,23 @@ class PostCategoryController extends Controller
         return response()->json(['filename' => $filename, 'url' => Storage::url('images/'.$filename)]);
     }
 
-
     public function bulkUpdateStatus(Request $request)
-{
-    $ids = $request->ids;
-    PostCategory::whereIn('id', $ids)->update(['status' => DB::raw('NOT status')]);
+    {
+        $ids = $request->input('ids');
+        // Toggle status for post categories
+        PostCategory::whereIn('id', $ids)->update(['status' => DB::raw('NOT status')]);
 
-    return response()->json(['success' => 'Status updated successfully!']);
-}
+        return response()->json(['success' => true, 'message' => 'Status updated successfully!']);
+    }
 
-public function bulkDelete(Request $request)
-{
-    $ids = $request->ids;
-    PostCategory::whereIn('id', $ids)->delete();
+    public function bulkDelete(Request $request)
+    {
+        $ids = $request->input('ids');
+        // Delete post categories
+        PostCategory::whereIn('id', $ids)->delete();
 
-    return response()->json(['success' => 'Selected rows deleted successfully!']);
-}
-
+        return response()->json(['success' => true, 'message' => 'Post Categories deleted successfully!']);
+    }
+    // }
 
 }

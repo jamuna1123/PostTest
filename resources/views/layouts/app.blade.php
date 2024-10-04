@@ -73,8 +73,8 @@
 
     {{-- Status- toggle --}}
     <script src="{{ asset('js/status-toggle.js') }}"></script>
-  
 
+  {{-- <script src="{{ asset('js/bulk-action.js') }}"></script> --}}
     <!-- Vite JS and CSS -->
     @vite(['resources/js/app.js'])
   
@@ -247,6 +247,7 @@
     </script>
 
 
+   <script src="{{ asset('js/bulk-action.js') }}"></script> 
 </body><!--end::Body-->
 
 </html>

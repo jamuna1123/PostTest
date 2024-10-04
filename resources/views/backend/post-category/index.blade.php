@@ -32,13 +32,14 @@
                                     <i class="fa fa-plus"></i> Create
                                 </a>
                                 <div class="d-flex">
-                                    <select id="bulkAction" class="form-control form-select me-2" style="width: auto;">
+                                    <select id="bulkActionPostCategory" class="form-control form-select me-2" style="width: auto;">
                                         <option value="" selected disabled>Select Any</option>
                                         <option value="toggle-status">Toggle Status</option>
                                         <option value="delete">Delete</option>
                                     </select>
-                                    <button class="btn btn-secondary" id="applyBulkAction"> <i class="fas fa-check"></i>
+                                    <button class="btn btn-secondary" id="applyPostCategoryBulkAction" data-bulk-action-url="{{ route('post-category.bulk-update-status') }}" data-delete-url="{{ route('post-category.bulk-delete') }}"> <i class="fas fa-check"></i>
                                         Apply</button>
+ 
                                 </div>
                             </div>
 
@@ -74,101 +75,9 @@
                 setupStatusToggles('.status-toggle', '/post-category/update-status');
             });
 
-            // Apply Bulk Action
-            $('#applyBulkAction').click(function() {
-                var selectedRows = $('input[name="selected_rows[]"]:checked').map(function() {
-                    return $(this).val();
-                }).get();
-                var bulkAction = $('#bulkAction').val();
-
-                if (bulkAction && selectedRows.length > 0) {
-                    if (bulkAction === 'toggle-status') {
-                        updateStatus(selectedRows);
-                    } else if (bulkAction === 'delete') {
-                        deleteSelectedRows(selectedRows);
-                    }
-                } else {
-                    alert('Please select an action and at least one row.');
-                }
-            });
-
-            // Update Status for Selected Rows
-            function updateStatus(ids) {
-                $.ajax({
-                    url: '/post-category/bulk-update-status',
-                    method: 'POST',
-                    data: {
-                        _token: '{{ csrf_token() }}',
-                        ids: ids
-                    },
-                    success: function(response) {
-                        Swal.fire({
-                            title: 'Success!',
-                            text: 'Status updated successfully!',
-                            icon: 'success',
-                            confirmButtonText: 'OK'
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                window.location.reload();
-                            }
-                        });
-                    },
-                    error: function(error) {
-                        Swal.fire({
-                            title: 'Error!',
-                            text: 'An error occurred.',
-                            icon: 'error',
-                            confirmButtonText: 'OK'
-                        });
-                    }
-                });
-            }
-
-            // Delete Selected Rows
-            function deleteSelectedRows(ids) {
-                Swal.fire({
-                    title: 'Are you sure?',
-                    text: 'You won\'t be able to revert this!',
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, delete it!'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        $.ajax({
-                            url: '/post-category/bulk-delete',
-                            method: 'POST',
-                            data: {
-                                
-                                _token: '{{ csrf_token() }}',
-                                ids: ids
-                            },
-                            success: function(response) {
-                                Swal.fire({
-                                    title: 'Deleted!',
-                                    text: 'Rows deleted successfully!',
-                                    icon: 'success',
-                                    confirmButtonText: 'OK'
-                                }).then((result) => {
-                                    if (result.isConfirmed) {
-                                        window.location.reload();
-                                    }
-                                });
-                            },
-                            error: function(error) {
-                                Swal.fire({
-                                    title: 'Error!',
-                                    text: 'An error occurred while deleting rows.',
-                                    icon: 'error',
-                                    confirmButtonText: 'OK'
-                                });
-                            }
-                        });
-                    }
-                });
-            }
+           
 
         });
     </script>
+
 @endpush

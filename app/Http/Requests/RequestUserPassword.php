@@ -3,8 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rules\Password as PasswordRule;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules\Password as PasswordRule;
+
 class RequestUserPassword extends FormRequest
 {
     /**
@@ -20,12 +21,12 @@ class RequestUserPassword extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-  public function rules(): array
+    public function rules(): array
     {
         return [
             // Validate current_password only if it's provided, and ensure it matches the user's existing password
             'current_password' => ['sometimes', 'required', function ($attribute, $value, $fail) {
-                if (!Hash::check($value, $this->user()->password)) {
+                if (! Hash::check($value, $this->user()->password)) {
                     $fail('The current password is incorrect.');
                 }
             }],

@@ -9,6 +9,7 @@ use App\Models\Post;
 use App\Models\PostCategory;
 use App\Models\User;
 use Carbon\Carbon;
+use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -253,4 +254,22 @@ class PostController extends Controller
     // {
     //     return response()->json(['filename' => $filename, 'url' => Storage::url('images/'.$filename)]);
     // }
+
+    public function bulkUpdateStatus(Request $request)
+    {
+        $ids = $request->input('ids');
+        // Toggle status for posts
+        Post::whereIn('id', $ids)->update(['status' => DB::raw('NOT status')]);
+
+        return response()->json(['success' => true, 'message' => 'Status updated successfully!']);
+    }
+
+    public function bulkDelete(Request $request)
+    {
+        $ids = $request->input('ids');
+        // Delete posts
+        Post::whereIn('id', $ids)->delete();
+
+        return response()->json(['success' => true, 'message' => 'Post deleted successfully!']);
+    }
 }

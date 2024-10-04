@@ -26,25 +26,31 @@ Route::middleware('auth')->group(function () {
     Route::get('/home', [DashboardController::class, 'home'])->name('home');
 
     // Post Category
+
     Route::resource('/post-category', PostCategoryController::class);
     Route::post('upload', [PostCategoryController::class, 'upload'])->name('upload');
     Route::delete('revert', [PostCategoryController::class, 'revert'])->name('revert');
     Route::get('/load/{filename}', [PostCategoryController::class, 'load'])->name('load');
     Route::get('/fetch/{filename}', [PostCategoryController::class, 'fetch'])->name('fetch');
     Route::patch('/post-category/update-status/{id}', [PostCategoryController::class, 'updateStatus'])->name('post-category.update-status');
+
     Route::post('/post-category/bulk-update-status', [PostCategoryController::class, 'bulkUpdateStatus'])->name('post-category.bulk-update-status');
     Route::post('/post-category/bulk-delete', [PostCategoryController::class, 'bulkDelete'])->name('post-category.bulk-delete');
 
     // post
     Route::patch('/post/update-status/{id}', [PostController::class, 'updateStatus'])->name('post.update-status');
     Route::resource('/post', PostController::class);
+    Route::post('/post/bulk-update-status', [PostController::class, 'bulkUpdateStatus'])->name('post.bulk-update-status');
+    Route::post('/post/bulk-delete', [PostController::class, 'bulkDelete'])->name('post.bulk-delete');
 
     Route::patch('/users/update-status/{id}', [AdminUserController::class, 'updateStatus'])->name('user.update-status');
     Route::resource('/users', AdminUserController::class);
     // Route::patch('/user/update-status-user/{id}', [AdminUserController::class, 'updateStatususer'])->name('user.update-status-user');
-   Route::get('/user/password/{id}', [AdminUserController::class, 'password'])->name('password');
+    Route::get('/user/password/{id}', [AdminUserController::class, 'password'])->name('password');
     Route::put('/user/password/change/{id}', [AdminUserController::class, 'updatepassword'])->name('user.password.change');
     // Other routes...
+    Route::post('/user/bulk-update-status', [AdminUserController::class, 'bulkUpdateStatus'])->name('user.bulk-update-status');
+    Route::post('/user/bulk-delete', [AdminUserController::class, 'bulkDelete'])->name('user.bulk-delete');
 
 });
 

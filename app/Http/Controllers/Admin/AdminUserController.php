@@ -4,10 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\DataTables\UserDataTable;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreUser;
 use App\Http\Requests\RequestUserPassword;
+use App\Http\Requests\StoreUser;
 use App\Models\User;
 use Carbon\Carbon;
+use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
@@ -207,7 +208,6 @@ class AdminUserController extends Controller
         return response()->json(['success' => true]);
     }
 
-
     public function password(string $id)
     {
         $user = user::find($id);
@@ -215,7 +215,7 @@ class AdminUserController extends Controller
         return view('admin.user.change-password', compact('user'));
     }
 
-   public function updatePassword(RequestUserPassword $request, string $id)
+    public function updatePassword(RequestUserPassword $request, string $id)
     {
 
         $user = user::findorfail($id);
@@ -250,5 +250,30 @@ class AdminUserController extends Controller
 
         }
 
+    }
+
+    public function bulkUpdateStatus(Request $request)
+    {
+        $ids = $request->input('ids');
+        $authId = auth()->id();  // Get the authenticated user's ID
+
+        // Toggle status for users except the authenticated user
+        User::whereIn('id', $ids)
+            ->where('id', '!=', $authId)  // Exclude the authenticated user
+            ->update(['status' => DB::raw('NOT status')]);
+
+        // Ensure the authenticated user's status is always 1
+        User::where('id', $authId)->update(['status' => 1]);
+
+        return response()->json(['success' => true, 'message' => 'Status updated successfully!']);
+    }
+
+    public function bulkDelete(Request $request)
+    {
+        $ids = $request->input('ids');
+        // Delete post categories
+        User::whereIn('id', $ids)->delete();
+
+        return response()->json(['success' => true, 'message' => 'User deleted successfully!']);
     }
 }
