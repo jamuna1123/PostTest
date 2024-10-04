@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "arcanedev/log-viewer": "^11.0",
         "barryvdh/laravel-dompdf": "^3.0",
         "diglactic/laravel-breadcrumbs": "^9.0",
         "elegantweb/sanitizer": "^2.2",
@@ -20,6 +21,7 @@
         "yajra/laravel-datatables": "^11.0"
     },
     "require-dev": {
+        "barryvdh/laravel-debugbar": "^3.14",
         "fakerphp/faker": "^1.23",
         "laravel/breeze": "^2.1",
         "laravel/pint": "^1.17",

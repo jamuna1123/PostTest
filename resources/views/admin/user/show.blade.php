@@ -121,6 +121,14 @@
                             <a href="{{ route('users.edit', $user->id) }}" class="btn btn-primary me-2">
                                 <i class="fas fa-edit"></i> Update
                             </a>
+                               @if (auth()->id() !== $user->id)
+                                <a href="{{ route('user.password.change', $user->id) }}" class="btn btn-secondary me-2">
+                               <i class="fas fa-lock"></i> Change Password
+                            </a>
+                            @endif
+                                <a href="{{ route('password', $user->id) }}" class="btn btn-secondary me-2">
+                               <i class="fas fa-lock"></i> Change Password
+                            </a>
                             @if (auth()->id() !== $user->id)
                                 <!-- Check if the authenticated user is not the same as the current user -->
                                 <a class="btn btn-danger me-2" onclick="handleDelete({{ $user->id }})">
