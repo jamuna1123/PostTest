@@ -105,7 +105,8 @@
             files: [
                 @if (isset($post) && $post->image)
                     {
-                        source: '{{ asset('storage/images/resized/' . basename($post->image)) }}',
+                        // source: '{{ asset('storage/images/resized/' . basename($post->image)) }}',
+                        source: '{{ asset('storage/images/resized/800px_' . basename($post->image)) }}',
 
                         options: {
                             type: 'local',

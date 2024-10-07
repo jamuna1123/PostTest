@@ -64,21 +64,33 @@ class PostController extends Controller
         $post->published_at = $request->published_at ? Carbon::parse($request->published_at) : Carbon::now();
 
         if ($request->input('image')) {
-            $imagePath = $request->input('image');
+             $imagePath = $request->input('image');
             $filename = basename($imagePath);
 
             // Define paths
-            $originalPath = 'images/original/'.$filename;
-            $resizedPath = 'images/resized/'.$filename;
+            $originalPath = 'images/'.$filename;
+            $thumbnail100Path = 'images/resized/100px_'.$filename;
+            $thumbnail800Path = 'images/resized/800px_'.$filename;
 
             // Move the file from 'tmp' to 'images'
             Storage::disk('public')->move($imagePath, $originalPath);
 
             // Resize the image using Intervention Image
-            $resizedImage = Image::make(storage_path('app/public/'.$originalPath))->resize(300, 200);
 
-            // Store the resized image
-            Storage::disk('public')->put($resizedPath, (string) $resizedImage->encode());
+            // 100px width image
+            $resized100Image = Image::make(storage_path('app/public/'.$originalPath))->resize(100, null, function ($constraint) {
+                $constraint->aspectRatio(); // Keep aspect ratio
+                $constraint->upsize(); // Prevent upsizing
+            });
+            Storage::disk('public')->put($thumbnail100Path, (string) $resized100Image->encode());
+
+            // 800px width image
+            $resized800Image = Image::make(storage_path('app/public/'.$originalPath))->resize(800, null, function ($constraint) {
+                $constraint->aspectRatio(); // Keep aspect ratio
+                $constraint->upsize(); // Prevent upsizing
+            });
+            Storage::disk('public')->put($thumbnail800Path, (string) $resized800Image->encode());
+
 
             $post->image = $originalPath;
         }
@@ -141,38 +153,50 @@ class PostController extends Controller
 
         if ($request->input('image')) {
             // Delete old images
+              // Delete old images if they exist
             if ($post->image) {
-                $oldOriginalImagePath = 'images/original/'.$post->image;
-                $oldResizedImagePath = 'images/resized/'.$post->image;
 
-                if (Storage::exists($oldOriginalImagePath)) {
-                    Storage::delete($oldOriginalImagePath);
+                // Delete original and thumbnail images if they exist
+                if (Storage::exists(public_path('storage/'.$post->image))) {
+                    Storage::delete(public_path('storage/'.$post->image));
                 }
-                if (Storage::exists($oldResizedImagePath)) {
-                    Storage::delete($oldResizedImagePath);
+                if (Storage::exists(public_path('storage/images/resized/'.basename($post->image)))) {
+                    Storage::delete(public_path('storage/images/resized/'.basename($post->image)));
                 }
             }
 
-            if ($request->input('image')) {
-                $imagePath = $request->input('image');
-                $filename = basename($imagePath);
+        
+            $imagePath = $request->input('image');
+            $filename = basename($imagePath);
 
-                // Define paths
-                $originalPath = 'images/original/'.$filename;
-                $resizedPath = 'images/resized/'.$filename;
+            // Define paths
+            $originalPath = 'images/'.$filename;
+            $thumbnail100Path = 'images/resized/100px_'.$filename;
+            $thumbnail800Path = 'images/resized/800px_'.$filename;
 
-                // Move the file from 'tmp' to 'images'
-                Storage::disk('public')->move($imagePath, $originalPath);
+            // Move the file from 'tmp' to 'images'
+            Storage::disk('public')->move($imagePath, $originalPath);
 
-                // Resize the image using Intervention Image
-                $resizedImage = Image::make(storage_path('app/public/'.$originalPath))->resize(300, 200);
+            // Resize the image using Intervention Image
 
-                // Store the resized image
-                Storage::disk('public')->put($resizedPath, (string) $resizedImage->encode());
+            // 100px width image
+            $resized100Image = Image::make(storage_path('app/public/'.$originalPath))->resize(100, null, function ($constraint) {
+                $constraint->aspectRatio(); // Keep aspect ratio
+                $constraint->upsize(); // Prevent upsizing
+            });
+            Storage::disk('public')->put($thumbnail100Path, (string) $resized100Image->encode());
+
+            // 800px width image
+            $resized800Image = Image::make(storage_path('app/public/'.$originalPath))->resize(800, null, function ($constraint) {
+                $constraint->aspectRatio(); // Keep aspect ratio
+                $constraint->upsize(); // Prevent upsizing
+            });
+            Storage::disk('public')->put($thumbnail800Path, (string) $resized800Image->encode());
+
 
                 $post->image = $originalPath;
             }
-        }
+      
         $post->status = $request->has('status') ? 1 : 0;
         $post->save();
         session()->flash('success', 'Post updated successfully.');
@@ -189,8 +213,8 @@ class PostController extends Controller
         $post = Post::findOrFail($id);
 
         if ($post->image) {
-            Storage::disk('public')->delete('images/original/'.$post->image);
-            Storage::disk('public')->delete('images/resized/'.$post->image);
+            Storage::disk('public')->delete('images/resized/100px_'.$post->image);
+            Storage::disk('public')->delete('images/resized/800px_'.$post->image);
         }
 
         $post->delete();

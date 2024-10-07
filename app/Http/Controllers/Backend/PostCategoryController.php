@@ -63,20 +63,33 @@ class PostCategoryController extends Controller
             $filename = basename($imagePath);
 
             // Define paths
-            $originalPath = 'images/original/'.$filename;
-            $resizedPath = 'images/resized/'.$filename;
+            $originalPath = 'images/'.$filename;
+            $thumbnail100Path = 'images/resized/100px_'.$filename;
+            $thumbnail800Path = 'images/resized/800px_'.$filename;
 
             // Move the file from 'tmp' to 'images'
             Storage::disk('public')->move($imagePath, $originalPath);
 
             // Resize the image using Intervention Image
-            $resizedImage = Image::make(storage_path('app/public/'.$originalPath))->resize(300, 200);
 
-            // Store the resized image
-            Storage::disk('public')->put($resizedPath, (string) $resizedImage->encode());
+            // 100px width image
+            $resized100Image = Image::make(storage_path('app/public/'.$originalPath))->resize(100, null, function ($constraint) {
+                $constraint->aspectRatio(); // Keep aspect ratio
+                $constraint->upsize(); // Prevent upsizing
+            });
+            Storage::disk('public')->put($thumbnail100Path, (string) $resized100Image->encode());
 
+            // 800px width image
+            $resized800Image = Image::make(storage_path('app/public/'.$originalPath))->resize(800, null, function ($constraint) {
+                $constraint->aspectRatio(); // Keep aspect ratio
+                $constraint->upsize(); // Prevent upsizing
+            });
+            Storage::disk('public')->put($thumbnail800Path, (string) $resized800Image->encode());
+
+            // Save the new image path in the database (original path)
             $postcategory->image = $originalPath;
         }
+
         $postcategory->status = $request->has('status') ? 1 : 0;
 
         $postcategory->save();
@@ -121,39 +134,83 @@ class PostCategoryController extends Controller
 
         $postcategory->status = $request->has('status') ? 1 : 0;
 
-        // Handle the image update
-        if ($request->input('image')) {
-            // Delete old images if an image already exists
-            if ($postcategory->image) {
-                $oldOriginalImagePath = 'images/original/'.$postcategory->image;
-                $oldResizedImagePath = 'images/resized/'.$postcategory->image;
+        // // Handle the image update
+        // if ($request->input('image')) {
+        //     // Delete old images if an image already exists
+        //     if ($postcategory->image) {
+        //         $oldOriginalImagePath = 'images/original/'.$postcategory->image;
+        //         $oldResizedImagePath = 'images/resized/'.$postcategory->image;
 
-                if (Storage::exists($oldOriginalImagePath)) {
-                    Storage::delete($oldOriginalImagePath);
+        //         if (Storage::exists($oldOriginalImagePath)) {
+        //             Storage::delete($oldOriginalImagePath);
+        //         }
+        //         if (Storage::exists($oldResizedImagePath)) {
+        //             Storage::delete($oldResizedImagePath);
+        //         }
+        //     }
+
+        //     $imagePath = $request->input('image');
+        //     $filename = basename($imagePath);
+
+        //     // Define paths
+        //     $originalPath = 'images/original/'.$filename;
+        //     $resizedPath = 'images/resized/'.$filename;
+
+        //     // Move the file from 'tmp' to 'images'
+        //     Storage::disk('public')->move($imagePath, $originalPath);
+
+        //     // Resize the image using Intervention Image
+        //     $resizedImage = Image::make(storage_path('app/public/'.$originalPath))->resize(300, 200);
+
+        //     // Store the resized image
+        //     Storage::disk('public')->put($resizedPath, (string) $resizedImage->encode());
+
+        //     $postcategory->image = $originalPath;
+
+        // }
+
+        if ($request->input('image')) {
+
+            // Delete old images if they exist
+            if ($postcategory->image) {
+
+                // Delete original and thumbnail images if they exist
+                if (Storage::exists(public_path('storage/'.$postcategory->image))) {
+                    Storage::delete(public_path('storage/'.$postcategory->image));
                 }
-                if (Storage::exists($oldResizedImagePath)) {
-                    Storage::delete($oldResizedImagePath);
+                if (Storage::exists(public_path('storage/images/resized/'.basename($postcategory->image)))) {
+                    Storage::delete(public_path('storage/images/resized/'.basename($postcategory->image)));
                 }
             }
-
             $imagePath = $request->input('image');
             $filename = basename($imagePath);
 
             // Define paths
-            $originalPath = 'images/original/'.$filename;
-            $resizedPath = 'images/resized/'.$filename;
+            $originalPath = 'images/'.$filename;
+            $thumbnail100Path = 'images/resized/100px_'.$filename;
+            $thumbnail800Path = 'images/resized/800px_'.$filename;
 
             // Move the file from 'tmp' to 'images'
             Storage::disk('public')->move($imagePath, $originalPath);
 
             // Resize the image using Intervention Image
-            $resizedImage = Image::make(storage_path('app/public/'.$originalPath))->resize(300, 200);
 
-            // Store the resized image
-            Storage::disk('public')->put($resizedPath, (string) $resizedImage->encode());
+            // 100px width image
+            $resized100Image = Image::make(storage_path('app/public/'.$originalPath))->resize(100, null, function ($constraint) {
+                $constraint->aspectRatio(); // Keep aspect ratio
+                $constraint->upsize(); // Prevent upsizing
+            });
+            Storage::disk('public')->put($thumbnail100Path, (string) $resized100Image->encode());
 
+            // 800px width image
+            $resized800Image = Image::make(storage_path('app/public/'.$originalPath))->resize(800, null, function ($constraint) {
+                $constraint->aspectRatio(); // Keep aspect ratio
+                $constraint->upsize(); // Prevent upsizing
+            });
+            Storage::disk('public')->put($thumbnail800Path, (string) $resized800Image->encode());
+
+            // Save the new image path in the database (original path)
             $postcategory->image = $originalPath;
-
         }
 
         $postcategory->save();
@@ -170,8 +227,8 @@ class PostCategoryController extends Controller
         $postcategory = PostCategory::findOrFail($id);
 
         if ($postcategory->image) {
-            Storage::disk('public')->delete('images/original/'.$postcategory->image);
-            Storage::disk('public')->delete('images/resized/'.$postcategory->image);
+            Storage::disk('public')->delete('images/resized/100px_'.$postcategory->image);
+            Storage::disk('public')->delete('images/resized/800px_'.$postcategory->image);
         }
         $postcategory->delete();
         session()->flash('success', 'Post Category deleted successfully.');

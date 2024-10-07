@@ -50,10 +50,10 @@
                                     <th style="width: 170px">Image:</th>
                                     <td>
                                         @if ($post->image)
-                                            <a href="{{ asset('storage/' . $post->image) }}" data-fancybox="gallery"
+                                            <a href="{{ asset('storage/images/resized/800px_' . basename($post->image)) }}" data-fancybox="gallery"
                                                 data-caption="{{ $post->title }}">
-                                                <img src="{{ asset('storage/images/resized/' . basename($post->image)) }}"
-                                                    alt="{{ $post->title }}" style="height: 50px;">
+                                                <img src="{{ asset('storage/images/resized/100px_' . basename($post->image)) }}"
+                                                    alt="{{ $post->title }}" style="width:100px; height: auto;">
                                             </a>
                                         @else
                                             No image available

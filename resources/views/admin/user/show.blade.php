@@ -39,11 +39,11 @@
                                     <th style="width: 170px">Image:</th>
                                     <td>
                                         @if ($user->image)
-                                            <a href="{{ asset('storage/' . $user->image) }}" data-fancybox="gallery"
-                                                data-caption="{{ $user->name }}">
-                                                <img src="{{ asset('storage/images/resized/' . basename($user->image)) }}"
-                                                    alt="{{ $user->name }}" style="height: 50px;">
-                                            </a>
+                                              <a href="{{ asset('storage/images/resized/800px_' . basename($user->image)) }}" data-fancybox="gallery"
+                                            data-caption="{{ $user->title }}">
+                                            <img src="{{ asset('storage/images/resized/100px_' . basename($user->image)) }}"
+                                                alt="{{ $user->title }}" style=" width:100px; height: auto;">
+                                        </a>
                                         @else
                                             <a>No image available</a>
                                         @endif

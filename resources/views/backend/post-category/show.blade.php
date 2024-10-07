@@ -40,10 +40,10 @@
                                     <th style="width: 170px">Category Image:</th>
                                     <td>
                                         @if ($postcategory->image)
-                                            <a href="{{ asset('storage/' . $postcategory->image) }}" data-fancybox="gallery"
+                                            <a href="{{ asset('storage/images/resized/800px_' . basename($postcategory->image)) }}" data-fancybox="gallery"
                                                 data-caption="{{ $postcategory->title }}">
-                                                <img src="{{ asset('storage/images/resized/' . basename($postcategory->image)) }}"
-                                                    alt="{{ $postcategory->title }}" style="height: 50px;">
+                                                <img src="{{ asset('storage/images/resized/100px_' . basename($postcategory->image)) }}"
+                                                    alt="{{ $postcategory->title }}" style="width: 100px; height: auto;">
                                             </a>
                                         @else
                                             No image available

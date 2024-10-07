@@ -64,24 +64,39 @@ class AdminUserController extends Controller
 
         // Handle image upload and resizing
         if ($request->input('image')) {
-            $imagePath = $request->input('image');
+              $imagePath = $request->input('image');
             $filename = basename($imagePath);
 
             // Define paths
-            $originalPath = 'images/original/'.$filename;
-            $resizedPath = 'images/resized/'.$filename;
+            $originalPath = 'images/'.$filename;
+            $thumbnail100Path = 'images/resized/100px_'.$filename;
+            $thumbnail800Path = 'images/resized/800px_'.$filename;
 
             // Move the file from 'tmp' to 'images'
             Storage::disk('public')->move($imagePath, $originalPath);
 
             // Resize the image using Intervention Image
-            $resizedImage = Image::make(storage_path('app/public/'.$originalPath))->resize(300, 200);
 
-            // Store the resized image
-            Storage::disk('public')->put($resizedPath, (string) $resizedImage->encode());
+            // 100px width image
+            $resized100Image = Image::make(storage_path('app/public/'.$originalPath))->resize(100, null, function ($constraint) {
+                $constraint->aspectRatio(); // Keep aspect ratio
+                $constraint->upsize(); // Prevent upsizing
+            });
+            Storage::disk('public')->put($thumbnail100Path, (string) $resized100Image->encode());
 
+            // 800px width image
+            $resized800Image = Image::make(storage_path('app/public/'.$originalPath))->resize(800, null, function ($constraint) {
+                $constraint->aspectRatio(); // Keep aspect ratio
+                $constraint->upsize(); // Prevent upsizing
+            });
+            Storage::disk('public')->put($thumbnail800Path, (string) $resized800Image->encode());
+
+            // Save the new image path in the database (original path)
             $user->image = $originalPath;
         }
+
+     
+      
 
         // Set email_verified_at to null if the email is changed
         if ($user->isDirty('email')) {
@@ -121,17 +136,17 @@ class AdminUserController extends Controller
         }
 
         // Handle the profile image
-        if ($request->input('image')) {
-            // Delete old images
-            if ($user->image) {
-                $oldOriginalImagePath = 'images/original/'.$user->image;
-                $oldResizedImagePath = 'images/resized/'.$user->image;
+         if ($request->input('image')) {
 
-                if (Storage::exists($oldOriginalImagePath)) {
-                    Storage::delete($oldOriginalImagePath);
+            // Delete old images if they exist
+            if ($user->image) {
+
+                // Delete original and thumbnail images if they exist
+                if (Storage::exists(public_path('storage/'.$user->image))) {
+                    Storage::delete(public_path('storage/'.$user->image));
                 }
-                if (Storage::exists($oldResizedImagePath)) {
-                    Storage::delete($oldResizedImagePath);
+                if (Storage::exists(public_path('storage/images/resized/'.basename($user->image)))) {
+                    Storage::delete(public_path('storage/images/resized/'.basename($user->image)));
                 }
             }
 
@@ -139,18 +154,30 @@ class AdminUserController extends Controller
             $filename = basename($imagePath);
 
             // Define paths
-            $originalPath = 'images/original/'.$filename;
-            $resizedPath = 'images/resized/'.$filename;
+            $originalPath = 'images/'.$filename;
+            $thumbnail100Path = 'images/resized/100px_'.$filename;
+            $thumbnail800Path = 'images/resized/800px_'.$filename;
 
             // Move the file from 'tmp' to 'images'
             Storage::disk('public')->move($imagePath, $originalPath);
 
             // Resize the image using Intervention Image
-            $resizedImage = Image::make(storage_path('app/public/'.$originalPath))->resize(300, 200);
 
-            // Store the resized image
-            Storage::disk('public')->put($resizedPath, (string) $resizedImage->encode());
+            // 100px width image
+            $resized100Image = Image::make(storage_path('app/public/'.$originalPath))->resize(100, null, function ($constraint) {
+                $constraint->aspectRatio(); // Keep aspect ratio
+                $constraint->upsize(); // Prevent upsizing
+            });
+            Storage::disk('public')->put($thumbnail100Path, (string) $resized100Image->encode());
 
+            // 800px width image
+            $resized800Image = Image::make(storage_path('app/public/'.$originalPath))->resize(800, null, function ($constraint) {
+                $constraint->aspectRatio(); // Keep aspect ratio
+                $constraint->upsize(); // Prevent upsizing
+            });
+            Storage::disk('public')->put($thumbnail800Path, (string) $resized800Image->encode());
+
+            // Save the new image path in the database (original path)
             $user->image = $originalPath;
         }
 
@@ -179,8 +206,8 @@ class AdminUserController extends Controller
         $user = User::findOrFail($id);
 
         if ($user->image) {
-            Storage::disk('public')->delete('images/original/'.$user->image);
-            Storage::disk('public')->delete('images/resized/'.$user->image);
+            Storage::disk('public')->delete('images/resized/100px_'.$user->image);
+            Storage::disk('public')->delete('images/resized/800px_'.$user->image);
         }
         $user->delete();
         session()->flash('success', 'User deleted successfully.');

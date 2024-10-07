@@ -108,7 +108,7 @@
             files: [
                 @if (isset($postcategory) && $postcategory->image)
                     {
-                        source: '{{ asset('storage/images/resized/' . basename($postcategory->image)) }}',
+                        source: '{{ asset('storage/images/resized/800px_' . basename($postcategory->image)) }}',
 
                         // source: '{{ asset('storage/' . $postcategory->image) }}',
                         options: {

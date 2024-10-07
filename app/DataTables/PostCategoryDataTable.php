@@ -50,8 +50,8 @@ class PostCategoryDataTable extends DataTable
             ->addColumn('category_image', function ($row) {
                 // Display image with a small thumbnail
                 if ($row->image) {
-                    return '<a href="'.asset('storage/'.$row->image).'" data-fancybox="gallery" data-caption="'.$row->title.'">
-                            <img src="'.asset('storage/images/resized/'.basename($row->image)).'" alt="'.$row->title.'" style="height: 50px;">
+                    return '<a href="'.asset('storage/images/resized/800px_'.basename($row->image)).'" data-fancybox="gallery" data-caption="'.$row->title.'">
+                            <img src="'.asset('storage/images/resized/100px_'.basename($row->image)).'" alt="'.$row->title.'" style="height: auto; width:100px;">
                         </a>';
                 }
 
