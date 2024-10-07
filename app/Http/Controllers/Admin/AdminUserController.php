@@ -64,6 +64,7 @@ class AdminUserController extends Controller
 
         // Handle image upload and resizing
         if ($request->input('image')) {
+            
               $imagePath = $request->input('image');
             $filename = basename($imagePath);
 
@@ -138,17 +139,25 @@ class AdminUserController extends Controller
         // Handle the profile image
          if ($request->input('image')) {
 
+          $existimage = '800px_'.basename($user->image);
+        $currentimage = basename($request->image);
+        // dd($existimage, $currentimage);
+
+        if ($existimage != $currentimage) {
+
             // Delete old images if they exist
             if ($user->image) {
-
-                // Delete original and thumbnail images if they exist
                 if (Storage::exists(public_path('storage/'.$user->image))) {
                     Storage::delete(public_path('storage/'.$user->image));
                 }
-                if (Storage::exists(public_path('storage/images/resized/'.basename($user->image)))) {
-                    Storage::delete(public_path('storage/images/resized/'.basename($user->image)));
+                if (Storage::exists(public_path('storage/images/resized/800px_'.basename($user->image)))) {
+                    Storage::delete(public_path('storage/images/resized/800px_'.basename($user->image)));
+                }
+                if (Storage::exists(public_path('storage/images/resized/100px_'.basename($user->image)))) {
+                    Storage::delete(public_path('storage/images/resized/100px_'.basename($user->image)));
                 }
             }
+        }
 
             $imagePath = $request->input('image');
             $filename = basename($imagePath);

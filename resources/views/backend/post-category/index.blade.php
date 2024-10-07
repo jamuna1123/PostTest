@@ -31,6 +31,15 @@
                                 <a class="btn btn-success" href="{{ route('post-category.create') }}" id="createNewProduct">
                                     <i class="fa fa-plus"></i> Create
                                 </a>
+                                  <!-- Reset Button -->
+                                <button type="button" class="btn btn-danger" onClick="resetTable()">
+                                    <i class="fa fa-undo"></i> Reset
+                                </button>
+
+                                <!-- Reload Button -->
+                                <button type="button" class="btn btn-warning" id="reloadTable" onclick="location.reload();">
+                                    <i class="fa fa-sync"></i> Reload
+                                </button>
                                 <div class="d-flex">
                                     <select id="bulkActionPostCategory" class="form-control form-select me-2" style="width: auto;">
                                         <option value="" selected disabled>Select Any</option>
