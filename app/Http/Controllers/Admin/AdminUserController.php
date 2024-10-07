@@ -137,7 +137,7 @@ class AdminUserController extends Controller
         }
 
         // Handle the profile image
-         if ($request->input('image')) {
+        //  if ($request->input('image')) {
 
           $existimage = '800px_'.basename($user->image);
         $currentimage = basename($request->image);
@@ -157,7 +157,7 @@ class AdminUserController extends Controller
                     Storage::delete(public_path('storage/images/resized/100px_'.basename($user->image)));
                 }
             }
-        }
+        
 
             $imagePath = $request->input('image');
             $filename = basename($imagePath);
@@ -188,7 +188,11 @@ class AdminUserController extends Controller
 
             // Save the new image path in the database (original path)
             $user->image = $originalPath;
+       } else {
+
+            $user->image = $user->image;
         }
+
 
         // Set email_verified_at to null if the email is changed
         if ($user->isDirty('email')) {
@@ -304,12 +308,13 @@ class AdminUserController extends Controller
         return response()->json(['success' => true, 'message' => 'Status updated successfully!']);
     }
 
-    public function bulkDelete(Request $request)
+  public function bulkDelete(Request $request)
     {
-        $ids = $request->input('ids');
-        // Delete post categories
-        User::whereIn('id', $ids)->delete();
+        $ids = $request->ids;
+        User::whereIn('id', $ids)
+            ->where('id', '!=', Auth::id())//Exclude the current logged-in user froim getting deleted
+            ->delete();
 
-        return response()->json(['success' => true, 'message' => 'User deleted successfully!']);
+        return response()->json(['success' => 'Selected rows deleted successfully!']);
     }
 }

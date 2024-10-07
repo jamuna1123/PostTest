@@ -169,17 +169,22 @@ class PostCategoryController extends Controller
 
         // }
 
-        if ($request->input('image')) {
+        $existimage = '800px_'.basename($postcategory->image);
+        $currentimage = basename($request->image);
+        // Delete old images if they exist
+
+        if ($existimage != $currentimage) {
 
             // Delete old images if they exist
             if ($postcategory->image) {
-
-                // Delete original and thumbnail images if they exist
                 if (Storage::exists(public_path('storage/'.$postcategory->image))) {
                     Storage::delete(public_path('storage/'.$postcategory->image));
                 }
-                if (Storage::exists(public_path('storage/images/resized/'.basename($postcategory->image)))) {
-                    Storage::delete(public_path('storage/images/resized/'.basename($postcategory->image)));
+                if (Storage::exists(public_path('storage/images/resized/800px_'.basename($postcategory->image)))) {
+                    Storage::delete(public_path('storage/images/resized/800px_'.basename($postcategory->image)));
+                }
+                if (Storage::exists(public_path('storage/images/resized/100px_'.basename($postcategory->image)))) {
+                    Storage::delete(public_path('storage/images/resized/100px_'.basename($postcategory->image)));
                 }
             }
             $imagePath = $request->input('image');
@@ -211,6 +216,9 @@ class PostCategoryController extends Controller
 
             // Save the new image path in the database (original path)
             $postcategory->image = $originalPath;
+        } else {
+
+            $postcategory->image = $postcategory->image;
         }
 
         $postcategory->save();

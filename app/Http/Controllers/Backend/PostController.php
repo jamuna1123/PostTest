@@ -64,7 +64,7 @@ class PostController extends Controller
         $post->published_at = $request->published_at ? Carbon::parse($request->published_at) : Carbon::now();
 
         if ($request->input('image')) {
-             $imagePath = $request->input('image');
+                $imagePath = $request->input('image');
             $filename = basename($imagePath);
 
             // Define paths
@@ -90,7 +90,6 @@ class PostController extends Controller
                 $constraint->upsize(); // Prevent upsizing
             });
             Storage::disk('public')->put($thumbnail800Path, (string) $resized800Image->encode());
-
 
             $post->image = $originalPath;
         }
@@ -151,17 +150,23 @@ class PostController extends Controller
             $post->slug = $request->slug;
         }
 
-        if ($request->input('image')) {
+          $existimage = '800px_'.basename($post->image);
+        $currentimage = basename($request->image);
             // Delete old images
               // Delete old images if they exist
+                if ($existimage != $currentimage) {
+
             if ($post->image) {
 
                 // Delete original and thumbnail images if they exist
                 if (Storage::exists(public_path('storage/'.$post->image))) {
                     Storage::delete(public_path('storage/'.$post->image));
                 }
-                if (Storage::exists(public_path('storage/images/resized/'.basename($post->image)))) {
-                    Storage::delete(public_path('storage/images/resized/'.basename($post->image)));
+                if (Storage::exists(public_path('storage/images/resized/800px_'.basename($post->image)))) {
+                    Storage::delete(public_path('storage/images/resized/800px_'.basename($post->image)));
+                }
+                if (Storage::exists(public_path('storage/images/resized/100px_'.basename($post->image)))) {
+                    Storage::delete(public_path('storage/images/resized/100px_'.basename($post->image)));
                 }
             }
 
@@ -195,7 +200,10 @@ class PostController extends Controller
 
 
                 $post->image = $originalPath;
-            }
+           } else {
+
+            $post->image = $post->image;
+        }
       
         $post->status = $request->has('status') ? 1 : 0;
         $post->save();

@@ -49,7 +49,7 @@ class UserDataTable extends DataTable
                 return $viewBtn.' '.$editBtn.' '.$passwordBtn.' '.$deleteBtn;
             })
             ->addColumn('checkbox', function ($row) {
-                return '<input type="checkbox" name="selected_rows[]" value="'.$row->id.'">';
+                return '<input type="checkbox"  name="selected_rows[]" value="'.$row->id.'">';
             })
             ->addColumn('image', function ($row) {
                 // Display image with a small thumbnail
