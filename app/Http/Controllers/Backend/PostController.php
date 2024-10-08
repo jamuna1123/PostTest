@@ -170,7 +170,7 @@ class PostController extends Controller
                 }
             }
 
-        
+            if ($request->input('image')) {
             $imagePath = $request->input('image');
             $filename = basename($imagePath);
 
@@ -204,6 +204,7 @@ class PostController extends Controller
 
             $post->image = $post->image;
         }
+    }
       
         $post->status = $request->has('status') ? 1 : 0;
         $post->save();

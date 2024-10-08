@@ -1,9 +1,9 @@
 <div class="card-body">
     <div class="row">
         <!-- Left Column -->
-        <div class="col-md-6">
+    
             <!-- Name Input -->
-            <div class="mb-3">
+            <div class="mb-3 col-md-6">
                 <label for="name" class="form-label">
                     <strong>Name:
                         <span class="text-danger">*</span>
@@ -16,37 +16,24 @@
                 @enderror
             </div>
 
-            <!-- Phone Input -->
-            <div class="mb-3">
-                <label for="phone" class="form-label">
-                    <strong>Phone:
+              <!-- Email Input -->
+            <div class="mb-3 col-md-6">
+                <label for="email" class="form-label">
+                    <strong>Email:
                         <span class="text-danger">*</span>
                     </strong>
                 </label>
-                <input type="text" name="phone" class="form-control @error('phone') is-invalid @enderror"
-                    id="phone" placeholder="Phone" value="{{ old('phone', $user->phone ?? '') }}">
-                @error('phone')
+                <input type="text" name="email" class="form-control @error('email') is-invalid @enderror"
+                    id="email" placeholder="Email" value="{{ old('email', $user->email ?? '') }}">
+                @error('email')
                     <div class="form-text text-danger">{{ $message }}</div>
                 @enderror
             </div>
 
-            <!-- Address Input -->
-            <div class="mb-3">
-                <label for="address" class="form-label">
-                    <strong>Address:
-                        <span class="text-danger">*</span>
-                    </strong>
-                </label>
-                <input type="text" name="address" class="form-control @error('address') is-invalid @enderror"
-                    id="address" placeholder="Address" value="{{ old('address', $user->address ?? '') }}">
-                @error('address')
-                    <div class="form-text text-danger">{{ $message }}</div>
-                @enderror
-            </div>
-
-            <!-- Password Input (only show on create page) -->
+   <!-- Password Input (only show on create page) -->
      @if (!isset($user) || !$user->exists)
-                <div class="mb-3">
+  
+                <div class="mb-3 col-md-6">
                     <label for="password" class="form-label">
                         <strong>Password:
                             <span class="text-danger">*</span>
@@ -63,26 +50,47 @@
                     @enderror
                 </div>
             @endif
-        </div>
+     
+       
 
-        <!-- Right Column -->
-        <div class="col-md-6">
-            <!-- Email Input -->
-            <div class="mb-3">
-                <label for="email" class="form-label">
-                    <strong>Email:
+            <!-- Phone Input -->
+     
+            <div class="mb-3 col-md-6">
+                <label for="phone" class="form-label">
+                    <strong>Phone:
                         <span class="text-danger">*</span>
                     </strong>
                 </label>
-                <input type="text" name="email" class="form-control @error('email') is-invalid @enderror"
-                    id="email" placeholder="Email" value="{{ old('email', $user->email ?? '') }}">
-                @error('email')
+                <input type="text" name="phone" class="form-control @error('phone') is-invalid @enderror"
+                    id="phone" placeholder="Phone" value="{{ old('phone', $user->phone ?? '') }}">
+                @error('phone')
                     <div class="form-text text-danger">{{ $message }}</div>
                 @enderror
             </div>
 
+            <!-- Address Input -->
+            <div class="mb-3 col-md-6">
+                <label for="address" class="form-label">
+                    <strong>Address:
+                        <span class="text-danger">*</span>
+                    </strong>
+                </label>
+                <input type="text" name="address" class="form-control @error('address') is-invalid @enderror"
+                    id="address" placeholder="Address" value="{{ old('address', $user->address ?? '') }}">
+                @error('address')
+                    <div class="form-text text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+ 
+         
+        <!-- Right Column -->
+       
+          
+
             <!-- Image Input -->
-            <div class="mb-3">
+            <div class="row">
+            <div class="mb-3 col-md-12">
+           
                 <label for="image" class="form-label"><strong>Image:</strong></label>
                 <input type="hidden" name="image" id="image" class="form-control">
                 @error('image')
@@ -90,13 +98,14 @@
                 @enderror
             </div>
         </div>
-    </div>
+     
+
 
     <!-- Full Column for Status -->
     @if (auth()->check() && auth()->id() !== $user->id)
         <div class="row">
-            <div class="col-12">
-                <div class="mb-3">
+          
+                <div class="mb-3 col-md-12">
                     <label for="status" class="form-label">
                         <strong>Status:
                             <span class="text-danger">*</span>
@@ -115,7 +124,7 @@
                         <div class="form-text text-danger">{{ $message }}</div>
                     @enderror
                 </div>
-            </div>
+           
         </div>
     @endif
 

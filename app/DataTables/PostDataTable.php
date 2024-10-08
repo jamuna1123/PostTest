@@ -94,7 +94,9 @@ class PostDataTable extends DataTable
             ->setTableId('post-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
-            ->dom('lfrtip')
+            ->dom('frt<"mt-3 d-inline-flex justify-content-between align-items-center w-100" lip>')
+            ->lengthMenu([[5, 10, 15, 20, 50, 100], [5, 10, 15, 20, 50, 100]])
+
             ->orderBy(1);
 
     }

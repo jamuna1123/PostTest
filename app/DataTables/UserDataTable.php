@@ -54,8 +54,8 @@ class UserDataTable extends DataTable
             ->addColumn('image', function ($row) {
                 // Display image with a small thumbnail
                 if ($row->image) {
-                    return '<a href="'.asset('storage/images/resized/800px_' . basename($row->image)).'" data-fancybox="gallery" data-caption="'.$row->title.'">
-                            <img src="'.asset('storage/images/resized/100px_' . basename($row->image)).'" alt="'.$row->title.'" style="width: 100px; height:auto">
+                    return '<a href="'.asset('storage/images/resized/800px_'.basename($row->image)).'" data-fancybox="gallery" data-caption="'.$row->title.'">
+                            <img src="'.asset('storage/images/resized/100px_'.basename($row->image)).'" alt="'.$row->title.'" style="width: 100px; height:auto">
                         </a>';
                 }
 
@@ -103,7 +103,9 @@ class UserDataTable extends DataTable
             ->setTableId('user-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
-            ->dom('lfrtip')
+            // ->dom('frtlip')
+            ->dom('frt<"mt-3 d-inline-flex justify-content-between align-items-center w-100" lip>')
+            ->lengthMenu([[5, 10, 15, 20, 50, 100], [5, 10, 15, 20, 50, 100]])
             ->orderBy(1);
         // The buttons have been removed
     }

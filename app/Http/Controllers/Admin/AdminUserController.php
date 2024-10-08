@@ -158,7 +158,7 @@ class AdminUserController extends Controller
                 }
             }
         
-
+    if ($request->input('image')) {
             $imagePath = $request->input('image');
             $filename = basename($imagePath);
 
@@ -192,6 +192,7 @@ class AdminUserController extends Controller
 
             $user->image = $user->image;
         }
+    }
 
 
         // Set email_verified_at to null if the email is changed

@@ -187,6 +187,7 @@ class PostCategoryController extends Controller
                     Storage::delete(public_path('storage/images/resized/100px_'.basename($postcategory->image)));
                 }
             }
+                if ($request->input('image')) {
             $imagePath = $request->input('image');
             $filename = basename($imagePath);
 
@@ -220,6 +221,7 @@ class PostCategoryController extends Controller
 
             $postcategory->image = $postcategory->image;
         }
+    }
 
         $postcategory->save();
         session()->flash('success', 'Post Category updated successfully.');

@@ -3,6 +3,8 @@
 use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Backend\PostCategoryController;
 use App\Http\Controllers\Backend\PostController;
+use App\Http\Controllers\Backend\AlbumController;
+use App\Http\Controllers\Backend\AlbumImageController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -51,6 +53,14 @@ Route::middleware('auth')->group(function () {
     // Other routes...
     Route::post('/user/bulk-update-status', [AdminUserController::class, 'bulkUpdateStatus'])->name('user.bulk-update-status');
     Route::post('/user/bulk-delete', [AdminUserController::class, 'bulkDelete'])->name('user.bulk-delete');
+//album
+      Route::resource('album', AlbumController::class);
+    Route::patch('/album/update-status/{id}', [AlbumController::class, 'updateStatus'])->name('albums.update-status');
+    Route::post('/multipleupload', [AlbumController::class, 'multipleUpload'])->name('multipleUpload');
+
+    //Image
+    Route::resource('album-image', AlbumImageController::class);
+    Route::get('/albums/{album}/images', [AlbumImageController::class, 'albumImage'])->name('album-image.albumImage');
 
 });
 

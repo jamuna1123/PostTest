@@ -4,10 +4,10 @@
         <!--begin::Brand Link-->
         <a href="./index.html" class="brand-link">
             <!--begin::Brand Image-->
-            <img src="../../dist/assets/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image opacity-75 shadow">
+            {{-- <img src="../../dist/assets/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image opacity-75 shadow"> --}}
             <!--end::Brand Image-->
             <!--begin::Brand Text-->
-            <span class="brand-text fw-light">Laravel Practise</span>
+            <span class="brand-text fw-light">Post Module</span>
             <!--end::Brand Text-->
         </a>
         <!--end::Brand Link-->
@@ -72,7 +72,14 @@
                     </ul>
                 </li>
 
-                 
+                   {{-- <li class="nav-item ">
+                    <a href="{{ route('album.create') }}" class="nav-link"> <i class="nav-icon fas fa-newspaper"></i>
+                        <p>
+                            Gallery
+                            <i class="nav-arrow bi bi-chevron-right"></i>
+                        </p>
+                    </a>
+                </li> --}}
             </ul>
             <!--end::Sidebar Menu-->
         </nav>
