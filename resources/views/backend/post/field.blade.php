@@ -41,7 +41,7 @@
         <!-- Post Category Field -->
         <div class="mb-3 col-md-6">
             <label for="post_category_id" class="form-label">
-                <strong>Post Category:
+                <strong>Category:
                     @if (true)
                         <span class="text-danger">*</span>
                     @endif

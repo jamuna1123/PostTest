@@ -4,7 +4,7 @@
 <body class="login-page bg-body-secondary">
     <div class="login-box">
         <div class="login-logo">
-            <a href="../index2.html"><b>Admin</b>LTE</a>
+            <a href="../index2.html"><b>Post</b> Module</a>
         </div> <!-- /.login-logo -->
         <div class="card">
             <div class="card-body login-card-body">
@@ -33,6 +33,7 @@
                         </div>
                         <x-input-error :messages="$errors->get('password')" class="mt-2" />
                     </div>
+                    
 
                     <!-- Remember Me -->
                     <div class="row">
